@@ -1,0 +1,265 @@
+/* css/style.css - Estilos para index.html (baseado em home_curso_modelo.jpg) */
+:root {
+    --cor-azul-primario-mv: #007bff; /* Azul do header e botões de etapa */
+    --cor-azul-secundario-mv: #0056b3; /* Hover do azul */
+    --cor-verde-acao-mv: #28a745; /* Botão "Comece aqui", "Liberar curso" */
+    --cor-amarelo-destaque-mv: #ffc107; /* Pode ser usado para botões especiais */
+    --cor-fundo-geral-mv: #f0f2f5; /* Cinza bem claro de fundo da página */
+    --cor-fundo-card-mv: #ffffff; /* Branco para cards e seções de conteúdo */
+    --cor-texto-principal-mv: #212529; /* Preto suave */
+    --cor-texto-secundario-mv: #6c757d; /* Cinza para parágrafos, infos */
+    --cor-borda-mv: #dee2e6; /* Cinza claro para bordas */
+    --cor-fundo-modulo-mv: #e9f5ff; /* Azul muito claro para cards de módulo (ou o verde do print) */
+    --cor-texto-modulo-mv: #004085; /* Texto para os cards de módulo */
+    --fonte-principal-mv: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --raio-borda-mv: 4px;
+    --sombra-mv: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+body {
+    margin: 0;
+    font-family: var(--fonte-principal-mv);
+    background-color: var(--cor-fundo-geral-mv);
+    color: var(--cor-texto-principal-mv);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+a { text-decoration: none; color: var(--cor-azul-primario-mv); }
+a:hover { color: var(--cor-azul-secundario-mv); }
+
+.btn-mv {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 0.9em;
+    font-weight: 600;
+    text-align: center;
+    border-radius: var(--raio-borda-mv);
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    border: none;
+}
+.btn-verde-mv { background-color: var(--cor-verde-acao-mv); color: white; }
+.btn-verde-mv:hover { background-color: #218838; }
+.btn-azul-outline-mv { border: 1px solid var(--cor-azul-primario-mv); color: var(--cor-azul-primario-mv); background-color: transparent; }
+.btn-azul-outline-mv:hover { background-color: var(--cor-azul-primario-mv); color: white; }
+.btn-cinza-mv { background-color: #6c757d; color: white; }
+.btn-cinza-mv:hover { background-color: #5a6268; }
+
+
+/* --- HEADER (home_curso_modelo.jpg) --- */
+.site-header-mv {
+    background-color: var(--cor-fundo-card-mv);
+    color: var(--cor-texto-principal-mv);
+    padding: 0 20px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--cor-borda-mv);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+.header-mv-container {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#logo-curso-mv { height: 30px; }
+.menu-principal-mv { display: flex; gap: 5px; }
+.menu-principal-mv a {
+    padding: 10px 12px; /* Ajustado */
+    color: var(--cor-texto-secundario-mv);
+    font-weight: 500;
+    font-size: 0.9em; /* Ajustado */
+    border-radius: var(--raio-borda-mv);
+}
+.menu-principal-mv a.active, .menu-principal-mv a:hover {
+    background-color: #e9ecef; /* Fundo para item ativo/hover */
+    color: var(--cor-azul-primario-mv);
+}
+.user-actions-mv { display: flex; align-items: center; gap: 12px; }
+.btn-liberar-curso-mv {
+    background-color: var(--cor-verde-acao-mv);
+    color: white;
+    font-size: 0.85em;
+    padding: 7px 10px; /* Ajustado */
+    border-radius: var(--raio-borda-mv);
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+.flag-icon-mv { height: 18px; border-radius: 3px; }
+.user-profile-mv { font-size: 0.85em; color: var(--cor-texto-secundario-mv); }
+
+/* --- Dashboard Container (index.html) --- */
+.dashboard-mv-container {
+    width: 90%;
+    max-width: 1180px;
+    margin: 20px auto;
+    padding: 0; /* Conteúdo interno terá padding */
+}
+
+.bem-vindo-mv {
+    background-color: var(--cor-fundo-card-mv);
+    padding: 20px 25px;
+    border-radius: var(--raio-borda-mv);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+    border: 1px solid var(--cor-borda-mv);
+}
+.avatar-mv img { width: 60px; height: 60px; border-radius: 50%; }
+.info-usuario-mv h2 { margin: 0 0 3px 0; font-size: 1.3em; font-weight: 600; }
+.info-usuario-mv p { margin: 0; font-size: 0.9em; color: var(--cor-texto-secundario-mv); }
+.progresso-geral-mv { margin-left: auto; text-align: right; font-size: 0.85em; }
+.progresso-geral-mv span { display: block; margin-bottom: 5px; }
+.barra-progresso-mv-container {
+    width: 180px; height: 6px; background-color: #e9ecef; border-radius: 3px;
+}
+.barra-progresso-mv-fill { height: 100%; background-color: var(--cor-verde-acao-mv); border-radius: 3px; width: 0%; }
+
+.comece-aqui-mv h3 { font-size: 1em; color: var(--cor-texto-secundario-mv); margin-bottom: 8px; font-weight: 500; }
+.card-comece-mv {
+    background-color: var(--cor-fundo-card-mv);
+    border: 1px solid var(--cor-borda-mv);
+    border-radius: var(--raio-borda-mv);
+    padding: 15px;
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    margin-bottom: 25px;
+}
+.card-comece-mv-img img { width: 180px; border-radius: var(--raio-borda-mv); }
+.card-comece-mv-info { flex-grow: 1; }
+.etapa-info-mv { font-size: 0.8em; color: var(--cor-texto-secundario-mv); margin-bottom: 3px; }
+.card-comece-mv-info h4 { font-size: 1.2em; margin: 0 0 8px 0; font-weight: 600; }
+.progresso-etapa-mv { height: 5px; background-color: #e9ecef; border-radius: 2.5px; margin-bottom: 5px; }
+.barra-progresso-mv-fill-pequena { height: 100%; background-color: var(--cor-verde-acao-mv); border-radius: 2.5px; }
+.status-etapa-mv { font-size: 0.8em; color: var(--cor-texto-secundario-mv); margin-bottom: 12px; }
+.status-etapa-mv span { margin-right: 10px; }
+.proximos-passos-mv { flex-basis: 220px; font-size: 0.8em; padding-left: 15px; border-left: 1px solid var(--cor-borda-mv); }
+.passo-item-mv { padding: 6px 0; border-bottom: 1px dotted var(--cor-borda-mv); color: var(--cor-texto-secundario-mv); }
+.passo-item-mv:last-child { border-bottom: none; }
+.aula-status-mv { float: right; color: #aaa; }
+
+.etapas-navegacao-mv {
+    display: flex;
+    background-color: var(--cor-azul-primario-mv);
+    border-radius: var(--raio-borda-mv) var(--raio-borda-mv) 0 0;
+    overflow: hidden;
+}
+.btn-etapa-mv {
+    flex: 1;
+    padding: 10px 8px;
+    background-color: transparent;
+    border: none;
+    color: rgba(255,255,255,0.8);
+    cursor: pointer;
+    font-size: 0.85em; /* Ajustado */
+    text-align: center;
+    transition: background-color 0.2s, color 0.2s;
+    border-right: 1px solid rgba(255,255,255,0.25);
+}
+.btn-etapa-mv:last-child { border-right: none; }
+.btn-etapa-mv:hover { background-color: rgba(255,255,255,0.1); }
+.btn-etapa-mv.active { background-color: var(--cor-fundo-card-mv); color: var(--cor-azul-primario-mv); font-weight: bold; }
+
+.etapas-conteudo-mv .etapa-painel-mv {
+    display: none;
+    background-color: var(--cor-fundo-card-mv);
+    padding: 20px;
+    border: 1px solid var(--cor-borda-mv);
+    border-top: none;
+    border-radius: 0 0 var(--raio-borda-mv) var(--raio-borda-mv);
+}
+.etapas-conteudo-mv .etapa-painel-mv.active { display: block; }
+.grid-modulos-mv {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* Ajustado */
+    gap: 15px;
+}
+.modulo-card-mv {
+    background-color: var(--cor-fundo-modulo-mv); /* Verde claro do print ou azul claro */
+    /* background-color: #D9EAD3; Verde claro do print */
+    border: 1px solid #c9d9c2; /* Borda para o verde claro */
+    border-radius: var(--raio-borda-mv);
+    padding: 12px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--cor-texto-modulo-mv);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.modulo-card-mv:hover { transform: translateY(-2px); box-shadow: var(--sombra-mv); }
+.numero-modulo-mv { display: block; font-size: 1.8em; font-weight: bold; margin-bottom: 3px; }
+.modulo-card-mv p { font-size: 0.9em; margin: 0 0 3px 0; font-weight: 500; }
+.modulo-card-mv small { font-size: 0.75em; margin: 0 0 8px 0; display: block; }
+.modulo-card-mv span:not(.numero-modulo-mv) { font-size: 0.8em; font-weight: bold; text-decoration: underline; }
+
+.secoes-inferiores-mv { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-top: 25px; }
+.comunidade-mv, .visite-comunidade-mv, .extras-mv, .fale-conosco-mv {
+    background-color: var(--cor-fundo-card-mv);
+    padding: 15px;
+    border-radius: var(--raio-borda-mv);
+    border: 1px solid var(--cor-borda-mv);
+}
+.comunidade-header-mv { display: flex; justify-content: space-between; align-items: center; }
+.secoes-inferiores-mv h3 {
+    font-size: 1.1em; margin: 0 0 12px 0; padding-bottom: 8px; border-bottom: 1px solid var(--cor-borda-mv);
+}
+.topico-comunidade-mv { padding: 8px 0; border-bottom: 1px dotted var(--cor-borda-mv); font-size: 0.85em; }
+.topico-comunidade-mv:last-child { border-bottom: none; }
+.topico-comunidade-mv h4 { margin: 0 0 2px 0; font-size: 0.95em; color: var(--cor-azul-primario-mv); font-weight: 500; }
+.topico-comunidade-mv p { margin: 0; color: var(--cor-texto-secundario-mv); font-size: 0.9em; }
+.card-visite-mv p { margin: 0 0 12px 0; font-size: 0.9em; }
+.post-exemplo-mv { background-color: var(--cor-fundo-geral-mv); padding: 8px; border-radius: var(--raio-borda-mv); }
+.post-exemplo-mv h4 { margin: 0 0 4px 0; font-size: 0.9em; color: var(--cor-azul-primario-mv); }
+.post-exemplo-mv span { font-size: 0.75em; color: var(--cor-texto-secundario-mv); }
+.card-fale-mv h4 { margin:0 0 5px 0; font-size: 1em; }
+.card-fale-mv .btn-mv { margin-bottom: 8px; }
+.card-fale-mv p { font-size: 0.8em; color: var(--cor-texto-secundario-mv); margin: 0; }
+
+/* Footer Coeso */
+.site-footer-mv {
+    background-color: #343a40; /* Cinza escuro como no footer da aula */
+    color: #adb5bd;
+    padding: 15px 20px;
+    text-align: center;
+    font-size: 0.8em;
+    margin-top: 30px;
+}
+.footer-mv-container { width: 100%; max-width: 1180px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+.site-footer-mv nav a { color: #ced4da; text-decoration: none; margin: 0 5px; }
+
+/* --- ESTILOS GERAIS PARA BARRAS DE PROGRESSO USADAS EM AMBOS OS CONTEXTOS --- */
+.barra-progresso-container, /* Usado no index antigo, manter se houver */
+.barra-progresso-mv-container, /* Usado no bem-vindo-mv */
+.progresso-etapa-mv, /* Usado no card comece aqui */
+.barra-progresso-container-total { /* Usado no bem-vindo-mv */
+    background-color: #e9ecef;
+    border-radius: 10px; /* Mais arredondado */
+    overflow: hidden;
+}
+.barra-progresso-mv-container { height: 6px; } /* Para bem-vindo */
+.progresso-etapa-mv { height: 5px; } /* Para card */
+
+.barra-progresso-preenchimento, /* Usado no index antigo */
+.barra-progresso-mv-fill, /* Usado no bem-vindo-mv */
+.barra-progresso-mv-fill-pequena, /* Usado no card comece aqui */
+.barra-progresso-preenchimento-total { /* Usado no bem-vindo-mv */
+    background-color: var(--cor-verde-acao-mv);
+    height: 100%;
+    border-radius: 10px; /* Mais arredondado */
+    width: 0%; /* JS atualiza */
+    transition: width 0.4s ease-in-out;
+    display: flex; /* Para centralizar texto, se houver */
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.7em; /* Texto dentro da barra, se houver */
+}

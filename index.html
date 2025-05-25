@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Principal - Projeto Bilíngue</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="site-header-mv">
+        <div class="header-mv-container">
+            <div class="logo-area-mv">
+                <img src="assets/logo-curso.png" alt="Logo Curso" id="logo-curso-mv">
+                </div>
+            <nav class="menu-principal-mv">
+                <a href="index.html" class="active">Home</a>
+                <a href="#">Meu perfil</a>
+                <a href="#">Comunidade</a>
+                <a href="#">Extras</a>
+                <a href="#">Suporte</a>
+                <a href="#">Playlist</a>
+            </nav>
+            <div class="user-actions-mv">
+                <button class="btn-liberar-curso-mv">Liberar curso completo</button>
+                <img src="assets/flag-usa.png" alt="Idioma USA" class="flag-icon-mv">
+                <img src="assets/flag-uk.png" alt="Idioma UK" class="flag-icon-mv">
+                <div class="user-profile-mv">
+                    <span>Bem-vindo(a), Amanda M...</span>
+                    </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-mv-container">
+        <section class="bem-vindo-mv">
+            <div class="avatar-mv">
+                <img src="assets/avatar-placeholder.png" alt="Avatar">
+            </div>
+            <div class="info-usuario-mv">
+                <h2>Bem-vindo(a), Amanda Menezes de Souza de Castro!</h2>
+                <p>Não informado</p>
+            </div>
+            <div class="progresso-geral-mv">
+                <span>Progresso geral <span id="progresso-geral-home-percent">0%</span></span>
+                <div class="barra-progresso-mv-container">
+                    <div class="barra-progresso-mv-fill" id="progresso-geral-home-bar" style="width: 0%;"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="comece-aqui-mv">
+            <h3>Comece aqui</h3>
+            <div class="card-comece-mv">
+                <div class="card-comece-mv-img">
+                    <img src="assets/placeholder-comece-aqui.jpg" alt="Imagem Curso">
+                </div>
+                <div class="card-comece-mv-info">
+                    <p class="etapa-info-mv">Etapa 1: Fundação > Primeiros passos</p>
+                    <h4>Passo 01 - Comece aqui</h4>
+                    <div class="progresso-etapa-mv">
+                        <div class="barra-progresso-mv-fill-pequena" style="width: 12.5%;"></div> </div>
+                    <p class="status-etapa-mv"><span>1/8</span> <span>0% concluído</span></p>
+                    <a href="modulos/modulo1_aula1.html" class="btn-mv btn-verde-mv">Comece aqui</a>
+                </div>
+                <div class="proximos-passos-mv">
+                    <div class="passo-item-mv">Passo 02 - Definindo o seu objetivo <span class="aula-status-mv">Aula 2/4</span></div>
+                    <div class="passo-item-mv">Passo 03 - Como acessar os materiais <span class="aula-status-mv">Aula 3/4</span></div>
+                    <div class="passo-item-mv">Passo 04 - Conclusão dos primeiros passos <span class="aula-status-mv">Aula 4/4</span></div>
+                </div>
+            </div>
+        </section>
+
+        <nav class="etapas-navegacao-mv">
+            <button class="btn-etapa-mv active" data-target="etapa1-mv-content">Etapa 1: Fundação</button>
+            <button class="btn-etapa-mv" data-target="etapa2-mv-content">Etapa 2: Mineração</button>
+            <button class="btn-etapa-mv" data-target="etapa3-mv-content">Etapa 3: Mar</button>
+            <button class="btn-etapa-mv" data-target="etapa4-mv-content">Etapa 4: Transição</button>
+            <button class="btn-etapa-mv" data-target="etapa5-mv-content">Etapa 5: Monolíngue</button>
+            <button class="btn-etapa-mv" data-target="etapa6-mv-content">Etapa 6: Escrita e Fala</button>
+        </nav>
+
+        <div class="etapas-conteudo-mv">
+            <section id="etapa1-mv-content" class="etapa-painel-mv active">
+                <div class="grid-modulos-mv">
+                    <a href="modulos/modulo1_aula1.html" class="modulo-card-mv">
+                        <span class="numero-modulo-mv">0</span>
+                        <p>Primeiros passos</p>
+                        <small>4 aulas disponíveis</small>
+                        <span>Módulo 000</span>
+                    </a>
+                    <a href="#" class="modulo-card-mv">
+                        <span class="numero-modulo-mv">1</span>
+                        <p>Módulo 001</p>
+                        <small>9 aulas disponíveis</small>
+                        <span>Módulo 001</span>
+                    </a>
+                    <a href="#" class="modulo-card-mv"><span class="numero-modulo-mv">2</span><p>Módulo 002</p><small>Em breve</small><span>Módulo 002</span></a>
+                    <a href="#" class="modulo-card-mv"><span class="numero-modulo-mv">3</span><p>Módulo 003</p><small>Em breve</small><span>Módulo 003</span></a>
+                    <a href="#" class="modulo-card-mv"><span class="numero-modulo-mv">4</span><p>Módulo 004</p><small>Em breve</small><span>Módulo 004</span></a>
+                    <a href="#" class="modulo-card-mv"><span class="numero-modulo-mv">5</span><p>Módulo 005</p><small>Em breve</small><span>Módulo 005</span></a>
+                    <a href="#" class="modulo-card-mv"><span class="numero-modulo-mv">6</span><p>Módulo 006</p><small>Em breve</small><span>Módulo 006</span></a>
+                    <a href="#" class="modulo-card-mv"><span class="numero-modulo-mv">7</span><p>Módulo 007</p><small>Em breve</small><span>Módulo 007</span></a>
+                    <a href="#" class="modulo-card-mv"><span class="numero-modulo-mv">8</span><p>Módulo 008</p><small>Em breve</small><span>Módulo 008</span></a>
+                    <a href="#" class="modulo-card-mv"><span class="numero-modulo-mv">9</span><p>Módulo 009</p><small>Em breve</small><span>Módulo 009</span></a>
+                </div>
+            </section>
+            <section id="etapa2-mv-content" class="etapa-painel-mv">
+                <p>Conteúdo da Etapa 2 (Mineração) virá aqui...</p>
+            </section>
+            <section id="etapa3-mv-content" class="etapa-painel-mv"><p>Conteúdo da Etapa 3 (Mar) virá aqui...</p></section>
+             <section id="etapa4-mv-content" class="etapa-painel-mv"><p>Conteúdo da Etapa 4 (Transição) virá aqui...</p></section>
+             <section id="etapa5-mv-content" class="etapa-painel-mv"><p>Conteúdo da Etapa 5 (Monolíngue) virá aqui...</p></section>
+             <section id="etapa6-mv-content" class="etapa-painel-mv"><p>Conteúdo da Etapa 6 (Escrita e Fala) virá aqui...</p></section>
+        </div>
+
+        <div class="secoes-inferiores-mv">
+            <section class="comunidade-mv">
+                <div class="comunidade-header-mv">
+                    <h3>Comunidade</h3>
+                    <a href="#" class="btn-mv btn-azul-outline-mv">Saiba mais</a>
+                </div>
+                <div class="topico-comunidade-mv">
+                    <h4>[OFICIAL] Dúvidas sobre o Anki</h4>
+                    <p>Pessoal, estamos abrindo esse tópico que é oficial para perguntas...</p>
+                </div>
+                <div class="topico-comunidade-mv">
+                    <h4>[OFICIAL] Dúvidas sobre o método de textos com áudio</h4>
+                    <p>Turma, estamos abrindo este tópico com o intuito de reunir as...</p>
+                </div>
+                 <div class="topico-comunidade-mv">
+                    <h4>[OFICIAL] Apresente-se aqui</h4>
+                    <p>Olá, pessoal, tudo bem? Aqui é a Vitória, uma das tutoras da equipe...</p>
+                </div>
+            </section>
+            <section class="visite-comunidade-mv">
+                 <h3>Visite nossa comunidade</h3>
+                 <div class="card-visite-mv">
+                    <p>Conheça outros usuários e tire suas dúvidas.</p>
+                    <div class="post-exemplo-mv">
+                        <h4>[OFICIAL] Dúvidas sobre o método de textos com áudio</h4>
+                        <span>216 respostas • há um dia, por <strong>Alzira Feitosa</strong></span>
+                    </div>
+                 </div>
+            </section>
+        </div>
+         <div class="secoes-inferiores-mv">
+            <section class="extras-mv">
+                <h3>Extras</h3>
+                {/* Conteúdo dos extras aqui */}
+            </section>
+            <section class="fale-conosco-mv">
+                 <h3>Fale conosco</h3>
+                 <div class="card-fale-mv">
+                    <h4>Fale conosco</h4>
+                    <a href="#" class="btn-mv btn-cinza-mv">Acessar</a>
+                    <p>Atendimento de segunda a sexta (exceto feriados), das 08h às 20h (horário de Brasília)</p>
+                 </div>
+            </section>
+        </div>
+
+    </main>
+
+    <footer class="site-footer-mv">
+        <div class="footer-mv-container">
+            <p>Curso de Idiomas Mairo Vergara &copy; 2017 - Todos os direitos reservados</p>
+            <nav>
+                <a href="#">Termos de uso</a> -
+                <a href="#">Política de privacidade</a>
+            </nav>
+        </div>
+    </footer>
+    <script src="js/script.js"></script>
+</body>
+</html>

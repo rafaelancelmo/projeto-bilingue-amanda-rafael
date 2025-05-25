@@ -1,0 +1,237 @@
+/* css/aula_style.css - Estilos para modulos/moduloX_aulaX.html (baseado em layout_aba_modulos.jpg) */
+
+/* Header e Footer são herdados de style.css para coesão, mas podemos sobrescrever se necessário */
+/* Se o header da página de aula for ligeiramente diferente: */
+.site-header-mv #logo-curso-mv { /* Se a logo na aula tiver um nome de ID diferente do global */
+    /* estilos específicos */
+}
+.menu-principal-mv a { /* Ajuste se o menu da aula for diferente */
+    /* padding: 21px 10px; */ /* Exemplo de ajuste */
+}
+.user-actions-mv .btn-liberar-curso-mv { /* Se o botão for diferente na aula */
+    /* font-size: 0.8em; */
+}
+.user-actions-mv .user-profile-mv span { /* Se o texto do usuário for diferente */
+    /* color: #eee; */
+}
+
+
+.pagina-aula-mv-layout {
+    display: flex;
+    max-width: 1180px; /* Largura como no print */
+    margin: 20px auto;
+    background-color: var(--cor-fundo-card-mv); /* Fundo branco */
+    /* box-shadow: var(--sombra-mv); */ /* Sem sombra no container principal da aula, conforme print */
+    border: 1px solid var(--cor-borda-mv); /* Borda suave em volta */
+}
+
+.conteudo-principal-mv-aula {
+    flex: 1; /* Ocupa o espaço disponível */
+    padding: 20px 25px; /* Espaçamento interno */
+}
+
+.sidebar-mv-aulas {
+    width: 300px; /* Largura da sidebar */
+    background-color: #f8f9fa; /* Fundo levemente acinzentado da sidebar */
+    padding: 15px;
+    border-left: 1px solid var(--cor-borda-mv);
+    font-size: 0.9em;
+}
+
+/* Conteúdo Principal da Aula */
+.breadcrumb-mv-aula {
+    font-size: 0.85em;
+    color: var(--cor-texto-secundario-mv);
+    margin-bottom: 8px;
+}
+.breadcrumb-mv-aula span:last-child {
+    font-weight: 500;
+    color: var(--cor-texto-principal-mv);
+}
+
+.titulo-mv-aula {
+    font-size: 1.7em;
+    font-weight: 600; /* Um pouco menos que bold total */
+    color: var(--cor-texto-principal-mv);
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.video-player-mv-aula {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background-color: #000;
+    margin-bottom: 10px; /* Espaço menor como no print */
+    border: 1px solid #ccc; /* Borda sutil */
+}
+.video-player-mv-aula iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.controles-inferiores-mv-aula {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0; /* Sem padding lateral, só vertical */
+    margin-bottom: 15px;
+    font-size: 0.9em;
+    border-top: 1px solid var(--cor-borda-mv);
+    border-bottom: 1px solid var(--cor-borda-mv);
+}
+.controles-inferiores-mv-aula > span { /* "Módulo 01 > Aula 01" */
+    color: var(--cor-texto-secundario-mv);
+    font-size: 0.9em;
+}
+.acoes-aula-mv {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.marcar-concluida-mv-aula {
+    transform: scale(1.2);
+    margin-right: 3px;
+}
+.acoes-aula-mv label {
+    color: var(--cor-texto-secundario-mv);
+    font-size: 0.9em;
+    cursor: pointer;
+}
+.btn-proxima-mv-aula {
+    padding: 7px 12px; /* Botão menor */
+    font-size: 0.85em;
+}
+
+/* Abas da Aula */
+.abas-mv-aula .botoes-abas-mv {
+    display: flex;
+    border-bottom: 1px solid var(--cor-borda-mv); /* Linha abaixo dos botões */
+}
+.btn-aba-mv {
+    padding: 10px 15px; /* Padding dos botões */
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    color: var(--cor-texto-secundario-mv);
+    font-size: 0.95em;
+    font-weight: 500;
+    border-bottom: 3px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+}
+.btn-aba-mv:hover {
+    color: var(--cor-azul-primario-mv);
+}
+.btn-aba-mv.active {
+    color: var(--cor-azul-primario-mv);
+    border-bottom-color: var(--cor-azul-primario-mv);
+    font-weight: bold;
+}
+.paineis-abas-mv .painel-aba-mv {
+    display: none;
+    padding: 18px 0px; /* Padding vertical, sem padding lateral */
+}
+.paineis-abas-mv .painel-aba-mv.active {
+    display: block;
+}
+.painel-aba-mv h4 { /* Título dentro do painel da aba */
+    font-size: 1.1em;
+    color: var(--cor-texto-principal-mv);
+    margin: 0 0 12px 0;
+}
+.lista-downloads-mv { list-style: none; padding: 0; }
+.lista-downloads-mv li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px dotted #efefef;
+}
+.lista-downloads-mv li:last-child { border-bottom: none; }
+.lista-downloads-mv li a { display: flex; align-items: center; color: var(--cor-azul-primario-mv); }
+.lista-downloads-mv li img { width: 18px; margin-right: 8px; }
+.btn-add-anki-mv {
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    color: #495057;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    line-height: 20px;
+    text-align: center;
+    font-size: 0.8em;
+}
+
+.player-audio-mv-aula { width: 100%; margin-top: 5px; }
+.pdf-viewer-mv-container {
+    width: 100%;
+    height: 500px; /* Altura do visualizador de PDF */
+    border: 1px solid var(--cor-borda-mv);
+}
+.pdf-viewer-mv-container iframe { width: 100%; height: 100%; border: none; }
+.link-pdf-externo-mv { text-align: left; margin-top: 10px; font-size: 0.9em; }
+
+
+/* Sidebar da Aula */
+.info-modulo-sidebar-mv {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--cor-borda-mv);
+}
+.info-modulo-sidebar-mv h4 { /* Título do Módulo */
+    font-size: 0.9em;
+    text-transform: uppercase;
+    color: var(--cor-texto-secundario-mv);
+    margin: 0 0 2px 0;
+    font-weight: 600;
+}
+.info-modulo-sidebar-mv h5 { /* Número da Aula */
+    font-size: 0.85em;
+    color: var(--cor-texto-secundario-mv);
+    margin: 0 0 4px 0;
+    font-weight: normal;
+}
+.info-modulo-sidebar-mv p { /* Título da Aula na Sidebar */
+    font-size: 0.95em;
+    color: var(--cor-texto-principal-mv);
+    margin: 0;
+    font-weight: 500;
+}
+.lista-aulas-mv-sidebar { list-style: none; padding: 0; margin-bottom: 15px; }
+.aula-link-sidebar-mv {
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+    text-decoration: none;
+    color: var(--cor-texto-principal-mv);
+    border-radius: var(--raio-borda-mv);
+    margin-bottom: 3px;
+    font-size: 0.9em;
+}
+.icone-play-sidebar-mv {
+    margin-right: 8px;
+    font-size: 0.7em;
+    color: var(--cor-texto-secundario-mv);
+}
+.aula-link-sidebar-mv:hover {
+    background-color: #e9ecef;
+}
+.aula-link-sidebar-mv.active {
+    background-color: var(--cor-azul-primario-mv);
+    color: white;
+}
+.aula-link-sidebar-mv.active .icone-play-sidebar-mv {
+    color: white;
+}
+.link-proximo-modulo-mv {
+    display: block;
+    text-align: right;
+    font-size: 0.9em;
+    color: var(--cor-azul-primario-mv);
+    font-weight: 500;
+}
+
+/* Footer da Aula é herdado de style.css pela classe .site-footer-mv */

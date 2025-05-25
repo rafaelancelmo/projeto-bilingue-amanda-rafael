@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 1 - Aula 2 - Projeto Bilíngue</title> <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/aula_style.css">
+</head>
+<body>
+    <header class="site-header-mv">
+        <div class="header-mv-container">
+            <div class="logo-area-mv">
+                <img src="../assets/logo-curso.png" alt="Logo Curso" id="logo-curso-mv">
+            </div>
+            <nav class="menu-principal-mv">
+                <a href="../index.html">Home</a>
+                <a href="#">Meu Perfil</a>
+                <a href="#">Comunidade</a>
+                <a href="#">Extras</a>
+                <a href="#">Suporte</a>
+            </nav>
+            <div class="user-actions-mv">
+                <button class="btn-liberar-curso-mv">Liberar curso completo</button>
+                <img src="../assets/flag-usa.png" alt="Idioma USA" class="flag-icon-mv">
+                <div class="user-profile-mv">
+                    <span>Bem vindo(a)!</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="pagina-aula-mv-layout" data-aula-id="m1a2"> <main class="conteudo-principal-mv-aula">
+            <nav class="breadcrumb-mv-aula">
+                <span>Módulo 01 > Aula 02</span>
+            </nav>
+            <h1 class="titulo-mv-aula">Título da Aula 02 do Módulo 01</h1> <div class="video-player-mv-aula">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/DgRjqWCFImY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+
+            <section class="controles-inferiores-mv-aula">
+                <span>Módulo 01 > Aula 02</span>
+                <div class="acoes-aula-mv">
+                    <input type="checkbox" id="chk-concluida-m1a2" class="marcar-concluida-mv-aula" data-aula="m1a2">
+                    <label for="chk-concluida-m1a2">Marcar como concluída</label>
+                    <a href="#" class="btn-mv btn-verde-mv btn-proxima-mv-aula">Próxima Aula &rarr;</a> </div>
+            </section>
+
+            <section class="abas-mv-aula">
+                <div class="botoes-abas-mv">
+                    <button class="btn-aba-mv active" data-target="downloads-mv-content-m1a2">Downloads</button>
+                    <button class="btn-aba-mv" data-target="audios-mv-content-m1a2">Áudios</button>
+                    <button class="btn-aba-mv" data-target="estudo-texto-mv-content-m1a2">Estudo do Texto</button>
+                    <button class="btn-aba-mv" data-target="comentarios-mv-content-m1a2">Comentários</button>
+                </div>
+                <div class="paineis-abas-mv">
+                    <div id="downloads-mv-content-m1a2" class="painel-aba-mv active">
+                        <h4>Downloads da aula</h4>
+                        <ul class="lista-downloads-mv">
+                            <li><a href="https://www.youtube.com/watch?v=DgRjqWCFImY" target="_blank"><img src="../assets/icon-video.png" alt=""> Assistir Vídeo da Aula no YouTube</a></li>
+                            <li><a href="../assets/audios/M01_A02_audio.mp3" download="Audio_Aula2_Mod1.mp3"><img src="../assets/icon-audio.png" alt=""> Baixar Áudio da Aula</a></li>
+                            <li><a href="#" target="_blank"><img src="../assets/icon-pdf.png" alt=""> Baixar PDF da Aula 2 (se houver)</a></li>
+                        </ul>
+                    </div>
+                    <div id="audios-mv-content-m1a2" class="painel-aba-mv">
+                        <h4>Áudio da Aula</h4>
+                        <audio controls controlsList="nodownload" class="player-audio-mv-aula">
+                            <source src="../assets/audios/M01_A02_audio.mp3" type="audio/mpeg">
+                            Seu navegador não suporta o elemento de áudio.
+                        </audio>
+                    </div>
+                    <div id="estudo-texto-mv-content-m1a2" class="painel-aba-mv">
+                        <h4>Estudo do Texto (PDF)</h4>
+                        <p>PDF da Aula 2 (se houver) viria aqui.</p>
+                    </div>
+                    <div id="comentarios-mv-content-m1a2" class="painel-aba-mv">
+                        <h4>Comentários</h4>
+                        <p>(Seção de comentários em desenvolvimento)</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <aside class="sidebar-mv-aulas">
+            <div class="info-modulo-sidebar-mv">
+                <h4>MÓDULO 01: FUNDAMENTOS</h4>
+                <h5>Aula 02</h5>
+                <p>Título da Aula 02</p>
+            </div>
+            <ul class="lista-aulas-mv-sidebar">
+                <li><a href="modulo1_aula1.html" class="aula-link-sidebar-mv"><span class="icone-play-sidebar-mv">&#9654;</span> Aula 01: Jack Hannaford 01 (ft)</a></li>
+                <li><a href="modulo1_aula2.html" class="aula-link-sidebar-mv active"><span class="icone-play-sidebar-mv">&#9654;</span> Aula 02: Título da Aula 02</a></li>
+                <li><a href="#" class="aula-link-sidebar-mv"><span class="icone-play-sidebar-mv">&#9654;</span> Aula 03: (Placeholder)</a></li>
+            </ul>
+             <a href="#" class="link-proximo-modulo-mv">Próximo Módulo &rarr;</a>
+        </aside>
+    </div>
+
+    <footer class="site-footer-mv">
+       <div class="footer-mv-container">
+            <p>PROJETO BILINGUE AMANDA & RAFAEL &copy; 2024-2025</p>
+            <nav>
+                <a href="#">Termos de uso</a> -
+                <a href="#">Política de privacidade</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script src="../js/aula_script.js"></script>
+    <script src="../js/script.js"></script>
+</body>
+</html>
