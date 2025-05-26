@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Playlist - Projeto Bilíngue</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/aula_style.css"> <style>
+        /* Estilos que já estavam aqui, mantidos para consistência */
+        .playlist-container { padding: 20px; }
+        .playlist-item {
+            background-color: var(--fundo-elemento);
+            border: 1px solid var(--borda-elemento);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: var(--raio-borda-mv);
+            box-shadow: var(--sombra-mv);
+        }
+        .playlist-item h4 { margin-top: 0; margin-bottom:10px; color: var(--texto-primario); }
+        .playlist-item audio { width: 100%; margin-bottom:10px;}
+        .btn-remover-playlist {
+            font-size: 0.8em;
+            padding: 5px 10px;
+            background-color: #e74c3c; /* Vermelho para remover */
+            color: white;
+            border: none; /* Herda de .btn-mv se adicionado, mas pode ser específico */
+            border-radius: var(--raio-borda-mv);
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn-remover-playlist:hover { background-color: #c0392b; }
+        #playlist-vazia-msg { color: var(--texto-secundario); }
+    </style>
+</head>
+<body class="tema-claro">
+    <header class="site-header-mv">
+        <div class="header-mv-container">
+            <div class="logo-area-mv"><img src="assets/logo-curso.png" alt="Logo Curso" id="logo-curso-mv"></div>
+            <nav class="menu-principal-mv">
+                <a href="index.html">Home</a>
+                <a href="#">Meu Perfil</a>
+                <a href="#">Extras</a>
+                <a href="playlist.html" class="active">Playlist</a> </nav>
+            <div class="user-actions-mv">
+                <button id="btn-toggle-tema" class="btn-mv btn-tema">Mudar Tema</button>
+                <img src="assets/flag-usa.png" alt="Idioma USA" class="flag-icon-mv">
+                <div class="user-profile-mv"><span>Bem vindo(a)!</span></div>
+            </div>
+        </div>
+    </header>
+
+    <div id="user-selection-overlay" class="user-selection-overlay-container hidden">
+        <div class="user-selection-box">
+            <h2>Quem está estudando?</h2>
+            <p>Por favor, selecione seu perfil na <a href="index.html" style="color: var(--cor-azul-primario-mv);">página inicial</a> para ver sua playlist.</p>
+            </div>
+    </div>
+
+    <main class="dashboard-mv-container">
+        <section class="playlist-section">
+            <h2 style="color: var(--cor-azul-primario-mv); margin-bottom: 20px;">Minha Playlist de Áudios</h2>
+            <div id="playlist-container-element">
+                <p id="playlist-vazia-msg" style="color: var(--texto-secundario); display: none;">Sua playlist está vazia. Vá até uma aula e clique em "Salvar na Playlist" ao lado de um áudio!</p>
+                </div>
+        </section>
+    </main>
+
+    <footer class="site-footer-mv">
+       <div class="footer-mv-container"><p>PROJETO BILINGUE AMANDA & RAFAEL © 2024-2025</p><nav><a href="#">Termos de uso</a> -<a href="#">Política de privacidade</a></nav></div>
+    </footer>
+
+    <script src="js/script.js"></script> 
+    <script>
+        // Script específico para a página playlist.html
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUserPlaylist = localStorage.getItem('currentUserProjetoBilingue');
+            const playlistContainerEl = document.getElementById('playlist-container-element');
+            const msgPlaylistVaziaEl = document.getElementById('playlist-vazia-msg');
+            const userSelectionOverlayPlaylist = document.getElementById('user-selection-overlay');
+
+            function ajustarCaminhoAudio(originalSrc) {
+                // Se o src salvo começa com '../assets/' (salvo de uma página em /modulos/),
+                // remove o '../' para funcionar a partir da raiz (onde playlist.html está).
+                if (originalSrc && originalSrc.startsWith('../assets/')) {
+                    return originalSrc.substring(3); // Remove os primeiros 3 caracteres: "../"
+                }
+                return originalSrc; // Retorna original se for um URL completo (Cloudinary) ou já correto
+            }
+
+            function renderizarPlaylist() {
+                if (!currentUserPlaylist) {
+                    if(msgPlaylistVaziaEl) msgPlaylistVaziaEl.style.display = 'none'; // Esconde mensagem padrão de vazia
+                    playlistContainerEl.innerHTML = '<p style="color: var(--texto-secundario);">Por favor, <a href="index.html" style="color: var(--cor-azul-primario-mv);">selecione um usuário</a> na página inicial para ver sua playlist.</p>';
+                    if(userSelectionOverlayPlaylist) userSelectionOverlayPlaylist.classList.remove('hidden'); // Mostra overlay se não estiver na home
+                    document.body.style.overflow = 'hidden'; // Trava scroll
+                    return;
+                }
+
+                if(userSelectionOverlayPlaylist) userSelectionOverlayPlaylist.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+
+
+                const playlistStorageKey = `playlistAudios_${currentUserPlaylist}`;
+                const playlist = JSON.parse(localStorage.getItem(playlistStorageKey)) || [];
+
+                if (playlist.length === 0) {
+                    if(msgPlaylistVaziaEl) msgPlaylistVaziaEl.style.display = 'block';
+                    // Limpa qualquer item anterior se a playlist ficou vazia
+                    const itemsExistentes = playlistContainerEl.querySelectorAll('.playlist-item');
+                    itemsExistentes.forEach(item => item.remove());
+                } else {
+                    if(msgPlaylistVaziaEl) msgPlaylistVaziaEl.style.display = 'none';
+                    playlistContainerEl.innerHTML = ''; // Limpa o container para reconstruir
+
+                    playlist.forEach((item, index) => {
+                        const playlistItemDiv = document.createElement('div');
+                        playlistItemDiv.classList.add('playlist-item');
+
+                        const titleEl = document.createElement('h4');
+                        titleEl.textContent = item.title || `Áudio ${index + 1}`;
+                        
+                        const audioPlayerEl = document.createElement('audio');
+                        audioPlayerEl.controls = true;
+                        audioPlayerEl.controlsList = "nodownload"; // Remove botão de download do player
+                        
+                        const correctedSrc = ajustarCaminhoAudio(item.src); // CORRIGE O CAMINHO AQUI
+
+                        audioPlayerEl.innerHTML = `<source src="${correctedSrc}" type="audio/mpeg">Seu navegador não suporta o elemento de áudio.`;
+                        
+                        const removeButton = document.createElement('button');
+                        removeButton.classList.add('btn-mv', 'btn-remover-playlist'); // Adicionando .btn-mv para estilo base
+                        removeButton.textContent = 'Remover';
+                        removeButton.dataset.audioSrc = item.src; // Usa o src original como identificador único
+
+                        removeButton.addEventListener('click', function() {
+                            removerItemDaPlaylist(this.dataset.audioSrc);
+                        });
+
+                        playlistItemDiv.appendChild(titleEl);
+                        playlistItemDiv.appendChild(audioPlayerEl);
+                        playlistItemDiv.appendChild(removeButton);
+                        playlistContainerEl.appendChild(playlistItemDiv);
+                    });
+                }
+            }
+
+            function removerItemDaPlaylist(audioSrcOriginalParaRemover) {
+                if (!currentUserPlaylist) return;
+                const playlistStorageKey = `playlistAudios_${currentUserPlaylist}`;
+                let playlist = JSON.parse(localStorage.getItem(playlistStorageKey)) || [];
+                // Filtra usando o src original, que é o identificador único salvo
+                playlist = playlist.filter(item => item.src !== audioSrcOriginalParaRemover);
+                localStorage.setItem(playlistStorageKey, JSON.stringify(playlist));
+                renderizarPlaylist(); 
+            }
+            
+            // Carrega a playlist ao iniciar
+            renderizarPlaylist();
+
+            // Se o usuário for selecionado em outra página e voltar para cá,
+            // ou se a seleção de usuário estiver nesta página.
+            // Como o script.js lida com a seleção, aqui apenas garantimos que o usuário é verificado.
+            // A atualização do nome do usuário no header é feita pelo script.js
+        });
+    </script>
+</body>
+</html>

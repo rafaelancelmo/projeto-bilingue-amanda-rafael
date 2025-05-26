@@ -1,237 +1,358 @@
-/* css/aula_style.css - Estilos para modulos/moduloX_aulaX.html (baseado em layout_aba_modulos.jpg) */
+/* css/aula_style.css - Estilos para modulos/moduloX_aulaX.html */
 
-/* Header e Footer são herdados de style.css para coesão, mas podemos sobrescrever se necessário */
-/* Se o header da página de aula for ligeiramente diferente: */
-.site-header-mv #logo-curso-mv { /* Se a logo na aula tiver um nome de ID diferente do global */
-    /* estilos específicos */
-}
-.menu-principal-mv a { /* Ajuste se o menu da aula for diferente */
-    /* padding: 21px 10px; */ /* Exemplo de ajuste */
-}
-.user-actions-mv .btn-liberar-curso-mv { /* Se o botão for diferente na aula */
-    /* font-size: 0.8em; */
-}
-.user-actions-mv .user-profile-mv span { /* Se o texto do usuário for diferente */
-    /* color: #eee; */
-}
-
+/* Herda header e footer de style.css pela classe .site-header-mv e .site-footer-mv */
+/* Cores e fontes são herdadas das variáveis :root ou body.tema-escuro em style.css */
 
 .pagina-aula-mv-layout {
     display: flex;
-    max-width: 1180px; /* Largura como no print */
+    max-width: 1180px;
     margin: 20px auto;
-    background-color: var(--cor-fundo-card-mv); /* Fundo branco */
-    /* box-shadow: var(--sombra-mv); */ /* Sem sombra no container principal da aula, conforme print */
-    border: 1px solid var(--cor-borda-mv); /* Borda suave em volta */
+    background-color: var(--fundo-elemento); /* Usa variável de tema */
+    border: 1px solid var(--borda-elemento); /* Usa variável de tema */
+    transition: background-color 0.3s, border-color 0.3s;
 }
 
+/* Modo Foco */
+.pagina-aula-mv-layout.modo-foco-ativado .conteudo-principal-mv-aula {
+    width: 100%;
+    max-width: 100%; /* Ocupa toda a largura do layout */
+    padding: 10px;
+}
+.pagina-aula-mv-layout.modo-foco-ativado .video-container-foco {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    z-index: 2000; /* Acima de tudo */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+.pagina-aula-mv-layout.modo-foco-ativado .video-player-mv-aula {
+    width: 90vw; /* Ajuste conforme preferir */
+    height: auto; /* aspect-ratio cuidará disso */
+    max-height: 90vh;
+    border: none;
+    box-shadow: none;
+}
+.pagina-aula-mv-layout.modo-foco-ativado #btn-modo-foco {
+    position: absolute;
+    bottom: 20px;
+    /* right: 20px; ou centralizado abaixo do vídeo */
+    z-index: 2001; /* Acima do vídeo */
+}
+/* Esconder outros elementos no modo foco */
+.pagina-aula-mv-layout.modo-foco-ativado .site-header-mv,
+.pagina-aula-mv-layout.modo-foco-ativado .breadcrumb-mv-aula,
+.pagina-aula-mv-layout.modo-foco-ativado .titulo-mv-aula,
+.pagina-aula-mv-layout.modo-foco-ativado .controles-inferiores-mv-aula,
+.pagina-aula-mv-layout.modo-foco-ativado .abas-mv-aula,
+.pagina-aula-mv-layout.modo-foco-ativado .sidebar-mv-aulas,
+.pagina-aula-mv-layout.modo-foco-ativado .site-footer-mv {
+    display: none !important;
+}
+
+
 .conteudo-principal-mv-aula {
-    flex: 1; /* Ocupa o espaço disponível */
-    padding: 20px 25px; /* Espaçamento interno */
+    flex: 1;
+    padding: 20px 25px;
+    color: var(--texto-primario); /* Usa variável de tema */
 }
 
 .sidebar-mv-aulas {
-    width: 300px; /* Largura da sidebar */
-    background-color: #f8f9fa; /* Fundo levemente acinzentado da sidebar */
+    width: 300px;
+    background-color: var(--fundo-pagina); /* Usa variável de tema (fundo mais claro que o card) */
     padding: 15px;
-    border-left: 1px solid var(--cor-borda-mv);
+    border-left: 1px solid var(--borda-elemento); /* Usa variável de tema */
     font-size: 0.9em;
+    transition: background-color 0.3s, border-color 0.3s;
 }
 
-/* Conteúdo Principal da Aula */
 .breadcrumb-mv-aula {
     font-size: 0.85em;
-    color: var(--cor-texto-secundario-mv);
+    color: var(--texto-secundario);
     margin-bottom: 8px;
 }
 .breadcrumb-mv-aula span:last-child {
     font-weight: 500;
-    color: var(--cor-texto-principal-mv);
+    color: var(--texto-primario);
 }
-
 .titulo-mv-aula {
     font-size: 1.7em;
-    font-weight: 600; /* Um pouco menos que bold total */
-    color: var(--cor-texto-principal-mv);
+    font-weight: 600;
+    color: var(--texto-primario);
     margin-top: 0;
     margin-bottom: 15px;
 }
 
+.video-container-foco { /* Novo container para o vídeo e botão modo foco */
+    position: relative; /* Para posicionar o botão modo foco se necessário */
+    margin-bottom: 10px;
+}
 .video-player-mv-aula {
     width: 100%;
     aspect-ratio: 16/9;
-    background-color: #000;
-    margin-bottom: 10px; /* Espaço menor como no print */
-    border: 1px solid #ccc; /* Borda sutil */
+    background-color: black;
+    border: 1px solid var(--borda-elemento); /* Usa variável de tema */
 }
-.video-player-mv-aula iframe {
+.video-player-mv-aula iframe { display: block; width: 100%; height: 100%; border: none; }
+
+#btn-modo-foco { /* Botão Modo Foco */
     display: block;
-    width: 100%;
-    height: 100%;
+    margin: 10px auto 0 auto; /* Centralizado abaixo do vídeo */
+    padding: 8px 15px;
+    background-color: var(--cor-azul-primario-mv);
+    color: white;
     border: none;
+    border-radius: var(--raio-borda-mv);
+    cursor: pointer;
+    font-size: 0.9em;
 }
+#btn-modo-foco:hover { background-color: var(--cor-azul-secundario-mv); }
+
 
 .controles-inferiores-mv-aula {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0; /* Sem padding lateral, só vertical */
+    padding: 10px 0;
     margin-bottom: 15px;
     font-size: 0.9em;
-    border-top: 1px solid var(--cor-borda-mv);
-    border-bottom: 1px solid var(--cor-borda-mv);
+    border-top: 1px solid var(--borda-elemento);
+    border-bottom: 1px solid var(--borda-elemento);
+    color: var(--texto-secundario);
 }
-.controles-inferiores-mv-aula > span { /* "Módulo 01 > Aula 01" */
-    color: var(--cor-texto-secundario-mv);
-    font-size: 0.9em;
-}
-.acoes-aula-mv {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.marcar-concluida-mv-aula {
-    transform: scale(1.2);
-    margin-right: 3px;
-}
-.acoes-aula-mv label {
-    color: var(--cor-texto-secundario-mv);
-    font-size: 0.9em;
-    cursor: pointer;
-}
-.btn-proxima-mv-aula {
-    padding: 7px 12px; /* Botão menor */
-    font-size: 0.85em;
-}
+.acoes-aula-mv { display: flex; align-items: center; gap: 10px; }
+.marcar-concluida-mv-aula { transform: scale(1.2); margin-right: 3px; }
+.acoes-aula-mv label { color: var(--texto-secundario); font-size: 0.9em; cursor: pointer; }
+.btn-proxima-mv-aula { padding: 7px 12px; font-size: 0.85em; }
+
 
 /* Abas da Aula */
 .abas-mv-aula .botoes-abas-mv {
     display: flex;
-    border-bottom: 1px solid var(--cor-borda-mv); /* Linha abaixo dos botões */
+    border-bottom: 1px solid var(--borda-elemento);
 }
 .btn-aba-mv {
-    padding: 10px 15px; /* Padding dos botões */
-    cursor: pointer;
-    border: none;
-    background-color: transparent;
-    color: var(--cor-texto-secundario-mv);
-    font-size: 0.95em;
-    font-weight: 500;
+    padding: 10px 15px; cursor: pointer; border: none;
+    background-color: transparent; color: var(--texto-secundario);
+    font-size: 0.95em; font-weight: 500;
     border-bottom: 3px solid transparent;
     transition: color 0.2s, border-color 0.2s;
 }
-.btn-aba-mv:hover {
-    color: var(--cor-azul-primario-mv);
-}
+.btn-aba-mv:hover { color: var(--cor-azul-primario-mv); }
 .btn-aba-mv.active {
     color: var(--cor-azul-primario-mv);
     border-bottom-color: var(--cor-azul-primario-mv);
     font-weight: bold;
 }
-.paineis-abas-mv .painel-aba-mv {
-    display: none;
-    padding: 18px 0px; /* Padding vertical, sem padding lateral */
-}
-.paineis-abas-mv .painel-aba-mv.active {
-    display: block;
-}
-.painel-aba-mv h4 { /* Título dentro do painel da aba */
-    font-size: 1.1em;
-    color: var(--cor-texto-principal-mv);
-    margin: 0 0 12px 0;
-}
+.paineis-abas-mv .painel-aba-mv { display: none; padding: 18px 0px; }
+.paineis-abas-mv .painel-aba-mv.active { display: block; }
+.painel-aba-mv h4 { font-size: 1.1em; color: var(--texto-primario); margin: 0 0 12px 0; }
+
 .lista-downloads-mv { list-style: none; padding: 0; }
 .lista-downloads-mv li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 0;
-    border-bottom: 1px dotted #efefef;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 0; border-bottom: 1px dotted #efefef;
+    border-color: var(--borda-elemento); /* Para tema escuro */
 }
 .lista-downloads-mv li:last-child { border-bottom: none; }
 .lista-downloads-mv li a { display: flex; align-items: center; color: var(--cor-azul-primario-mv); }
 .lista-downloads-mv li img { width: 18px; margin-right: 8px; }
 .btn-add-anki-mv {
-    background-color: #e9ecef;
-    border: 1px solid #ced4da;
-    color: #495057;
-    font-weight: bold;
-    border-radius: 50%;
-    width: 22px;
-    height: 22px;
-    cursor: pointer;
-    line-height: 20px;
-    text-align: center;
-    font-size: 0.8em;
+    background-color: #e9ecef; border: 1px solid #ced4da; color: #495057;
+    font-weight: bold; border-radius: 50%; width: 22px; height: 22px;
+    cursor: pointer; line-height: 20px; text-align: center; font-size: 0.8em;
+}
+body.tema-escuro .btn-add-anki-mv {
+    background-color: #45494d;
+    border-color: #5a5e62;
+    color: #c8c9ca;
 }
 
+
 .player-audio-mv-aula { width: 100%; margin-top: 5px; }
+.transcricao-audio-mv {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: var(--fundo-pagina); /* Fundo sutilmente diferente */
+    border-radius: var(--raio-borda-mv);
+    font-size: 0.95em;
+    line-height: 1.8;
+    max-height: 200px; /* Altura máxima, com scroll se necessário */
+    overflow-y: auto;
+    border: 1px solid var(--borda-elemento);
+}
+.transcricao-audio-mv .legenda-item {
+    display: inline; /* Ou block se cada frase for uma linha */
+    transition: background-color 0.2s, color 0.2s;
+    padding: 0 2px;
+    border-radius: 2px;
+}
+.transcricao-audio-mv .legenda-item.highlight {
+    background-color: var(--cor-azul-primario-mv); /* Cor de destaque */
+    color: white;
+}
+body.tema-escuro .transcricao-audio-mv .legenda-item.highlight {
+    background-color: var(--cor-secundaria); /* Verde água no tema escuro */
+    color: var(--texto-primario);
+}
+
+
 .pdf-viewer-mv-container {
-    width: 100%;
-    height: 500px; /* Altura do visualizador de PDF */
-    border: 1px solid var(--cor-borda-mv);
+    width: 100%; height: 500px; border: 1px solid var(--borda-elemento);
 }
 .pdf-viewer-mv-container iframe { width: 100%; height: 100%; border: none; }
 .link-pdf-externo-mv { text-align: left; margin-top: 10px; font-size: 0.9em; }
 
-
-/* Sidebar da Aula */
-.info-modulo-sidebar-mv {
-    margin-bottom: 12px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--cor-borda-mv);
+/* Aba de Anotações */
+#anotacoes-mv-content-m1a1 h4 { /* Reutiliza o estilo do h4 do painel de aba */
+    font-size: 1.1em; color: var(--texto-primario); margin: 0 0 12px 0;
 }
-.info-modulo-sidebar-mv h4 { /* Título do Módulo */
-    font-size: 0.9em;
-    text-transform: uppercase;
-    color: var(--cor-texto-secundario-mv);
-    margin: 0 0 2px 0;
-    font-weight: 600;
-}
-.info-modulo-sidebar-mv h5 { /* Número da Aula */
-    font-size: 0.85em;
-    color: var(--cor-texto-secundario-mv);
-    margin: 0 0 4px 0;
-    font-weight: normal;
-}
-.info-modulo-sidebar-mv p { /* Título da Aula na Sidebar */
+.textarea-anotacoes-mv {
+    width: 100%;
+    min-height: 200px;
+    padding: 10px;
+    border: 1px solid var(--borda-elemento);
+    border-radius: var(--raio-borda-mv);
+    font-family: var(--fonte-principal-mv);
     font-size: 0.95em;
-    color: var(--cor-texto-principal-mv);
-    margin: 0;
-    font-weight: 500;
+    line-height: 1.6;
+    resize: vertical; /* Permite redimensionar verticalmente */
+    background-color: var(--fundo-elemento);
+    color: var(--texto-primario);
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
+.textarea-anotacoes-mv:focus {
+    outline: none;
+    border-color: var(--cor-azul-primario-mv);
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+
+/* --- Sidebar da Aula --- */
+.info-modulo-sidebar-mv { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--borda-elemento); }
+.info-modulo-sidebar-mv h4 { font-size: 0.9em; text-transform: uppercase; color: var(--texto-secundario); margin: 0 0 2px 0; font-weight: 600; }
+.info-modulo-sidebar-mv h5 { font-size: 0.85em; color: var(--texto-secundario); margin: 0 0 4px 0; font-weight: normal; }
+.info-modulo-sidebar-mv p { font-size: 0.95em; color: var(--texto-primario); margin: 0; font-weight: 500; }
 .lista-aulas-mv-sidebar { list-style: none; padding: 0; margin-bottom: 15px; }
 .aula-link-sidebar-mv {
-    display: flex;
-    align-items: center;
-    padding: 8px 10px;
-    text-decoration: none;
-    color: var(--cor-texto-principal-mv);
-    border-radius: var(--raio-borda-mv);
-    margin-bottom: 3px;
-    font-size: 0.9em;
+    display: flex; align-items: center; padding: 8px 10px;
+    text-decoration: none; color: var(--texto-primario);
+    border-radius: var(--raio-borda-mv); margin-bottom: 3px; font-size: 0.9em;
+    transition: background-color 0.2s, color 0.2s;
 }
-.icone-play-sidebar-mv {
-    margin-right: 8px;
-    font-size: 0.7em;
-    color: var(--cor-texto-secundario-mv);
-}
-.aula-link-sidebar-mv:hover {
-    background-color: #e9ecef;
-}
-.aula-link-sidebar-mv.active {
-    background-color: var(--cor-azul-primario-mv);
-    color: white;
-}
-.aula-link-sidebar-mv.active .icone-play-sidebar-mv {
-    color: white;
-}
+.icone-play-sidebar-mv { margin-right: 8px; font-size: 0.7em; color: var(--texto-secundario); }
+.aula-link-sidebar-mv:hover { background-color: #e9ecef; }
+body.tema-escuro .aula-link-sidebar-mv:hover { background-color: #383c40; }
+
+.aula-link-sidebar-mv.active { background-color: var(--cor-azul-primario-mv); color: white; }
+.aula-link-sidebar-mv.active .icone-play-sidebar-mv { color: white; }
 .link-proximo-modulo-mv {
-    display: block;
-    text-align: right;
-    font-size: 0.9em;
-    color: var(--cor-azul-primario-mv);
-    font-weight: 500;
+    display: block; text-align: right; font-size: 0.9em;
+    color: var(--cor-azul-primario-mv); font-weight: 500;
+}
+/* css/aula_style.css - Adicionar no FINAL do arquivo */
+
+@media (max-width: 992px) { /* Telas médias, antes de quebrar sidebar */
+    .pagina-aula-mv-layout {
+        width: 95%;
+    }
+    .sidebar-mv-aulas {
+        width: 260px; /* Sidebar um pouco mais fina */
+    }
 }
 
-/* Footer da Aula é herdado de style.css pela classe .site-footer-mv */
+
+@media (max-width: 768px) {
+    .pagina-aula-mv-layout {
+        flex-direction: column; /* Sidebar abaixo do conteúdo principal */
+        width: 100%;
+        margin-top: 10px;
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+    }
+
+    .conteudo-principal-mv-aula {
+        padding: 15px; /* Padding menor */
+    }
+
+    .sidebar-mv-aulas {
+        width: 100%; /* Sidebar ocupa largura total */
+        border-left: none;
+        border-top: 1px solid var(--cor-borda-elemento);
+        padding: 15px;
+        box-sizing: border-box; /* Garante que padding não aumente a largura */
+    }
+
+    .titulo-mv-aula {
+        font-size: 1.4em; /* Título da aula menor */
+    }
+
+    .controles-inferiores-mv-aula {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start; /* Alinha itens à esquerda */
+    }
+    .acoes-aula-mv {
+        width: 100%;
+        display: flex;
+        justify-content: space-between; /* Espaçar botões */
+    }
+    .acoes-aula-mv label {
+        margin-right: auto; /* Empurra "Próxima Aula" para a direita */
+        margin-left: 10px;
+    }
+
+    .botoes-abas-mv {
+        /* Permite scroll horizontal se as abas não couberem */
+        overflow-x: auto;
+        white-space: nowrap; /* Impede quebra de linha dos botões */
+        -webkit-overflow-scrolling: touch; /* Scroll suave em iOS */
+    }
+    .btn-aba-mv {
+        flex-shrink: 0; /* Impede que os botões encolham */
+        font-size: 0.9em;
+        padding: 8px 12px;
+    }
+
+    .pdf-viewer-mv-container {
+        height: 400px; /* Diminui altura do PDF em telas menores */
+    }
+    
+    /* Modo Foco em telas menores */
+    .pagina-aula-mv-layout.modo-foco-ativado .video-player-mv-aula {
+        width: 100%; /* Vídeo ocupa mais da tela do celular */
+        max-height: none;
+        aspect-ratio: 16/9; /* Garante a proporção */
+    }
+     .pagina-aula-mv-layout.modo-foco-ativado .video-container-foco {
+        padding: 0; /* Remove padding do container no modo foco mobile */
+    }
+    .pagina-aula-mv-layout.modo-foco-ativado #btn-modo-foco {
+        font-size: 0.8em;
+        padding: 6px 10px;
+    }
+}
+@media (max-width: 480px) {
+    .titulo-mv-aula {
+        font-size: 1.2em;
+    }
+    .controles-inferiores-mv-aula > span,
+    .acoes-aula-mv label {
+        font-size: 0.85em;
+    }
+     .btn-proxima-mv-aula, .btn-anterior-mv-aula {
+        font-size: 0.8em;
+        padding: 6px 10px;
+    }
+    .btn-aba-mv {
+        font-size: 0.8em;
+        padding: 8px 10px;
+    }
+}

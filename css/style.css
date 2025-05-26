@@ -1,28 +1,60 @@
-/* css/style.css - Estilos para index.html (baseado em home_curso_modelo.jpg) */
+/* css/style.css - Estilos para index.html */
 :root {
-    --cor-azul-primario-mv: #007bff; /* Azul do header e botões de etapa */
-    --cor-azul-secundario-mv: #0056b3; /* Hover do azul */
-    --cor-verde-acao-mv: #28a745; /* Botão "Comece aqui", "Liberar curso" */
-    --cor-amarelo-destaque-mv: #ffc107; /* Pode ser usado para botões especiais */
-    --cor-fundo-geral-mv: #f0f2f5; /* Cinza bem claro de fundo da página */
-    --cor-fundo-card-mv: #ffffff; /* Branco para cards e seções de conteúdo */
-    --cor-texto-principal-mv: #212529; /* Preto suave */
-    --cor-texto-secundario-mv: #6c757d; /* Cinza para parágrafos, infos */
-    --cor-borda-mv: #dee2e6; /* Cinza claro para bordas */
-    --cor-fundo-modulo-mv: #e9f5ff; /* Azul muito claro para cards de módulo (ou o verde do print) */
-    --cor-texto-modulo-mv: #004085; /* Texto para os cards de módulo */
+    --cor-azul-primario-mv: #007bff;
+    --cor-azul-secundario-mv: #0056b3;
+    --cor-verde-acao-mv: #28a745;
+    --cor-texto-principal-mv: #212529;
+    --cor-texto-secundario-mv: #6c757d;
+    --cor-borda-mv: #dee2e6;
+    --cor-fundo-modulo-mv: #e9f5ff;
+    --cor-texto-modulo-mv: #004085;
     --fonte-principal-mv: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --raio-borda-mv: 4px;
     --sombra-mv: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+
+    /* Variáveis de Tema Claro (Padrão) */
+    --fundo-pagina: #f0f2f5;
+    --fundo-elemento: #ffffff;
+    --texto-primario: #212529;
+    --texto-secundario: #6c757d;
+    --borda-elemento: #dee2e6;
+    --header-bg: #ffffff;
+    --header-texto: #007bff; /* Azul para texto no header claro */
+    --header-link-texto: #495057; /* Cinza escuro para links de menu */
+    --header-link-hover-bg: #e9ecef;
+    --btn-tema-bg: #f8f9fa;
+    --btn-tema-texto: #212529;
 }
+
+body.tema-escuro {
+    --fundo-pagina: #1f2225;    /* Cinza bem escuro */
+    --fundo-elemento: #2c3034;  /* Cinza escuro para cards */
+    --texto-primario: #e8eaed;  /* Cinza muito claro (quase branco) */
+    --texto-secundario: #9aa0a6; /* Cinza mais claro */
+    --borda-elemento: #404346;   /* Borda sutil no tema escuro */
+    --header-bg: #2c3034;
+    --header-texto: #e8eaed;
+    --header-link-texto: #bdc1c6;
+    --header-link-hover-bg: #3c4043;
+    --btn-tema-bg: #3c4043;
+    --btn-tema-texto: #e8eaed;
+
+    /* Ajuste para cores primárias no tema escuro se necessário */
+    --cor-azul-primario-mv: #58a6ff; /* Um azul mais claro para contraste */
+    --cor-verde-acao-mv: #34d058; /* Um verde mais claro */
+    --cor-fundo-modulo-mv: #2d3c4a;
+    --cor-texto-modulo-mv: #adbac7;
+}
+
 
 body {
     margin: 0;
     font-family: var(--fonte-principal-mv);
-    background-color: var(--cor-fundo-geral-mv);
-    color: var(--cor-texto-principal-mv);
+    background-color: var(--fundo-pagina);
+    color: var(--texto-primario);
     font-size: 14px;
     line-height: 1.5;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 img { max-width: 100%; height: auto; display: block; }
@@ -37,29 +69,34 @@ a:hover { color: var(--cor-azul-secundario-mv); }
     text-align: center;
     border-radius: var(--raio-borda-mv);
     cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
+    transition: background-color 0.2s, transform 0.1s, color 0.2s;
     border: none;
 }
 .btn-verde-mv { background-color: var(--cor-verde-acao-mv); color: white; }
 .btn-verde-mv:hover { background-color: #218838; }
-.btn-azul-outline-mv { border: 1px solid var(--cor-azul-primario-mv); color: var(--cor-azul-primario-mv); background-color: transparent; }
-.btn-azul-outline-mv:hover { background-color: var(--cor-azul-primario-mv); color: white; }
-.btn-cinza-mv { background-color: #6c757d; color: white; }
-.btn-cinza-mv:hover { background-color: #5a6268; }
+/* ... (outros estilos de botões que você já tinha) ... */
+.btn-tema {
+    background-color: var(--btn-tema-bg);
+    color: var(--btn-tema-texto);
+    border: 1px solid var(--borda-elemento);
+    padding: 7px 10px;
+    font-size: 0.85em;
+}
 
 
 /* --- HEADER (home_curso_modelo.jpg) --- */
 .site-header-mv {
-    background-color: var(--cor-fundo-card-mv);
-    color: var(--cor-texto-principal-mv);
+    background-color: var(--header-bg);
+    color: var(--header-texto);
     padding: 0 20px;
     height: 60px;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid var(--cor-borda-mv);
+    border-bottom: 1px solid var(--borda-elemento);
     position: sticky;
     top: 0;
     z-index: 1000;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 .header-mv-container {
     width: 100%;
@@ -70,81 +107,70 @@ a:hover { color: var(--cor-azul-secundario-mv); }
     justify-content: space-between;
 }
 #logo-curso-mv { height: 30px; }
+.logo-area-mv span { /* Se você adicionar o texto ao lado da logo */
+    color: var(--header-texto);
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-left: 10px;
+}
 .menu-principal-mv { display: flex; gap: 5px; }
 .menu-principal-mv a {
-    padding: 10px 12px; /* Ajustado */
-    color: var(--cor-texto-secundario-mv);
+    padding: 10px 12px;
+    color: var(--header-link-texto);
     font-weight: 500;
-    font-size: 0.9em; /* Ajustado */
+    font-size: 0.9em;
     border-radius: var(--raio-borda-mv);
+    transition: background-color 0.2s, color 0.2s;
 }
 .menu-principal-mv a.active, .menu-principal-mv a:hover {
-    background-color: #e9ecef; /* Fundo para item ativo/hover */
-    color: var(--cor-azul-primario-mv);
+    background-color: var(--header-link-hover-bg);
+    color: var(--cor-azul-primario-mv); /* Mantém o azul para destaque */
 }
 .user-actions-mv { display: flex; align-items: center; gap: 12px; }
-.btn-liberar-curso-mv {
-    background-color: var(--cor-verde-acao-mv);
-    color: white;
-    font-size: 0.85em;
-    padding: 7px 10px; /* Ajustado */
-    border-radius: var(--raio-borda-mv);
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-}
+/* .btn-liberar-curso-mv foi removido */
 .flag-icon-mv { height: 18px; border-radius: 3px; }
-.user-profile-mv { font-size: 0.85em; color: var(--cor-texto-secundario-mv); }
+.user-profile-mv { font-size: 0.85em; color: var(--texto-secundario); }
 
 /* --- Dashboard Container (index.html) --- */
 .dashboard-mv-container {
     width: 90%;
     max-width: 1180px;
     margin: 20px auto;
-    padding: 0; /* Conteúdo interno terá padding */
+    padding: 0;
 }
 
-.bem-vindo-mv {
-    background-color: var(--cor-fundo-card-mv);
-    padding: 20px 25px;
+.bem-vindo-mv, .card-comece-mv, .etapas-conteudo-mv .etapa-painel-mv,
+.comunidade-mv, .visite-comunidade-mv, .extras-mv, .fale-conosco-mv,
+.modulo-card-mv {
+    background-color: var(--fundo-elemento);
+    color: var(--texto-primario);
+    border: 1px solid var(--borda-elemento);
     border-radius: var(--raio-borda-mv);
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 25px;
-    border: 1px solid var(--cor-borda-mv);
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
+.bem-vindo-mv { padding: 20px 25px; display: flex; align-items: center; gap: 20px; margin-bottom: 25px; }
 .avatar-mv img { width: 60px; height: 60px; border-radius: 50%; }
-.info-usuario-mv h2 { margin: 0 0 3px 0; font-size: 1.3em; font-weight: 600; }
-.info-usuario-mv p { margin: 0; font-size: 0.9em; color: var(--cor-texto-secundario-mv); }
-.progresso-geral-mv { margin-left: auto; text-align: right; font-size: 0.85em; }
+.info-usuario-mv h2 { margin: 0 0 3px 0; font-size: 1.3em; font-weight: 600; color: var(--texto-primario); }
+.info-usuario-mv p { margin: 0; font-size: 0.9em; color: var(--texto-secundario); }
+.progresso-geral-mv { margin-left: auto; text-align: right; font-size: 0.85em; color: var(--texto-secundario); }
 .progresso-geral-mv span { display: block; margin-bottom: 5px; }
 .barra-progresso-mv-container {
     width: 180px; height: 6px; background-color: #e9ecef; border-radius: 3px;
 }
 .barra-progresso-mv-fill { height: 100%; background-color: var(--cor-verde-acao-mv); border-radius: 3px; width: 0%; }
 
-.comece-aqui-mv h3 { font-size: 1em; color: var(--cor-texto-secundario-mv); margin-bottom: 8px; font-weight: 500; }
-.card-comece-mv {
-    background-color: var(--cor-fundo-card-mv);
-    border: 1px solid var(--cor-borda-mv);
-    border-radius: var(--raio-borda-mv);
-    padding: 15px;
-    display: flex;
-    gap: 15px;
-    align-items: flex-start;
-    margin-bottom: 25px;
-}
+.comece-aqui-mv h3 { font-size: 1em; color: var(--texto-secundario); margin-bottom: 8px; font-weight: 500; }
+.card-comece-mv { padding: 15px; display: flex; gap: 15px; align-items: flex-start; margin-bottom: 25px; }
 .card-comece-mv-img img { width: 180px; border-radius: var(--raio-borda-mv); }
 .card-comece-mv-info { flex-grow: 1; }
-.etapa-info-mv { font-size: 0.8em; color: var(--cor-texto-secundario-mv); margin-bottom: 3px; }
-.card-comece-mv-info h4 { font-size: 1.2em; margin: 0 0 8px 0; font-weight: 600; }
+.etapa-info-mv { font-size: 0.8em; color: var(--texto-secundario); margin-bottom: 3px; }
+.card-comece-mv-info h4 { font-size: 1.2em; margin: 0 0 8px 0; font-weight: 600; color: var(--texto-primario); }
 .progresso-etapa-mv { height: 5px; background-color: #e9ecef; border-radius: 2.5px; margin-bottom: 5px; }
 .barra-progresso-mv-fill-pequena { height: 100%; background-color: var(--cor-verde-acao-mv); border-radius: 2.5px; }
-.status-etapa-mv { font-size: 0.8em; color: var(--cor-texto-secundario-mv); margin-bottom: 12px; }
+.status-etapa-mv { font-size: 0.8em; color: var(--texto-secundario); margin-bottom: 12px; }
 .status-etapa-mv span { margin-right: 10px; }
-.proximos-passos-mv { flex-basis: 220px; font-size: 0.8em; padding-left: 15px; border-left: 1px solid var(--cor-borda-mv); }
-.passo-item-mv { padding: 6px 0; border-bottom: 1px dotted var(--cor-borda-mv); color: var(--cor-texto-secundario-mv); }
+.proximos-passos-mv { flex-basis: 220px; font-size: 0.8em; padding-left: 15px; border-left: 1px solid var(--borda-elemento); }
+.passo-item-mv { padding: 6px 0; border-bottom: 1px dotted var(--borda-elemento); color: var(--texto-secundario); }
 .passo-item-mv:last-child { border-bottom: none; }
 .aula-status-mv { float: right; color: #aaa; }
 
@@ -153,46 +179,26 @@ a:hover { color: var(--cor-azul-secundario-mv); }
     background-color: var(--cor-azul-primario-mv);
     border-radius: var(--raio-borda-mv) var(--raio-borda-mv) 0 0;
     overflow: hidden;
+    margin-top: 25px;
 }
 .btn-etapa-mv {
-    flex: 1;
-    padding: 10px 8px;
-    background-color: transparent;
-    border: none;
-    color: rgba(255,255,255,0.8);
-    cursor: pointer;
-    font-size: 0.85em; /* Ajustado */
-    text-align: center;
-    transition: background-color 0.2s, color 0.2s;
+    flex: 1; padding: 10px 8px; background-color: transparent; border: none;
+    color: rgba(255,255,255,0.8); cursor: pointer; font-size: 0.85em;
+    text-align: center; transition: background-color 0.2s, color 0.2s;
     border-right: 1px solid rgba(255,255,255,0.25);
 }
 .btn-etapa-mv:last-child { border-right: none; }
 .btn-etapa-mv:hover { background-color: rgba(255,255,255,0.1); }
-.btn-etapa-mv.active { background-color: var(--cor-fundo-card-mv); color: var(--cor-azul-primario-mv); font-weight: bold; }
+.btn-etapa-mv.active { background-color: var(--fundo-elemento); color: var(--cor-azul-primario-mv); font-weight: bold; }
 
-.etapas-conteudo-mv .etapa-painel-mv {
-    display: none;
-    background-color: var(--cor-fundo-card-mv);
-    padding: 20px;
-    border: 1px solid var(--cor-borda-mv);
-    border-top: none;
-    border-radius: 0 0 var(--raio-borda-mv) var(--raio-borda-mv);
-}
+.etapas-conteudo-mv .etapa-painel-mv { display: none; padding: 20px; border-top: none; border-radius: 0 0 var(--raio-borda-mv) var(--raio-borda-mv); }
 .etapas-conteudo-mv .etapa-painel-mv.active { display: block; }
-.grid-modulos-mv {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* Ajustado */
-    gap: 15px;
-}
+.grid-modulos-mv { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
 .modulo-card-mv {
-    background-color: var(--cor-fundo-modulo-mv); /* Verde claro do print ou azul claro */
-    /* background-color: #D9EAD3; Verde claro do print */
-    border: 1px solid #c9d9c2; /* Borda para o verde claro */
-    border-radius: var(--raio-borda-mv);
-    padding: 12px;
-    text-align: center;
-    text-decoration: none;
-    color: var(--cor-texto-modulo-mv);
+    /* background-color já definido acima para herdar tema */
+    /* border já definido acima */
+    padding: 12px; text-align: center; text-decoration: none;
+    color: var(--cor-texto-modulo-mv); /* Ajustar no tema escuro se necessário */
     transition: transform 0.2s, box-shadow 0.2s;
 }
 .modulo-card-mv:hover { transform: translateY(-2px); box-shadow: var(--sombra-mv); }
@@ -200,66 +206,676 @@ a:hover { color: var(--cor-azul-secundario-mv); }
 .modulo-card-mv p { font-size: 0.9em; margin: 0 0 3px 0; font-weight: 500; }
 .modulo-card-mv small { font-size: 0.75em; margin: 0 0 8px 0; display: block; }
 .modulo-card-mv span:not(.numero-modulo-mv) { font-size: 0.8em; font-weight: bold; text-decoration: underline; }
+.modulo-progresso-card { height: 5px; background-color: #e0e0e0; border-radius: 2.5px; margin-top: 8px; }
+.barra-progresso-interna-card { height: 100%; background-color: var(--cor-verde-acao-mv); border-radius: 2.5px; width: 0%; }
+
 
 .secoes-inferiores-mv { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-top: 25px; }
-.comunidade-mv, .visite-comunidade-mv, .extras-mv, .fale-conosco-mv {
-    background-color: var(--cor-fundo-card-mv);
-    padding: 15px;
-    border-radius: var(--raio-borda-mv);
-    border: 1px solid var(--cor-borda-mv);
-}
+.comunidade-mv, .visite-comunidade-mv, .extras-mv, .fale-conosco-mv { padding: 15px; }
 .comunidade-header-mv { display: flex; justify-content: space-between; align-items: center; }
 .secoes-inferiores-mv h3 {
-    font-size: 1.1em; margin: 0 0 12px 0; padding-bottom: 8px; border-bottom: 1px solid var(--cor-borda-mv);
+    font-size: 1.1em; margin: 0 0 12px 0; padding-bottom: 8px;
+    border-bottom: 1px solid var(--borda-elemento); color: var(--texto-primario);
 }
-.topico-comunidade-mv { padding: 8px 0; border-bottom: 1px dotted var(--cor-borda-mv); font-size: 0.85em; }
+.topico-comunidade-mv { padding: 8px 0; border-bottom: 1px dotted var(--borda-elemento); font-size: 0.85em; }
 .topico-comunidade-mv:last-child { border-bottom: none; }
 .topico-comunidade-mv h4 { margin: 0 0 2px 0; font-size: 0.95em; color: var(--cor-azul-primario-mv); font-weight: 500; }
-.topico-comunidade-mv p { margin: 0; color: var(--cor-texto-secundario-mv); font-size: 0.9em; }
-.card-visite-mv p { margin: 0 0 12px 0; font-size: 0.9em; }
-.post-exemplo-mv { background-color: var(--cor-fundo-geral-mv); padding: 8px; border-radius: var(--raio-borda-mv); }
+.topico-comunidade-mv p { margin: 0; color: var(--texto-secundario); font-size: 0.9em; }
+.card-visite-mv p { margin: 0 0 12px 0; font-size: 0.9em; color: var(--texto-secundario); }
+.post-exemplo-mv { background-color: var(--fundo-pagina); padding: 8px; border-radius: var(--raio-borda-mv); border: 1px solid var(--borda-elemento); }
 .post-exemplo-mv h4 { margin: 0 0 4px 0; font-size: 0.9em; color: var(--cor-azul-primario-mv); }
-.post-exemplo-mv span { font-size: 0.75em; color: var(--cor-texto-secundario-mv); }
-.card-fale-mv h4 { margin:0 0 5px 0; font-size: 1em; }
+.post-exemplo-mv span { font-size: 0.75em; color: var(--texto-secundario); }
+.card-fale-mv h4 { margin:0 0 5px 0; font-size: 1em; color: var(--texto-primario); }
 .card-fale-mv .btn-mv { margin-bottom: 8px; }
-.card-fale-mv p { font-size: 0.8em; color: var(--cor-texto-secundario-mv); margin: 0; }
+.card-fale-mv p { font-size: 0.8em; color: var(--texto-secundario); margin: 0; }
+
 
 /* Footer Coeso */
 .site-footer-mv {
-    background-color: #343a40; /* Cinza escuro como no footer da aula */
+    background-color: #343a40; /* Fixo, não muda com tema claro/escuro */
     color: #adb5bd;
     padding: 15px 20px;
     text-align: center;
     font-size: 0.8em;
     margin-top: 30px;
 }
-.footer-mv-container { width: 100%; max-width: 1180px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+.footer-mv-container { width: 100%; max-width: 1180px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
 .site-footer-mv nav a { color: #ced4da; text-decoration: none; margin: 0 5px; }
 
-/* --- ESTILOS GERAIS PARA BARRAS DE PROGRESSO USADAS EM AMBOS OS CONTEXTOS --- */
-.barra-progresso-container, /* Usado no index antigo, manter se houver */
-.barra-progresso-mv-container, /* Usado no bem-vindo-mv */
-.progresso-etapa-mv, /* Usado no card comece aqui */
-.barra-progresso-container-total { /* Usado no bem-vindo-mv */
-    background-color: #e9ecef;
-    border-radius: 10px; /* Mais arredondado */
-    overflow: hidden;
-}
-.barra-progresso-mv-container { height: 6px; } /* Para bem-vindo */
-.progresso-etapa-mv { height: 5px; } /* Para card */
+/* ... (todos os estilos anteriores do aula_style.css) ... */
 
-.barra-progresso-preenchimento, /* Usado no index antigo */
-.barra-progresso-mv-fill, /* Usado no bem-vindo-mv */
-.barra-progresso-mv-fill-pequena, /* Usado no card comece aqui */
-.barra-progresso-preenchimento-total { /* Usado no bem-vindo-mv */
-    background-color: var(--cor-verde-acao-mv);
+/* Estilos para Transcrição de Áudio */
+.transcricao-audio-mv {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: var(--fundo-pagina); /* Herda do tema */
+    border: 1px solid var(--borda-elemento); /* Herda do tema */
+    border-radius: var(--raio-borda-mv);
+    font-size: 1em; /* Ajuste conforme necessário */
+    line-height: 1.8;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.legenda-linha {
+    margin-bottom: 10px; /* Espaço entre os pares de legenda ENG/PT */
+}
+
+.legenda-item {
+    display: inline-block; /* Para padding funcionar bem */
+    padding: 2px 4px;
+    border-radius: 3px;
+    transition: background-color 0.15s ease-out, color 0.15s ease-out;
+}
+
+.legenda-pt {
+    font-size: 0.9em; /* Tradução um pouco menor */
+    color: var(--texto-secundario); /* Cor mais suave para tradução */
+    margin-left: 5px; /* Pequeno recuo */
+}
+
+.legenda-item.highlight {
+    background-color: var(--cor-azul-primario-mv);
+    color: white !important; /* Garante que o texto da legenda fique branco */
+}
+
+body.tema-escuro .legenda-item.highlight {
+    background-color: var(--cor-secundaria); /* Verde água no tema escuro */
+    color: var(--texto-primario) !important; /* Texto claro no fundo verde */
+}
+
+body.tema-escuro .legenda-pt {
+    color: #a8b2bc; /* Ajuste da cor da tradução para tema escuro */
+}
+/* css/style.css - Estilos para Seleção de Usuário */
+.user-selection-overlay-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 100%;
-    border-radius: 10px; /* Mais arredondado */
-    width: 0%; /* JS atualiza */
-    transition: width 0.4s ease-in-out;
-    display: flex; /* Para centralizar texto, se houver */
-    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7); /* Fundo escuro semi-transparente */
+    display: flex;
     justify-content: center;
-    color: white;
-    font-size: 0.7em; /* Texto dentro da barra, se houver */
+    align-items: center;
+    z-index: 2000; /* Para ficar acima de tudo */
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+/* css/style.css - Estilos para Seleção de Usuário */
+
+.user-selection-overlay-container {
+    position: fixed; /* Cobre a tela toda */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75); /* Fundo escuro semi-transparente */
+    display: flex; /* Centraliza a caixa de seleção */
+    justify-content: center;
+    align-items: center;
+    z-index: 2000; /* Garante que fique acima de outros conteúdos */
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.user-selection-overlay-container.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none; /* Impede interação quando escondido */
+}
+
+.user-selection-box {
+    background-color: var(--fundo-elemento); /* Usa variável de tema (branco no tema claro) */
+    padding: 35px 50px;
+    border-radius: var(--raio-borda-mv); /* Usa o raio de borda definido */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    text-align: center;
+    color: var(--texto-primario); /* Usa variável de tema */
+    width: 90%;
+    max-width: 400px; /* Largura máxima da caixa */
+}
+
+.user-selection-box h2 {
+    margin-top: 0;
+    margin-bottom: 30px;
+    color: var(--cor-azul-primario-mv); /* Usa variável de tema */
+    font-size: 1.8em;
+    font-weight: 600;
+}
+
+.btn-user-select { /* Reutiliza a classe .btn-mv, mas pode ter estilos específicos */
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    /* Herda estilos de .btn-mv, mas pode adicionar específicos */
+    background-color: var(--cor-verde-acao-mv); /* Usa variável de tema */
+    color: white; /* Texto branco para botões de ação */
+    border: none;
+}
+.btn-user-select:last-child {
+    margin-bottom: 0;
+}
+.btn-user-select:hover {
+    opacity: 0.85; /* Efeito hover suave */
+    transform: translateY(-1px); /* Leve elevação */
+}
+/* css/style.css - Adicionar no FINAL do arquivo */
+
+/* Ajustes Globais para Telas Menores */
+@media (max-width: 768px) {
+    body {
+        font-size: 15px; /* Aumenta um pouco a fonte base para legibilidade */
+    }
+
+    .container, .header-mv-container, .dashboard-mv-container, .footer-mv-container {
+        width: 95%; /* Mais espaço lateral */
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    /* Header Principal (index.html e compartilhado) */
+    .site-header-mv .header-mv-container {
+        flex-direction: column;
+        height: auto;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .logo-area-mv {
+        margin-bottom: 10px;
+    }
+    .menu-principal-mv {
+        flex-wrap: wrap; /* Permite que os links do menu quebrem linha */
+        justify-content: center;
+        gap: 5px;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .menu-principal-mv a {
+        padding: 8px 10px; /* Links do menu um pouco menores */
+        font-size: 0.85em;
+    }
+    .user-actions-mv {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+    .btn-liberar-curso-home, /* Mantido caso você o adicione de volta */
+    .btn-tema { /* Para o botão de tema no header da index */
+        width: 100%;
+        max-width: 200px; /* Evita que o botão ocupe a tela toda */
+        margin: 5px auto;
+        display: block;
+    }
+    .user-profile-mv {
+        text-align: center;
+        width: 100%;
+    }
+
+
+    /* Dashboard (index.html) */
+    .bem-vindo-mv {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    .progresso-geral-mv {
+        margin-left: 0;
+        text-align: center;
+        width: 100%;
+    }
+    .barra-progresso-mv-container {
+        width: 100%; /* Barra de progresso ocupa toda a largura disponível */
+        max-width: 250px; /* Mas não mais que isso */
+        margin: 5px auto 0 auto; /* Centraliza */
+    }
+
+    .card-comece-mv {
+        flex-direction: column;
+        align-items: center;
+    }
+    .card-comece-mv-img img {
+        width: 150px; /* Imagem menor */
+        margin-bottom: 15px;
+    }
+    .info-comece-aqui, .proximos-passos-mv {
+        flex-basis: auto; /* Remove a base de largura */
+        width: 100%;
+        text-align: center;
+    }
+    .proximos-passos-mv {
+        padding-left: 0;
+        border-left: none;
+        margin-top: 15px;
+        border-top: 1px solid var(--cor-borda);
+        padding-top: 15px;
+    }
+    .aula-status-mv {
+        float: none; /* Remove float */
+        display: block; /* Quebra linha */
+        margin-top: 3px;
+    }
+
+    .etapas-navegacao-mv {
+        flex-direction: column; /* Abas de etapa uma abaixo da outra */
+    }
+    .btn-etapa-mv {
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,0.25);
+        font-size: 0.95em; /* Fonte um pouco maior para toque */
+    }
+    .btn-etapa-mv:last-child {
+        border-bottom: none;
+    }
+
+    .grid-modulos-mv {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Cards de módulo menores e mais colunas se couber */
+        gap: 10px;
+    }
+    .modulo-card-mv p { font-size: 0.85em; }
+    .modulo-card-mv small { font-size: 0.7em; }
+
+    .secoes-inferiores-mv-single, 
+    .grid-duplo-dashboard { /* Se você tiver o grid duplo */
+        grid-template-columns: 1fr; /* Uma coluna */
+    }
+
+    .footer-mv-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+/* css/style.css - Adicionar ou Modificar no FINAL do arquivo */
+
+/* Ajustes Globais para Telas Menores já existentes (revisão) */
+@media (max-width: 768px) {
+    body {
+        font-size: 15px; 
+    }
+
+    .container, .header-mv-container, .dashboard-mv-container, .footer-mv-container {
+        width: 95%;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    /* Header Principal (index.html e compartilhado com aula_style.css) */
+    .site-header-mv .header-mv-container {
+        flex-direction: column; /* Empilha os blocos do header */
+        height: auto; /* Altura automática */
+        padding-top: 10px;
+        padding-bottom: 10px;
+        gap: 10px; /* Espaço entre os blocos empilhados */
+    }
+    .logo-area-mv { /* Para index.html e aula_style.css */
+        margin-bottom: 0; /* Remove margem se empilhado */
+    }
+    .menu-principal-mv { /* Menu principal do header */
+        order: 3; /* Coloca o menu por último no empilhamento do header */
+        flex-wrap: wrap; 
+        justify-content: center;
+        gap: 5px; /* Espaçamento entre os links do menu */
+        width: 100%;
+        margin-bottom: 0; /* Remove margem se empilhado */
+    }
+    .menu-principal-mv a {
+        padding: 8px 10px; 
+        font-size: 0.85em;
+        flex-grow: 1; /* Faz os links ocuparem espaço similar */
+        text-align: center;
+        background-color: rgba(0,0,0,0.05); /* Leve fundo para melhor toque */
+    }
+    body.tema-escuro .menu-principal-mv a { /* Adaptação para tema escuro */
+        background-color: rgba(255,255,255,0.08);
+    }
+
+    .user-actions-mv {
+        order: 2; /* Ações do usuário vêm antes do menu no empilhamento */
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+    }
+    .btn-liberar-curso-home, /* Mantido caso você o adicione de volta */
+    .btn-tema { 
+        min-width: 150px; /* Largura mínima para botões */
+        padding: 10px 15px; /* Mais área de toque */
+    }
+    .user-profile-mv {
+        text-align: center;
+        width: 100%;
+    }
+
+
+    /* Dashboard (index.html) */
+    .bem-vindo-mv {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+        padding: 15px; /* Padding menor */
+    }
+    .avatar-mv img, .avatar-mv .placeholder-avatar {
+        width: 60px; height: 60px; font-size: 1.5em; /* Avatar menor */
+        margin: 0 auto 10px auto; /* Centraliza avatar */
+    }
+    .info-usuario-mv h2 { font-size: 1.2em; }
+    .progresso-geral-mv {
+        margin-left: 0;
+        text-align: center;
+        width: 100%;
+    }
+    .barra-progresso-mv-container {
+        width: 100%; 
+        max-width: 280px; 
+        margin: 5px auto 0 auto;
+    }
+
+    .atalho-inicio h3 {
+        text-align: center;
+    }
+    .card-comece-mv {
+        flex-direction: column;
+        align-items: center; /* Centraliza itens empilhados */
+        padding: 15px;
+    }
+    .card-comece-mv-img img {
+        width: 100%; /* Imagem ocupa largura do card */
+        max-width: 200px; /* Mas não mais que isso */
+        margin-bottom: 15px;
+    }
+    .info-comece-aqui, .proximos-passos-mv {
+        flex-basis: auto; 
+        width: 100%;
+        text-align: center;
+    }
+    .info-comece-aqui h4 { font-size: 1.3em; } /* Título da aula um pouco maior */
+    .btn-comecar-agora { width: 80%; margin: 0 auto; display: block; padding: 12px; } /* Botão maior */
+
+    .proximos-passos-mv {
+        padding-left: 0;
+        border-left: none;
+        margin-top: 20px;
+        border-top: 1px solid var(--borda-elemento);
+        padding-top: 20px;
+    }
+    .passo-item-mv {
+        text-align: left; /* Alinha texto dos próximos passos à esquerda */
+    }
+    .aula-status-mv {
+        display: inline-block; /* Mantém na mesma linha se couber */
+        margin-left: 10px;
+        font-size: 0.9em;
+    }
+
+    .etapas-navegacao-mv {
+        flex-direction: column; /* Abas de etapa uma abaixo da outra */
+        border-radius: var(--raio-borda-mv); /* Arredonda tudo */
+    }
+    .btn-etapa-mv {
+        border-right: none;
+        border-bottom: 1px solid rgba(0,0,0,0.1); /* Divisória mais sutil no tema claro */
+    }
+    body.tema-claro .btn-etapa-mv.active { /* Ajuste para tema claro */
+         border-bottom: 1px solid var(--fundo-card); /* Para "fundir" com o painel */
+    }
+    body.tema-escuro .btn-etapa-mv {
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    body.tema-escuro .btn-etapa-mv.active {
+        border-bottom: 1px solid var(--fundo-elemento);
+    }
+    .btn-etapa-mv:last-child {
+        border-bottom: none;
+        border-radius: 0 0 var(--raio-borda-mv) var(--raio-borda-mv);
+    }
+    .btn-etapa-mv.active:first-child { /* Para o primeiro botão ativo */
+        border-radius: var(--raio-borda-mv) var(--raio-borda-mv) 0 0;
+    }
+     .btn-etapa-mv.active:not(:first-child):not(:last-child) {
+        border-radius: 0;
+    }
+
+
+    .etapas-conteudo-mv .etapa-painel-mv {
+        border-radius: 0 0 var(--raio-borda-mv) var(--raio-borda-mv);
+        padding: 15px;
+    }
+     /* Se o botão de etapa ativo não for o primeiro, remove o border-radius superior do painel */
+    .btn-etapa-mv.active ~ .etapas-conteudo-mv .etapa-painel-mv,
+    .btn-etapa-mv.active + .btn-etapa-mv + .etapas-conteudo-mv .etapa-painel-mv { /* Casos mais complexos se a ordem HTML for diferente */
+        /* Se o painel ativo não for o primeiro, ele pode não precisar de border-radius superior */
+    }
+    .etapas-navegacao-mv + .etapas-conteudo-mv .etapa-painel-mv.active {
+         border-radius: 0 0 var(--raio-borda-mv) var(--raio-borda-mv);
+    }
+    /* Se a primeira aba de etapa estiver ativa, o painel correspondente se junta a ela */
+    .btn-etapa-mv:first-child.active + .etapas-conteudo-mv #etapa1-mv-content.active {
+        border-radius: 0 0 var(--raio-borda-mv) var(--raio-borda-mv);
+    }
+     /* Caso especial: se a primeira aba de etapa estiver ativa, remove o border-radius de cima do painel */
+    .etapas-navegacao-mv .btn-etapa-mv:first-child.active + .paineis-etapas-curso > .conteudo-etapa.active {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+
+
+    .grid-modulos-mv {
+        /* Muda para duas colunas em telas médias, uma em muito pequenas */
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); 
+        gap: 15px;
+    }
+    .modulo-card-mv { padding: 10px; }
+    .modulo-card-mv p { font-size: 0.9em; }
+
+    .secoes-inferiores-mv-single, 
+    .grid-duplo-dashboard { /* Se você tiver o grid duplo para comunidade/visite */
+        grid-template-columns: 1fr; /* Uma coluna */
+    }
+
+    .footer-mv-container {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+    }
+    .site-footer-mv nav {
+        margin-top: 5px;
+    }
+}
+/* css/style.css - Adicionar/Modificar no FINAL do arquivo para RESPONSIVIDADE */
+
+/* Base Responsiva ( Herdada e Ajustada ) */
+@media (max-width: 768px) {
+    body {
+        font-size: 16px; /* Melhorar legibilidade base */
+    }
+
+    .container, .header-mv-container, .dashboard-mv-container, .footer-mv-container {
+        width: auto; /* Ocupa o disponível, menos os paddings */
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    /* Header Principal (index.html) - Melhorando o empilhamento */
+    .site-header-mv .header-mv-container {
+        flex-direction: row; /* Tenta manter na linha */
+        flex-wrap: wrap; /* Permite quebrar se não couber */
+        justify-content: space-between;
+        height: auto;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .logo-area-mv {
+        margin-bottom: 0;
+        flex-basis: 100%; /* Logo ocupa toda a largura na primeira "linha" do wrap */
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .menu-principal-mv {
+        flex-basis: 100%; /* Menu ocupa toda a largura abaixo da logo */
+        order: 3;
+        flex-wrap: nowrap; /* Tenta manter o menu numa linha */
+        justify-content: flex-start; /* Alinha à esquerda */
+        gap: 0px;
+        width: 100%;
+        margin-bottom: 10px;
+        overflow-x: auto; /* PERMITE ROLAGEM HORIZONTAL NO MENU */
+        padding-bottom: 8px; /* Espaço para a barra de rolagem não colar */
+        -webkit-overflow-scrolling: touch; /* Scroll suave no iOS */
+    }
+    .menu-principal-mv a {
+        padding: 8px 12px; 
+        font-size: 0.9em;
+        flex-shrink: 0; /* Impede que os itens do menu encolham */
+        white-space: nowrap; /* Impede quebra de texto dentro do link */
+        border-radius: 0; /* Remove border-radius para um visual mais de "abas" na rolagem */
+        border-bottom: 2px solid transparent;
+    }
+    .menu-principal-mv a.active, .menu-principal-mv a:hover {
+        background-color: transparent;
+        color: var(--cor-azul-primario-mv);
+        border-bottom-color: var(--cor-azul-primario-mv);
+    }
+
+    .user-actions-mv {
+        flex-basis: 100%; /* Ações do usuário abaixo do menu */
+        order: 2;
+        flex-wrap: nowrap; /* Tenta manter na linha */
+        justify-content: space-around; /* Distribui os botões */
+        gap: 10px;
+        width: 100%;
+        padding: 10px 0;
+        border-top: 1px solid var(--cor-borda);
+        margin-top: 10px;
+    }
+    .btn-tema, .btn-liberar-curso-home {
+        padding: 8px 10px;
+        font-size: 0.85em;
+        flex-grow: 1; /* Para ocupar espaço disponível */
+        text-align: center;
+    }
+    .flag-icon-mv { display: none; } /* Esconde bandeiras em telas muito pequenas para simplificar */
+    .user-profile-mv { text-align: center; font-size: 0.85em; }
+
+
+    /* Dashboard (index.html) */
+    .bem-vindo-mv {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+        padding: 20px 15px;
+    }
+    .progresso-geral-mv {
+        margin-left: 0;
+        width: 100%;
+    }
+    .barra-progresso-mv-container {
+        max-width: 100%; /* Ocupa a largura do card */
+    }
+
+    .atalho-inicio h3 {
+        font-size: 1.2em; /* Destaque para "Comece aqui" */
+        margin-bottom: 15px;
+    }
+    .card-comece-mv {
+        flex-direction: column;
+        align-items: stretch; /* Itens ocupam a largura */
+    }
+    .card-comece-mv-img img {
+        width: 100%; 
+        max-width: 100%; /* Imagem responsiva dentro do card */
+        height: 180px; /* Altura fixa para a imagem, ajuste conforme necessário */
+        object-fit: cover; /* Garante que a imagem cubra a área sem distorcer */
+    }
+    .info-comece-aqui, .proximos-passos-mv {
+        text-align: left; /* Alinha texto à esquerda dentro do card */
+    }
+    .info-comece-aqui h4 { font-size: 1.2em; }
+    .btn-comecar-agora { display: block; width: auto; text-align: center; margin-top: 15px; }
+
+    .proximos-passos-mv {
+        border-left: none;
+        padding-left: 0;
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid var(--cor-borda);
+    }
+    .passo-item-mv { font-size: 0.9em; }
+
+    .etapas-navegacao-mv {
+        flex-direction: row; /* Mantém horizontal */
+        overflow-x: auto; /* Permite rolagem horizontal das abas de etapa */
+        white-space: nowrap;
+        background-color: var(--cor-fundo-card); /* Fundo branco para destacar da página */
+        padding: 5px 0;
+        border-radius: var(--raio-borda-mv);
+        border: 1px solid var(--cor-borda);
+        margin-bottom: 1px; /* Para conectar visualmente com o painel */
+    }
+    .btn-etapa-mv {
+        flex: 0 0 auto; /* Não cresce, não encolhe, baseia-se no conteúdo */
+        border-right: 1px solid var(--cor-borda);
+        border-bottom: none; /* Remove borda de baixo do botão */
+        border-radius: 0;
+        padding: 12px 18px; /* Padding maior para toque */
+        color: var(--cor-texto-secundario);
+        background-color: transparent;
+    }
+    .btn-etapa-mv.active {
+        color: var(--cor-azul-primario-mv);
+        background-color: var(--fundo-pagina); /* Cor de fundo da página para destacar */
+        border-bottom: 3px solid var(--cor-azul-primario-mv); /* Borda inferior para indicar ativa */
+        margin-bottom: -1px; /* Para sobrepor a borda do painel de conteúdo */
+    }
+    .btn-etapa-mv:last-child{ border-right: none; }
+
+    .etapas-conteudo-mv .etapa-painel-mv {
+        padding: 20px;
+        border-radius: var(--raio-borda-mv);
+        /* Se o .etapas-navegacao-mv tem borda, o painel pode não precisar de borda superior */
+        /* border-top: none; */ 
+    }
+
+    .grid-modulos-mv {
+        /* Uma coluna em telas menores, duas em telas um pouco maiores */
+        grid-template-columns: 1fr; 
+        gap: 15px;
+    }
+
+    .secoes-inferiores-mv-single, 
+    .grid-duplo-dashboard {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Ajustes para telas muito pequenas, como smartphones em modo retrato */
+@media (max-width: 480px) {
+    .site-header-mv .header-mv-container {
+        padding: 8px 0px; /* Reduz padding interno do header */
+    }
+    .logo-area-mv { margin-bottom: 8px; }
+    #logo-curso-principal, #logo-curso-mv { height: 26px; }
+    .menu-principal-mv a { font-size: 0.75em; padding: 6px 10px;}
+    .user-actions-mv { flex-direction: column; gap: 8px; } /* Empilha botões de tema e usuário */
+    .btn-tema, .btn-liberar-curso-home { width: auto; max-width: none; } /* Botões ocupam largura necessária */
+    .user-profile-mv { font-size: 0.8em; }
+
+
+    .bem-vindo-mv { padding: 15px; }
+    .info-usuario-mv h2 { font-size: 1.1em; }
+    .info-usuario-mv p { font-size: 0.85em; }
+
+    .atalho-inicio h3 { font-size: 1.1em; }
+    .card-comece-mv-info h4 { font-size: 1.1em; } /* Título da aula no card */
+    .status-etapa-mv { font-size: 0.8em; }
+    .proximos-passos-mv { font-size: 0.8em; }
+
+    .btn-etapa-mv { font-size: 0.8em; padding: 10px 15px; }
+
+    .modulo-card-mv p { font-size: 0.85em; }
+    .numero-modulo-mv { font-size: 1.5em;}
 }

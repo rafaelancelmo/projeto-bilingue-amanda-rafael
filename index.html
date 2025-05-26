@@ -6,30 +6,37 @@
     <title>Painel Principal - Projeto Bilíngue</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="tema-claro">
     <header class="site-header-mv">
         <div class="header-mv-container">
             <div class="logo-area-mv">
-                <img src="assets/logo-curso.png" alt="Logo Curso" id="logo-curso-mv">
-                </div>
+                <img src="assets/logo-curso.png" alt="Logo Projeto Bilíngue" id="logo-curso-mv">
+            </div>
             <nav class="menu-principal-mv">
-                <a href="index.html" class="active">Home</a>
-                <a href="#">Meu perfil</a>
-                <a href="#">Comunidade</a>
-                <a href="#">Extras</a>
-                <a href="#">Suporte</a>
-                <a href="#">Playlist</a>
+    <a href="index.html" class="active">Home</a>
+    <a href="#">Meu perfil</a>
+    <a href="#">Extras</a>
+    <a href="playlist.html">Playlist</a> </nav>
             </nav>
             <div class="user-actions-mv">
-                <button class="btn-liberar-curso-mv">Liberar curso completo</button>
+                <button id="btn-logout" class="btn-mv btn-tema" style="background-color: #e74c3c; color: white;">Sair</button>
+                 <button id="btn-toggle-tema" class="btn-mv btn-tema">Mudar Tema</button>
                 <img src="assets/flag-usa.png" alt="Idioma USA" class="flag-icon-mv">
                 <img src="assets/flag-uk.png" alt="Idioma UK" class="flag-icon-mv">
                 <div class="user-profile-mv">
-                    <span>Bem-vindo(a), Amanda M...</span>
-                    </div>
+                    <span>Bem vindo(a)!</span>
+                </div>
             </div>
         </div>
     </header>
+
+    <div id="user-selection-overlay" class="user-selection-overlay-container hidden">
+        <div class="user-selection-box">
+            <h2>Quem está estudando?</h2>
+            <button id="btn-select-rafael" class="btn-mv btn-user-select">Sou Rafael Ancelmo</button>
+            <button id="btn-select-amanda" class="btn-mv btn-user-select">Sou Amanda Menezes</button>
+        </div>
+    </div>
 
     <main class="dashboard-mv-container">
         <section class="bem-vindo-mv">
@@ -37,7 +44,7 @@
                 <img src="assets/avatar-placeholder.png" alt="Avatar">
             </div>
             <div class="info-usuario-mv">
-                <h2>Bem-vindo(a), Amanda Menezes de Souza de Castro!</h2>
+                <h2>Bem-vindo(a), Usuário!</h2>
                 <p>Não informado</p>
             </div>
             <div class="progresso-geral-mv">
@@ -55,17 +62,18 @@
                     <img src="assets/placeholder-comece-aqui.jpg" alt="Imagem Curso">
                 </div>
                 <div class="card-comece-mv-info">
-                    <p class="etapa-info-mv">Etapa 1: Fundação > Primeiros passos</p>
-                    <h4>Passo 01 - Comece aqui</h4>
+                    <p class="etapa-info-mv">Etapa 1: Fundação > Módulo 01</p>
+                    <h4>Aula 1: MOD01 AULA 01</h4>
                     <div class="progresso-etapa-mv">
-                        <div class="barra-progresso-mv-fill-pequena" style="width: 12.5%;"></div> </div>
-                    <p class="status-etapa-mv"><span>1/8</span> <span>0% concluído</span></p>
-                    <a href="modulos/modulo1_aula1.html" class="btn-mv btn-verde-mv">Comece aqui</a>
+                        <div class="barra-progresso-mv-fill-pequena" style="width: 0%;" id="barra-m1-card-home"></div>
+                    </div>
+                    <p class="status-etapa-mv"><span id="aulas-m1-card-home">0/6</span> <span id="percent-m1-card-home">0%</span> concluído</p>
+                    <a href="modulos/modulo1_aula1.html" class="btn-mv btn-verde-mv">Continuar Módulo 01</a>
                 </div>
                 <div class="proximos-passos-mv">
-                    <div class="passo-item-mv">Passo 02 - Definindo o seu objetivo <span class="aula-status-mv">Aula 2/4</span></div>
-                    <div class="passo-item-mv">Passo 03 - Como acessar os materiais <span class="aula-status-mv">Aula 3/4</span></div>
-                    <div class="passo-item-mv">Passo 04 - Conclusão dos primeiros passos <span class="aula-status-mv">Aula 4/4</span></div>
+                    <div class="passo-item-mv">Aula 2: MOD01 AULA 02 <span class="aula-status-mv">Módulo 01</span></div>
+                    <div class="passo-item-mv">Aula 3: MOD01 AULA 03 <span class="aula-status-mv">Módulo 01</span></div>
+                    <div class="passo-item-mv">Aula 4: MOD01 AULA 04 <span class="aula-status-mv">Módulo 01</span></div>
                 </div>
             </div>
         </section>
@@ -74,98 +82,89 @@
             <button class="btn-etapa-mv active" data-target="etapa1-mv-content">Etapa 1: Fundação</button>
             <button class="btn-etapa-mv" data-target="etapa2-mv-content">Etapa 2: Mineração</button>
             <button class="btn-etapa-mv" data-target="etapa3-mv-content">Etapa 3: Mar</button>
-            <button class="btn-etapa-mv" data-target="etapa4-mv-content">Etapa 4: Transição</button>
-            <button class="btn-etapa-mv" data-target="etapa5-mv-content">Etapa 5: Monolíngue</button>
-            <button class="btn-etapa-mv" data-target="etapa6-mv-content">Etapa 6: Escrita e Fala</button>
         </nav>
 
         <div class="etapas-conteudo-mv">
             <section id="etapa1-mv-content" class="etapa-painel-mv active">
+                <h3>Módulos da Etapa de Fundação</h3>
                 <div class="grid-modulos-mv">
                     <a href="modulos/modulo1_aula1.html" class="modulo-card-mv">
-                        <span class="numero-modulo-mv">0</span>
-                        <p>Primeiros passos</p>
-                        <small>4 aulas disponíveis</small>
-                        <span>Módulo 000</span>
+                        <span class="numero-modulo-mv">1</span> <p>Fundamentos I</p> <small>6 aulas</small> <span>Módulo 01</span>
+                        <div class="modulo-progresso-card"><div class="barra-progresso-interna-card" id="prog-m1-card" style="width: 0%;"></div></div>
                     </a>
-                    <a href="#" class="modulo-card-mv">
-                        <span class="numero-modulo-mv">1</span>
-                        <p>Módulo 001</p>
-                        <small>9 aulas disponíveis</small>
-                        <span>Módulo 001</span>
+                    <a href="modulos/modulo2_aula1.html" class="modulo-card-mv">
+                        <span class="numero-modulo-mv">2</span> <p>Fundamentos II</p> <small>9 aulas</small> <span>Módulo 02</span>
+                        <div class="modulo-progresso-card"><div class="barra-progresso-interna-card" id="prog-m2-card" style="width: 0%;"></div></div>
                     </a>
-                    <a href="#" class="modulo-card-mv"><span class="numero-modulo-mv">2</span><p>Módulo 002</p><small>Em breve</small><span>Módulo 002</span></a>
-                    <a href="#" class="modulo-card-mv"><span class="numero-modulo-mv">3</span><p>Módulo 003</p><small>Em breve</small><span>Módulo 003</span></a>
-                    <a href="#" class="modulo-card-mv"><span class="numero-modulo-mv">4</span><p>Módulo 004</p><small>Em breve</small><span>Módulo 004</span></a>
-                    <a href="#" class="modulo-card-mv"><span class="numero-modulo-mv">5</span><p>Módulo 005</p><small>Em breve</small><span>Módulo 005</span></a>
-                    <a href="#" class="modulo-card-mv"><span class="numero-modulo-mv">6</span><p>Módulo 006</p><small>Em breve</small><span>Módulo 006</span></a>
-                    <a href="#" class="modulo-card-mv"><span class="numero-modulo-mv">7</span><p>Módulo 007</p><small>Em breve</small><span>Módulo 007</span></a>
-                    <a href="#" class="modulo-card-mv"><span class="numero-modulo-mv">8</span><p>Módulo 008</p><small>Em breve</small><span>Módulo 008</span></a>
-                    <a href="#" class="modulo-card-mv"><span class="numero-modulo-mv">9</span><p>Módulo 009</p><small>Em breve</small><span>Módulo 009</span></a>
+                    <a href="#" class="modulo-card-mv modulo-desabilitado">
+                        <span class="numero-modulo-mv">3</span> <p>Módulo 03</p> <small>Em breve</small> <span>Módulo 03</span>
+                        <div class="modulo-progresso-card"><div class="barra-progresso-interna-card" id="prog-m3-card" style="width: 0%;"></div></div>
+                    </a>
+                    <a href="#" class="modulo-card-mv modulo-desabilitado">
+                        <span class="numero-modulo-mv">4</span> <p>Módulo 04</p> <small>Em breve</small> <span>Módulo 04</span>
+                        <div class="modulo-progresso-card"><div class="barra-progresso-interna-card" id="prog-m4-card" style="width: 0%;"></div></div>
+                    </a>
+                    <a href="#" class="modulo-card-mv modulo-desabilitado">
+                        <span class="numero-modulo-mv">5</span> <p>Módulo 05</p> <small>Em breve</small> <span>Módulo 05</span>
+                        <div class="modulo-progresso-card"><div class="barra-progresso-interna-card" id="prog-m5-card" style="width: 0%;"></div></div>
+                    </a>
+                    <a href="#" class="modulo-card-mv modulo-desabilitado">
+                        <span class="numero-modulo-mv">6</span> <p>Módulo 06</p> <small>Em breve</small> <span>Módulo 06</span>
+                        <div class="modulo-progresso-card"><div class="barra-progresso-interna-card" id="prog-m6-card" style="width: 0%;"></div></div>
+                    </a>
+                    <a href="#" class="modulo-card-mv modulo-desabilitado">
+                        <span class="numero-modulo-mv">7</span> <p>Módulo 07</p> <small>Em breve</small> <span>Módulo 07</span>
+                        <div class="modulo-progresso-card"><div class="barra-progresso-interna-card" id="prog-m7-card" style="width: 0%;"></div></div>
+                    </a>
+                    <a href="#" class="modulo-card-mv modulo-desabilitado">
+                        <span class="numero-modulo-mv">8</span> <p>Módulo 08</p> <small>Em breve</small> <span>Módulo 08</span>
+                        <div class="modulo-progresso-card"><div class="barra-progresso-interna-card" id="prog-m8-card" style="width: 0%;"></div></div>
+                    </a>
+                    <a href="#" class="modulo-card-mv modulo-desabilitado">
+                        <span class="numero-modulo-mv">9</span> <p>Módulo 09</p> <small>Em breve</small> <span>Módulo 09</span>
+                        <div class="modulo-progresso-card"><div class="barra-progresso-interna-card" id="prog-m9-card" style="width: 0%;"></div></div>
+                    </a>
                 </div>
             </section>
             <section id="etapa2-mv-content" class="etapa-painel-mv">
-                <p>Conteúdo da Etapa 2 (Mineração) virá aqui...</p>
+                <h3>Módulos da Etapa de Mineração</h3>
+                <div class="grid-modulos-mv">
+                    <a href="#" class="modulo-card-mv modulo-desabilitado"><span class="numero-modulo-mv">10</span><p>Módulo 10</p><small>Em breve</small><span>Módulo 10</span><div class="modulo-progresso-card"><div class="barra-progresso-interna-card" id="prog-m10-card" style="width: 0%;"></div></div></a>
+                    <a href="#" class="modulo-card-mv modulo-desabilitado"><span class="numero-modulo-mv">11</span><p>Módulo 11</p><small>Em breve</small><span>Módulo 11</span><div class="modulo-progresso-card"><div class="barra-progresso-interna-card" id="prog-m11-card" style="width: 0%;"></div></div></a>
+                    <a href="#" class="modulo-card-mv modulo-desabilitado"><span class="numero-modulo-mv">12</span><p>Módulo 12</p><small>Em breve</small><span>Módulo 12</span><div class="modulo-progresso-card"><div class="barra-progresso-interna-card" id="prog-m12-card" style="width: 0%;"></div></div></a>
+                    <a href="#" class="modulo-card-mv modulo-desabilitado"><span class="numero-modulo-mv">13</span><p>Módulo 13</p><small>Em breve</small><span>Módulo 13</span><div class="modulo-progresso-card"><div class="barra-progresso-interna-card" id="prog-m13-card" style="width: 0%;"></div></div></a>
+                    <a href="#" class="modulo-card-mv modulo-desabilitado"><span class="numero-modulo-mv">14</span><p>Módulo 14</p><small>Em breve</small><span>Módulo 14</span><div class="modulo-progresso-card"><div class="barra-progresso-interna-card" id="prog-m14-card" style="width: 0%;"></div></div></a>
+                </div>
             </section>
-            <section id="etapa3-mv-content" class="etapa-painel-mv"><p>Conteúdo da Etapa 3 (Mar) virá aqui...</p></section>
-             <section id="etapa4-mv-content" class="etapa-painel-mv"><p>Conteúdo da Etapa 4 (Transição) virá aqui...</p></section>
-             <section id="etapa5-mv-content" class="etapa-painel-mv"><p>Conteúdo da Etapa 5 (Monolíngue) virá aqui...</p></section>
-             <section id="etapa6-mv-content" class="etapa-painel-mv"><p>Conteúdo da Etapa 6 (Escrita e Fala) virá aqui...</p></section>
+            <section id="etapa3-mv-content" class="etapa-painel-mv">
+                <h3>Módulos da Etapa Mar</h3>
+                 <div class="grid-modulos-mv">
+                    <a href="#" class="modulo-card-mv modulo-desabilitado"><span class="numero-modulo-mv">15</span><p>Módulo 15</p><small>Em breve</small><span>Módulo 15</span><div class="modulo-progresso-card"><div class="barra-progresso-interna-card" id="prog-m15-card" style="width: 0%;"></div></div></a>
+                    <a href="#" class="modulo-card-mv modulo-desabilitado"><span class="numero-modulo-mv">16</span><p>Módulo 16</p><small>Em breve</small><span>Módulo 16</span><div class="modulo-progresso-card"><div class="barra-progresso-interna-card" id="prog-m16-card" style="width: 0%;"></div></div></a>
+                    <a href="#" class="modulo-card-mv modulo-desabilitado"><span class="numero-modulo-mv">17</span><p>Módulo 17</p><small>Em breve</small><span>Módulo 17</span><div class="modulo-progresso-card"><div class="barra-progresso-interna-card" id="prog-m17-card" style="width: 0%;"></div></div></a>
+                    <a href="#" class="modulo-card-mv modulo-desabilitado"><span class="numero-modulo-mv">18</span><p>Módulo 18</p><small>Em breve</small><span>Módulo 18</span><div class="modulo-progresso-card"><div class="barra-progresso-interna-card" id="prog-m18-card" style="width: 0%;"></div></div></a>
+                    <a href="#" class="modulo-card-mv modulo-desabilitado"><span class="numero-modulo-mv">19</span><p>Módulo 19</p><small>Em breve</small><span>Módulo 19</span><div class="modulo-progresso-card"><div class="barra-progresso-interna-card" id="prog-m19-card" style="width: 0%;"></div></div></a>
+                    <a href="#" class="modulo-card-mv modulo-desabilitado"><span class="numero-modulo-mv">20</span><p>Módulo 20</p><small>Em breve</small><span>Módulo 20</span><div class="modulo-progresso-card"><div class="barra-progresso-interna-card" id="prog-m20-card" style="width: 0%;"></div></div></a>
+                    <a href="#" class="modulo-card-mv modulo-desabilitado"><span class="numero-modulo-mv">21</span><p>Módulo 21</p><small>Em breve</small><span>Módulo 21</span><div class="modulo-progresso-card"><div class="barra-progresso-interna-card" id="prog-m21-card" style="width: 0%;"></div></div></a>
+                    <a href="#" class="modulo-card-mv modulo-desabilitado"><span class="numero-modulo-mv">22</span><p>Módulo 22</p><small>Em breve</small><span>Módulo 22</span><div class="modulo-progresso-card"><div class="barra-progresso-interna-card" id="prog-m22-card" style="width: 0%;"></div></div></a>
+                    <a href="#" class="modulo-card-mv modulo-desabilitado"><span class="numero-modulo-mv">23</span><p>Módulo 23</p><small>Em breve</small><span>Módulo 23</span><div class="modulo-progresso-card"><div class="barra-progresso-interna-card" id="prog-m23-card" style="width: 0%;"></div></div></a>
+                </div>
+            </section>
         </div>
 
-        <div class="secoes-inferiores-mv">
-            <section class="comunidade-mv">
-                <div class="comunidade-header-mv">
-                    <h3>Comunidade</h3>
-                    <a href="#" class="btn-mv btn-azul-outline-mv">Saiba mais</a>
-                </div>
-                <div class="topico-comunidade-mv">
-                    <h4>[OFICIAL] Dúvidas sobre o Anki</h4>
-                    <p>Pessoal, estamos abrindo esse tópico que é oficial para perguntas...</p>
-                </div>
-                <div class="topico-comunidade-mv">
-                    <h4>[OFICIAL] Dúvidas sobre o método de textos com áudio</h4>
-                    <p>Turma, estamos abrindo este tópico com o intuito de reunir as...</p>
-                </div>
-                 <div class="topico-comunidade-mv">
-                    <h4>[OFICIAL] Apresente-se aqui</h4>
-                    <p>Olá, pessoal, tudo bem? Aqui é a Vitória, uma das tutoras da equipe...</p>
-                </div>
-            </section>
-            <section class="visite-comunidade-mv">
-                 <h3>Visite nossa comunidade</h3>
-                 <div class="card-visite-mv">
-                    <p>Conheça outros usuários e tire suas dúvidas.</p>
-                    <div class="post-exemplo-mv">
-                        <h4>[OFICIAL] Dúvidas sobre o método de textos com áudio</h4>
-                        <span>216 respostas • há um dia, por <strong>Alzira Feitosa</strong></span>
-                    </div>
-                 </div>
-            </section>
-        </div>
-         <div class="secoes-inferiores-mv">
+        <div class="secoes-inferiores-mv-single">
             <section class="extras-mv">
                 <h3>Extras</h3>
-                {/* Conteúdo dos extras aqui */}
-            </section>
-            <section class="fale-conosco-mv">
-                 <h3>Fale conosco</h3>
-                 <div class="card-fale-mv">
-                    <h4>Fale conosco</h4>
-                    <a href="#" class="btn-mv btn-cinza-mv">Acessar</a>
-                    <p>Atendimento de segunda a sexta (exceto feriados), das 08h às 20h (horário de Brasília)</p>
-                 </div>
+                <p>(Conteúdo dos extras aqui)</p>
             </section>
         </div>
-
     </main>
 
     <footer class="site-footer-mv">
         <div class="footer-mv-container">
             <p>Curso de Idiomas Mairo Vergara &copy; 2017 - Todos os direitos reservados</p>
             <nav>
-                <a href="#">Termos de uso</a> -
-                <a href="#">Política de privacidade</a>
+                <a href="#">Termos de uso</a> - <a href="#">Política de privacidade</a>
             </nav>
         </div>
     </footer>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Projeto Bilíngue</title>
+    <link rel="stylesheet" href="css/style.css"> <style>
+        /* Estilos específicos para a página de login */
+        body.login-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--cor-fundo-pagina);
+        }
+        .login-container {
+            background-color: var(--fundo-elemento);
+            padding: 30px 40px;
+            border-radius: var(--raio-borda-mv);
+            box-shadow: var(--sombra-mv);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .login-container img.logo {
+            max-width: 150px;
+            margin-bottom: 20px;
+        }
+        .login-container h2 {
+            color: var(--cor-primaria);
+            margin-bottom: 25px;
+            font-size: 1.8em;
+        }
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 12px 10px;
+            margin-bottom: 15px;
+            border: 1px solid var(--borda-elemento);
+            border-radius: var(--raio-borda-mv);
+            font-size: 1em;
+            background-color: var(--fundo-pagina); /* Um pouco diferente do card para destaque */
+            color: var(--texto-primario);
+        }
+        .login-form button {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1em;
+            /* Estilos do .btn-mv e .btn-verde-mv serão aplicados se a classe estiver presente */
+        }
+        .login-error {
+            color: #e74c3c; /* Vermelho para erro */
+            font-size: 0.9em;
+            margin-top: 15px;
+            display: none; /* Escondido por padrão */
+        }
+    </style>
+</head>
+<body class="login-page tema-claro"> <div class="login-container">
+        <img src="assets/logo-curso.png" alt="Logo Projeto Bilíngue" class="logo">
+        <h2>Acesso ao Sistema</h2>
+        <form id="loginForm" class="login-form">
+            <div>
+                <input type="text" id="username" placeholder="Login" required>
+            </div>
+            <div>
+                <input type="password" id="password" placeholder="Senha" required>
+            </div>
+            <button type="submit" class="btn-mv btn-verde-mv">Entrar</button>
+            <p id="loginErrorMessage" class="login-error">Login ou senha inválidos!</p>
+        </form>
+    </div>
+
+    <script>
+        // Script específico para login.html
+        document.addEventListener('DOMContentLoaded', function() {
+            // Aplicar tema salvo (copiado e simplificado de script.js)
+            const corpoLogin = document.body;
+            const temaSalvoLogin = localStorage.getItem('temaProjetoBilingue');
+            corpoLogin.classList.remove('tema-claro', 'tema-escuro');
+            if (temaSalvoLogin) {
+                corpoLogin.classList.add(temaSalvoLogin);
+            } else {
+                corpoLogin.classList.add('tema-claro');
+            }
+
+            // Se já estiver logado, redireciona para o index.html
+            if (localStorage.getItem('isUserLoggedIn') === 'true') {
+                window.location.href = 'index.html';
+            }
+
+            const loginForm = document.getElementById('loginForm');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const errorMessageElement = document.getElementById('loginErrorMessage');
+
+            loginForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // Impede o envio padrão do formulário
+
+                const username = usernameInput.value;
+                const password = passwordInput.value;
+
+                // CREDENCIAIS HARDCODED - NÃO SEGURO PARA PRODUÇÃO REAL
+                const correctUsername = "admin";
+                const correctPassword = "admin***";
+
+                if (username === correctUsername && password === correctPassword) {
+                    localStorage.setItem('isUserLoggedIn', 'true');
+                    // Opcional: definir um 'currentUser' padrão após login admin, ou deixar para a seleção
+                    // localStorage.setItem('currentUserProjetoBilingue', 'admin_profile'); // Exemplo
+                    window.location.href = 'index.html'; // Redireciona para a página principal
+                } else {
+                    errorMessageElement.style.display = 'block';
+                    passwordInput.value = ''; // Limpa o campo de senha
+                    usernameInput.focus();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
