@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 7: MOD03 AULA 07 - Projeto Bilíngue</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/aula_style.css">
+</head>
+<body class="tema-claro">
+    <header class="site-header-mv">
+        <div class="header-mv-container">
+            <div class="logo-area-mv"><img src="../assets/logo-curso.png" alt="Logo Curso" id="logo-curso-mv"></div>
+            <nav class="menu-principal-mv"><a href="../index.html">Home</a><a href="#">Meu Perfil</a><a href="#">Extras</a><a href="../playlist.html">Playlist</a></nav>
+            <div class="user-actions-mv"><button id="btn-toggle-tema-aula" class="btn-mv btn-tema">Mudar Tema</button><img src="../assets/flag-usa.png" alt="Idioma USA" class="flag-icon-mv"><div class="user-profile-mv"><span>Bem vindo(a)!</span></div></div>
+        </div>
+    </header>
+
+    <div class="pagina-aula-mv-layout modo-foco-desativado" data-aula-id="m3a7">
+        <main class="conteudo-principal-mv-aula">
+            <nav class="breadcrumb-mv-aula"><span>Módulo 03 > Aula 07</span></nav>
+            <h1 class="titulo-mv-aula">Aula 7: MOD03 AULA 07</h1>
+
+            <div class="video-container-foco">
+                <div class="video-player-mv-aula">
+                    <video controls controlsList="nodownload" width="100%">
+                        <source src="https://res.cloudinary.com/dkkjrtbsv/video/upload/v1748741768/7_-_The_Endless_Tale_06_yot1jt.mp4" type="video/mp4">
+                        Seu navegador não suporta vídeos embutidos.
+                    </video>
+                </div>
+                <button id="btn-modo-foco" class="btn-mv btn-foco">Modo Foco Vídeo</button>
+            </div>
+
+            <section class="controles-inferiores-mv-aula">
+                <span>Módulo 03 > Aula 07</span>
+                <div class="acoes-aula-mv">
+                    <a href="modulo3_aula6.html" class="btn-mv btn-secondary btn-anterior-mv-aula">← Aula Anterior</a>
+                    <input type="checkbox" id="chk-concluida-m3a7" class="marcar-concluida-mv-aula" data-aula="m3a7">
+                    <label for="chk-concluida-m3a7">Marcar como concluída</label>
+                    <a href="modulo3_aula8.html" class="btn-mv btn-verde-mv btn-proxima-mv-aula">Próxima Aula →</a>
+                </div>
+            </section>
+
+            <section class="abas-mv-aula">
+                <div class="botoes-abas-mv">
+                    <button class="btn-aba-mv active" data-target="downloads-mv-content-m3a7">Downloads</button>
+                    <button class="btn-aba-mv" data-target="audios-mv-content-m3a7">Áudios</button>
+                    <button class="btn-aba-mv" data-target="estudo-texto-mv-content-m3a7">Estudo do Texto</button>
+                    <button class="btn-aba-mv" data-target="anotacoes-mv-content-m3a7">Anotações</button>
+                </div>
+                <div class="paineis-abas-mv">
+                    <div id="downloads-mv-content-m3a7" class="painel-aba-mv active">
+                        <h4>Downloads da aula</h4>
+                        <ul class="lista-downloads-mv">
+                            <li><a href="https://res.cloudinary.com/dkkjrtbsv/video/upload/v1748741768/7_-_The_Endless_Tale_06_yot1jt.mp4" target="_blank"><img src="../assets/icon-video.png" alt=""> Assistir/Baixar Vídeo da Aula 07</a></li>
+                            <li><a href="https://res.cloudinary.com/dkkjrtbsv/video/upload/v1748742661/M03_A06_audio_yvuopa.mp3" download="Audio_Mod3_Aula7.mp3"><img src="../assets/icon-audio.png" alt=""> Baixar Áudio da Aula 07</a></li>
+                            <li><a href="../assets/pdfs/M03_A07_texto.pdf" download="Texto_Mod3_Aula7.pdf"><img src="../assets/icon-pdf.png" alt=""> Baixar PDF da Aula 07</a></li>
+                        </ul>
+                    </div>
+                    <div id="audios-mv-content-m3a7" class="painel-aba-mv">
+                        <h4>Áudio da Aula</h4>
+                        <audio id="audio-player-m3a7" controls controlsList="nodownload" class="player-audio-mv-aula">
+                            <source src="https://res.cloudinary.com/dkkjrtbsv/video/upload/v1748742661/M03_A06_audio_yvuopa.mp3" type="audio/mpeg">
+                            Seu navegador não suporta o elemento de áudio.
+                        </audio>
+                        <button class="btn-mv btn-salvar-playlist" 
+                                data-audio-src="https://res.cloudinary.com/dkkjrtbsv/video/upload/v1748742661/M03_A06_audio_yvuopa.mp3" 
+                                data-audio-title="Módulo 03 - Aula 7">Salvar na Playlist</button>
+                        <div id="transcricao-audio-m3a7" class="transcricao-audio-mv"><p>Carregando transcrição...</p></div>
+                    </div>
+                    <div id="estudo-texto-mv-content-m3a7" class="painel-aba-mv">
+                        <h4>Estudo do Texto (PDF)</h4>
+                        <div class="pdf-viewer-mv-container">
+                            <iframe src="../assets/pdfs/M03_A07_texto.pdf" title="Visualizador de PDF"></iframe>
+                        </div>
+                         <p class="link-pdf-externo-mv"><a href="../assets/pdfs/M03_A07_texto.pdf" target="_blank">Abrir PDF em nova janela</a></p>
+                    </div>
+                    <div id="anotacoes-mv-content-m3a7" class="painel-aba-mv">
+                        <h4>Minhas Anotações</h4>
+                        <textarea id="textarea-anotacoes-m3a7" class="textarea-anotacoes-mv" placeholder="Suas anotações..."></textarea>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <aside class="sidebar-mv-aulas">
+            <div class="info-modulo-sidebar-mv"><h4>MÓDULO 03: NOME DO MÓDULO 03</h4><h5>Aula 07</h5><p>Aula 7: MOD03 AULA 07</p></div>
+            <ul class="lista-aulas-mv-sidebar">
+                <li><a href="modulo3_aula1.html" class="aula-link-sidebar-mv"><span class="icone-play-sidebar-mv">▶</span> Aula 1: MOD03 AULA 01</a></li>
+                <li><a href="modulo3_aula2.html" class="aula-link-sidebar-mv"><span class="icone-play-sidebar-mv">▶</span> Aula 2: MOD03 AULA 02</a></li>
+                <li><a href="modulo3_aula3.html" class="aula-link-sidebar-mv"><span class="icone-play-sidebar-mv">▶</span> Aula 3: MOD03 AULA 03</a></li>
+                <li><a href="modulo3_aula4.html" class="aula-link-sidebar-mv"><span class="icone-play-sidebar-mv">▶</span> Aula 4: MOD03 AULA 04</a></li>
+                <li><a href="modulo3_aula5.html" class="aula-link-sidebar-mv"><span class="icone-play-sidebar-mv">▶</span> Aula 5: MOD03 AULA 05</a></li>
+                <li><a href="modulo3_aula6.html" class="aula-link-sidebar-mv"><span class="icone-play-sidebar-mv">▶</span> Aula 6: MOD03 AULA 06</a></li>
+                <li><a href="modulo3_aula7.html" class="aula-link-sidebar-mv active"><span class="icone-play-sidebar-mv">▶</span> Aula 7: MOD03 AULA 07</a></li>
+                <li><a href="modulo3_aula8.html" class="aula-link-sidebar-mv"><span class="icone-play-sidebar-mv">▶</span> Aula 8: MOD03 AULA 08</a></li>
+                <li><a href="modulo3_aula9.html" class="aula-link-sidebar-mv"><span class="icone-play-sidebar-mv">▶</span> Aula 9: MOD03 AULA 09</a></li>
+            </ul>
+            <a href="#" class="link-proximo-modulo-mv">Próximo Módulo →</a> 
+        </aside>
+    </div>
+    <footer class="site-footer-mv">
+       <div class="footer-mv-container"><p>PROJETO BILINGUE AMANDA & RAFAEL © 2024-2025</p><nav><a href="#">Termos de uso</a> -<a href="#">Política de privacidade</a></nav></div>
+    </footer>
+    <script src="../js/aula_script.js"></script>
+    <script src="../js/script.js"></script>
+</body>
+</html>

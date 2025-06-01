@@ -314,10 +314,105 @@ const transcricaoMod02Aula08 = [
     { start: 29.0, end: 33.0, textEng: "Now, who do you think was more foolish, the farmer or his wife?", textPt: "Agora, quem você acha que foi mais tolo, o fazendeiro ou sua esposa?" }
 ];
 
+// Em js/aula_script.js, junto às outras definições de transcrição:
+
+// TRANSCRIÇÃO PARA M03 AULA 01 (com tempos estimados - AJUSTE FINO NECESSÁRIO POR VOCÊ)
+const transcricaoMod03Aula01 = [
+    { start: 0.5, end: 3.5, textEng: "In the Far East there was a Great King", textPt: "No Extremo Oriente havia um Grande Rei" },
+    { start: 3.8, end: 6.0, textEng: "who had no work to do.", textPt: "que não tinha nenhum trabalho para fazer." },
+    { start: 6.5, end: 9.0, textEng: "Every day, and all day long,", textPt: "Todos os dias, e o dia todo," },
+    { start: 9.5, end: 12.5, textEng: "he sat on soft cushions and listened to stories.", textPt: "ele se sentava em almofadas macias e escutava histórias." },
+    { start: 13.0, end: 15.5, textEng: "And no matter what the story was about,", textPt: "E não importa sobre o que era a história," },
+    { start: 16.0, end: 20.5, textEng: "he never grew tired of hearing it, even though many of the stories took hours to complete.", textPt: "ele nunca se cansava de escutá-la, mesmo que muitas histórias levassem horas para acabar." },
+    { start: 21.0, end: 24.5, textEng: "“There is only one fault with your story,” he often said,", textPt: "“Há apenas uma falha na sua história,” ele frequentemente dizia," },
+    { start: 24.8, end: 26.5, textEng: "“it is too short.”", textPt: "“ela é muito curta.”" },
+    { start: 27.0, end: 30.0, textEng: "All the storytellers in the world were invited to his palace;", textPt: "Todos os contadores de histórias do mundo eram convidados ao seu palácio;" },
+    { start: 30.5, end: 33.5, textEng: "and some of them told stories that were very long indeed.", textPt: "e alguns deles contavam histórias que eram de fato muito longas." }
+];
+
+const transcricaoMod03Aula02 = [
+   { start: 0.5, end: 3.5, textEng: "In the Far East there was a Great King", textPt: "No Extremo Oriente havia um Grande Rei" },
+    { start: 3.8, end: 6.0, textEng: "who had no work to do.", textPt: "que não tinha nenhum trabalho para fazer." },
+    { start: 6.5, end: 9.0, textEng: "Every day, and all day long,", textPt: "Todos os dias, e o dia todo," },
+    { start: 9.5, end: 12.5, textEng: "he sat on soft cushions and listened to stories.", textPt: "ele se sentava em almofadas macias e escutava histórias." },
+    { start: 13.0, end: 15.5, textEng: "And no matter what the story was about,", textPt: "E não importa sobre o que era a história," },
+    { start: 16.0, end: 20.5, textEng: "he never grew tired of hearing it, even though many of the stories took hours to complete.", textPt: "ele nunca se cansava de escutá-la, mesmo que muitas histórias levassem horas para acabar." },
+    { start: 21.0, end: 24.5, textEng: "“There is only one fault with your story,” he often said,", textPt: "“Há apenas uma falha na sua história,” ele frequentemente dizia," },
+    { start: 24.8, end: 26.5, textEng: "“it is too short.”", textPt: "“ela é muito curta.”" },
+    { start: 27.0, end: 30.0, textEng: "All the storytellers in the world were invited to his palace;", textPt: "Todos os contadores de histórias do mundo eram convidados ao seu palácio;" },
+    { start: 30.5, end: 33.5, textEng: "and some of them told stories that were very long indeed.", textPt: "e alguns deles contavam histórias que eram de fato muito longas." }
+];
+const transcricaoMod03Aula03 = [
+     { start: 0.5, end: 3.5, textEng: "But The King was always sad", textPt: "Mas o Rei estava sempre triste" },
+    { start: 3.7, end: 5.5, textEng: "when the story ended.", textPt: "quando a história acabava." },
+    { start: 6.0, end: 12.5, textEng: "At last he sent a message to every city and town, offering a prize to any one able to tell him an endless tale.", textPt: "Finalmente ele enviou uma mensagem a toda cidade grande e cidade pequena, oferecendo um prêmio a qualquer um capaz de contar a ele um conto sem fim." },
+    { start: 13.0, end: 17.0, textEng: "He said: “To the man that will tell me a story which lasts forever,", textPt: "Ele disse: “Ao homem que irá me contar uma história que dure para sempre," },
+    { start: 17.5, end: 20.0, textEng: "I will give my daughter as his wife;", textPt: "Eu darei minha filha como sua esposa;" },
+    { start: 20.5, end: 25.0, textEng: "and I will make him my heir, and he shall be king after me.”", textPt: "e eu farei dele meu herdeiro, e ele será rei depois de mim.”" },
+    { start: 25.5, end: 28.5, textEng: "But this challenge wasn’t quite what it seemed.", textPt: "Mas este desafio não era muito (exatamente) o que parecia." },
+    { start: 29.0, end: 30.8, textEng: "The King added a strict condition.", textPt: "O Rei adicionou uma condição rigorosa." },
+    { start: 31.3, end: 34.5, textEng: "“If any man tries to tell such a story and fails,", textPt: "“Se qualquer homem tentar contar tal história e falhar," },
+    { start: 35.0, end: 37.0, textEng: "then his head will be cut off.”", textPt: "então sua cabeça será cortada.”" }
+];
+
+const transcricaoMod03Aula04 = [
+    { start: 0.5, end: 3.5, textEng: "The King's daughter was very beautiful,", textPt: "A filha do Rei era muito bonita," },
+    { start: 3.7, end: 8.0, textEng: "and many young men in The Kingdom were willing to do anything to win her.", textPt: "e muitos jovens rapazes no Reino estavam dispostos a fazer qualquer coisa para ganhá-la." },
+    { start: 8.5, end: 13.0, textEng: "But none of them wanted to lose his head, and so only a few tried for the prize.", textPt: "Mas nenhum deles queria perder a cabeça, e então apenas alguns se arriscaram pelo prêmio." },
+    { start: 13.5, end: 16.5, textEng: "One young man invented a story that lasted three months;", textPt: "Um jovem rapaz inventou uma história que durou três meses;" },
+    { start: 17.0, end: 20.0, textEng: "but after that, he could think of nothing more.", textPt: "mas depois disso, ele não conseguiu pensar em mais nada." },
+    { start: 20.5, end: 26.5, textEng: "His fate was a warning to others, and it was a long time before another storyteller was daring enough to take the King's challenge.", textPt: "Seu destino foi um alerta aos outros, e levou muito tempo antes que outro contador de histórias fosse ousado o suficiente para aceitar o desafio do Rei." }
+];
+
+const transcricaoMod03Aula05 = [
+    { start: 0.5, end: 4.0, textEng: "One day a Stranger from the South came to The Palace.", textPt: "Um dia um Estranho do Sul veio ao Palácio." },
+    { start: 4.5, end: 6.0, textEng: "“Great king,” he said,", textPt: "“Grande rei,” ele disse," },
+    { start: 6.5, end: 11.0, textEng: "“is it true that you offer a prize to the man who can tell a story that has no end?”", textPt: "“é verdade que você oferece um prêmio ao homem que conseguir contar uma história que não tem fim?”" },
+    { start: 11.5, end: 13.5, textEng: "“It is true,” said The King.", textPt: "“É verdade,” disse o Rei." },
+    { start: 14.0, end: 18.0, textEng: "“And will this man have your daughter for his wife, and will he be your heir?”", textPt: "“E irá este homem ter sua filha como esposa, e será ele (irá ele ser) seu herdeiro?”" },
+    { start: 18.5, end: 22.5, textEng: "“Yes, if he succeeds,” said The King, “but if he fails, he will lose his head.”", textPt: "“Sim, se ele for bem-sucedido,” disse o Rei, “mas se ele falhar, ele vai perder sua cabeça.”" },
+    { start: 23.0, end: 25.0, textEng: "“Very well, then,” said the Stranger.", textPt: "“Muito bem, então,” disse o Estranho." },
+    { start: 25.5, end: 28.0, textEng: "“I have a pleasant story about locusts.”", textPt: "Eu tenho uma agradável história sobre gafanhotos.”" },
+    { start: 28.5, end: 30.0, textEng: "“Tell it,” said The King.", textPt: "“Conte-a,” disse o Rei." },
+    { start: 30.5, end: 32.0, textEng: "“I will listen to you.”", textPt: "“Eu vou te escutar.”" }
+];
+
+const transcricaoMod03Aula06 = [
+    { start: 0.0, end: 4.0, textEng: "The storyteller began his story.", textPt: "O contador de histórias começou sua história." },
+    { start: 4.1, end: 12.0, textEng: "“Once upon a time a certain king seized all the corn in his country, and stored it in a strong granary,", textPt: "“Uma vez (era uma vez) um certo rei confiscou todo o milho de seu país, e guardou-o em um forte celeiro," },
+    { start: 12.1, end: 19.0, textEng: "but a swarm of locusts came over the land and saw where the grain was stored.", textPt: "mas um enxame de gafanhotos invadiu a terra e viu onde os grãos estavam guardados." },
+    { start: 19.1, end: 28.0, textEng: "After searching for many days, the locusts found a small crack on the east side of the granary,", textPt: "Depois de procurar por muitos dias, os gafanhotos encontraram uma pequena rachadura no lado leste do celeiro," },
+    { start: 28.1, end: 35.0, textEng: "but the opening was just large enough for one locust at a time to pass through.", textPt: "mas a abertura era apenas grande o bastante para um gafanhoto de cada vez passar." },
+    { start: 35.1, end: 40.0, textEng: "So, one locust went in and carried away a grain of corn;", textPt: "Então, um gafanhoto entrou e levou um grão de milho;" },
+    { start: 40.1, end: 45.0, textEng: "then another locust went in and carried away a grain of corn;", textPt: "então outro gafanhoto entrou e levou um grão de milho;" },
+    { start: 45.1, end: 50.0, textEng: "then another locust went in and carried away a grain of corn.”", textPt: "então outro gafanhoto entrou e levou um grão de milho.”" }
+];
+
+const transcricaoMod03Aula07 = [
+    { start: 0.5, end: 3.5, textEng: "Day after day, week after week,", textPt: "Dia após dia, semana após semana," },
+    { start: 4.0, end: 6.5, textEng: "the Stranger kept on saying,", textPt: "o Estranho continuava dizendo," },
+    { start: 7.0, end: 11.0, textEng: "“Then another locust went in and carried away a grain of corn.”", textPt: "“Então outro gafanhoto entrou e levou um grão de milho.”" },
+    { start: 11.5, end: 14.0, textEng: "A month passed. A year passed.", textPt: "Um mês se passou. Um ano se passou." },
+    { start: 14.5, end: 17.0, textEng: "After two years, The King asked,", textPt: "Depois de dois anos, o Rei perguntou," },
+    { start: 17.5, end: 22.0, textEng: "“How much longer will the locusts be going in and carrying away corn?\"", textPt: "“Por quanto tempo mais os gafanhotos vão entrar e levar milho?”" },
+    { start: 22.5, end: 24.5, textEng: "\"Oh, King!\" said the Stranger,", textPt: "“Ó, Rei!” disse o Estranho," },
+    { start: 25.0, end: 29.0, textEng: "“the locusts have only cleared a few inches, and there are thousands of inches in the granary.\"", textPt: "“os gafanhotos removeram/liberaram apenas algumas polegadas, e há milhares de polegadas no celeiro.”" }
+];
+
+const transcricaoMod03Aula08 = [
+    { start: 0.5, end: 3.0, textEng: "“Man, man!” cried The King,", textPt: "“Cara, cara!” gritou o Rei," },
+    { start: 3.5, end: 5.5, textEng: "“You will drive me mad.", textPt: "“Você vai me enlouquecer." },
+    { start: 6.0, end: 8.0, textEng: "I can listen to it no longer.", textPt: "Eu não posso mais escutar isso." },
+    { start: 8.5, end: 13.5, textEng: "Take my daughter, be my heir, and rule my Kingdom,", textPt: "Leve minha filha, seja meu herdeiro e reine sobre meu Reino," },
+    { start: 14.0, end: 18.0, textEng: "but do not let me hear another word about those incessant locusts!\"", textPt: "mas não me deixe ouvir outra palavra sobre aqueles gafanhotos intermináveis!”" },
+    { start: 18.5, end: 22.5, textEng: "So, the Stranger married The King's daughter and lived happily in the land for many years;", textPt: "Então, o Estranho se casou com a filha do Rei e viveu feliz naquela terra por muitos anos;" },
+    { start: 23.0, end: 27.5, textEng: "however, his father-in-law, The King, did not care to listen to any more stories.", textPt: "no entanto, seu sogro, o Rei, não queria mais ouvir quaisquer outras histórias." }
+];
+
         // Define qual transcrição usar
         if (["m1a1", "m1a2", "m1a3", "m1a4", "m1a5", "m1a6"].includes(aulaId)) {
             legendasAula = transcricaoJackHannafordM1;
-        } else if (aulaId === "m2a1" || aulaId === "m2a9") { // Aulas de M02 que são só vídeo
+        } else if (aulaId === "m2a1" || aulaId === "m2a9" || aulaId === "m3a9") { // Aulas de M02 que são só vídeo
              transcricaoContainer.innerHTML = "<p>Esta aula é apenas instrucional em vídeo.</p>";
         } else if (aulaId === "m2a2") { 
             legendasAula = transcricaoMod02Aula02;
@@ -333,7 +428,23 @@ const transcricaoMod02Aula08 = [
             legendasAula = transcricaoMod02Aula07;
         } else if (aulaId === "m2a8") { // <-- NOVA CONDIÇÃO ADICIONADA
             legendasAula = transcricaoMod02Aula08;
-        }
+        } else if (aulaId === "m3a1") { // <-- NOVA CONDIÇÃO ADICIONADA
+            legendasAula = transcricaoMod03Aula01;
+        } else if (aulaId === "m3a2") { // <-- NOVA CONDIÇÃO ADICIONADA
+            legendasAula = transcricaoMod03Aula02;
+        } else if (aulaId === "m3a3") { // <-- NOVA CONDIÇÃO ADICIONADA
+            legendasAula = transcricaoMod03Aula03;
+        } else if (aulaId === "m3a4") { // <-- NOVA CONDIÇÃO ADICIONADA
+            legendasAula = transcricaoMod03Aula04;
+        } else if (aulaId === "m3a5") { // <-- NOVA CONDIÇÃO ADICIONADA
+            legendasAula = transcricaoMod03Aula05;
+        } else if (aulaId === "m3a6") { // <-- NOVA CONDIÇÃO ADICIONADA
+            legendasAula = transcricaoMod03Aula06;
+        } else if (aulaId === "m3a7") { // <-- NOVA CONDIÇÃO ADICIONADA
+            legendasAula = transcricaoMod03Aula07;
+        } else if (aulaId === "m3a8") { // <-- NOVA CONDIÇÃO ADICIONADA
+            legendasAula = transcricaoMod03Aula08;
+            }
 
         // Adicione 'else if' para m2a4, m2a5, m2a6, m2a7, m2a8 quando tiver as transcrições
         else {
