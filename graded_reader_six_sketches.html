@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graded Reader: Six Sketches - Projeto Bilíngue</title>
+    <link rel="stylesheet" href="css/style.css"> 
+    <style>
+        /* CSS da página do leitor (COPIADO E ADAPTADO de sallys_phone_reader.html) */
+        :root {
+            --reader-bg-claro: #fdfdfd; --reader-texto-claro: #202124;
+            --reader-traducao-texto-claro: #5f6368; --reader-traducao-bg-claro: #f1f3f4;
+            --reader-highlight-hover-claro: rgba(0, 123, 255, 0.08);
+            --reader-capitulo-ativo-bg-claro: #e0f2ff;
+            --reader-capitulo-ativo-borda-claro: var(--cor-azul-primario-mv); /* Usa var do style.css */
+
+            --reader-bg-sepia: #f5e8d5; --reader-texto-sepia: #5b4636;
+            --reader-traducao-texto-sepia: #795548; --reader-traducao-bg-sepia: #e6ddc9;
+            --reader-highlight-hover-sepia: rgba(91, 70, 54, 0.1);
+            --reader-capitulo-ativo-bg-sepia: #dcd0bf;
+            --reader-capitulo-ativo-borda-sepia: #795548;
+
+            --reader-bg-escuro: #202124; --reader-texto-escuro: #e8eaed;
+            --reader-traducao-texto-escuro: #bdc1c6; --reader-traducao-bg-escuro: #3c4043;
+            --reader-highlight-hover-escuro: rgba(255, 255, 255, 0.1);
+            --reader-capitulo-ativo-bg-escuro: #2d3c4a;
+            --reader-capitulo-ativo-borda-escuro: var(--cor-secundaria); /* Usa var do style.css */
+            
+            /* Variáveis de controle de layout do leitor - serão atualizadas pelo JS */
+            --reader-font-family-current: 'Georgia', 'Times New Roman', Times, serif;
+            --reader-font-size-current: 1.1em; 
+            --reader-line-height-current: 1.8;
+            --reader-text-width-current: 700px; 
+        }
+
+        /* Aplica o tema do leitor ao .reader-page-wrapper */
+        .reader-page-wrapper.theme-reader-claro {
+            background-color: var(--reader-bg-claro);
+            color: var(--reader-texto-claro);
+        }
+        .reader-page-wrapper.theme-reader-claro .capitulo-reader-gr.active-segment {
+            background-color: var(--reader-capitulo-ativo-bg-claro);
+            border-color: var(--reader-capitulo-ativo-borda-claro);
+        }
+        .reader-page-wrapper.theme-reader-claro .pt-translation-inline {
+            background-color: var(--reader-traducao-bg-claro);
+            color: var(--reader-traducao-texto-claro);
+        }
+         .reader-page-wrapper.theme-reader-claro .eng-paragraph-interactive:hover {
+            background-color: var(--reader-highlight-hover-claro);
+        }
+
+        .reader-page-wrapper.theme-reader-sepia {
+            background-color: var(--reader-bg-sepia);
+            color: var(--reader-texto-sepia);
+        }
+        .reader-page-wrapper.theme-reader-sepia .capitulo-reader-gr.active-segment {
+            background-color: var(--reader-capitulo-ativo-bg-sepia);
+            border-color: var(--reader-capitulo-ativo-borda-sepia);
+        }
+        .reader-page-wrapper.theme-reader-sepia .pt-translation-inline {
+            background-color: var(--reader-traducao-bg-sepia);
+            color: var(--reader-traducao-texto-sepia);
+        }
+        .reader-page-wrapper.theme-reader-sepia .eng-paragraph-interactive:hover {
+            background-color: var(--reader-highlight-hover-sepia);
+        }
+
+        .reader-page-wrapper.theme-reader-escuro {
+            background-color: var(--reader-bg-escuro);
+            color: var(--reader-texto-escuro);
+        }
+         .reader-page-wrapper.theme-reader-escuro .capitulo-reader-gr.active-segment {
+            background-color: var(--reader-capitulo-ativo-bg-escuro);
+            border-color: var(--reader-capitulo-ativo-borda-escuro);
+        }
+        .reader-page-wrapper.theme-reader-escuro .pt-translation-inline {
+            background-color: var(--reader-traducao-bg-escuro);
+            color: var(--reader-traducao-texto-escuro);
+        }
+        .reader-page-wrapper.theme-reader-escuro .eng-paragraph-interactive:hover {
+            background-color: var(--reader-highlight-hover-escuro);
+        }
+        /* Fim dos temas do leitor */
+
+        .reader-page-wrapper { 
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .reader-main-content { 
+            max-width: var(--reader-text-width-current); 
+            margin: 0 auto;
+            padding: 20px; 
+            font-family: var(--reader-font-family-current);
+            font-size: var(--reader-font-size-current);
+            line-height: var(--reader-line-height-current);
+        }
+        .reader-title-header { text-align: center; margin-bottom: 30px; }
+        .reader-title-header h2 { font-size: 2.2em; margin:0; font-weight: 600; color: var(--cor-azul-primario-mv); }
+        .reader-title-header h3 { font-size: 1.2em; color: var(--texto-secundario); margin-top: 5px; font-weight: normal; }
+
+        .reader-controls-panel {
+            background-color: var(--fundo-elemento); 
+            color: var(--texto-primario);
+            padding: 12px 18px; margin-bottom: 25px;
+            border-radius: var(--raio-borda-mv); box-shadow: var(--sombra-mv);
+            display: flex; flex-wrap: wrap; gap: 10px 20px;
+            align-items: center; justify-content: center; font-size: 0.9em;
+            border: 1px solid var(--borda-elemento);
+        }
+        .control-group { display: flex; align-items: center; gap: 8px; }
+        .control-group label { margin-right: 5px; font-weight: 500; color: inherit; } /* Herda cor do painel */
+        .control-group button, .control-group select {
+            padding: 7px 10px; border: 1px solid var(--borda-elemento);
+            background-color: var(--fundo-elemento); color: var(--texto-primario);
+            border-radius: var(--raio-borda-mv); cursor: pointer; font-size: 0.95em;
+        }
+        .control-group button:hover, .control-group select:hover { border-color: var(--cor-azul-primario-mv); }
+        
+        .audio-player-reader { margin-bottom: 25px; border-bottom: 1px solid var(--borda-elemento); padding-bottom: 25px;}
+        .audio-player-reader audio { width: 100%; }
+        .audio-player-reader p { margin-bottom: 8px; font-size: 0.9em; color: var(--texto-secundario); }
+
+        .capitulo-reader-gr { margin-bottom: 15px; padding: 15px; border: 2px solid transparent; 
+            border-radius: var(--raio-borda-mv); cursor: pointer; transition: background-color 0.3s, border-color 0.3s;
+        }
+        /* :hover e .active-segment são definidos pelas classes de tema do leitor */
+        .capitulo-reader-gr h3.cap-title { font-size: 1.6em; margin-bottom: 8px; font-weight: 600; } 
+        .capitulo-reader-gr h4.cap-subtitle { font-size: 1.3em; margin-bottom: 20px; opacity: 0.85; font-style: italic; } 
+        
+        .eng-paragraph-interactive { margin-bottom: 0.3em; cursor: pointer; padding: 3px 0; line-height: inherit; font-size: inherit; }
+        /* :hover definido pelas classes de tema do leitor */
+        .eng-paragraph-interactive.active-para-audio { font-weight: bold; color: var(--cor-secundaria); }
+
+        .pt-translation-inline {
+            font-size: 0.9em; 
+            line-height: 1.6; 
+            margin-left: 25px; 
+            margin-top: 0.1em;
+            margin-bottom: 1.5em; 
+            padding: 10px 15px;
+            border-left: 4px solid var(--cor-secundaria); 
+            border-radius: 0 var(--raio-borda-mv) var(--raio-borda-mv) 0;
+            display: none; 
+            animation: fadeInTranslation 0.4s;
+            /* Fundo e cor do texto são aplicados pelas classes de tema do leitor */
+        }
+        @keyframes fadeInTranslation { from { opacity: 0; } to { opacity: 1; } }
+
+        .download-pdf-reader-final { display: block; text-align: center; margin: 30px 0 10px 0; }
+        .download-pdf-reader-final a {
+            padding: 10px 18px; background-color: var(--cor-secundaria);
+            color: white; text-decoration: none;
+            border-radius: var(--raio-borda-mv); font-weight: 500;
+        }
+         .download-pdf-reader-final a:hover { background-color: #17a589; }
+
+        @media (max-width: 768px) {
+            .reader-main-content { padding: 20px 15px; max-width: 100%; }
+            .reader-controls-panel { flex-direction: column; align-items: stretch; gap: 10px; }
+            .control-group { justify-content: space-between; margin-bottom: 5px; }
+            .control-group label { margin-right: 10px; }
+            .control-group button, .control-group select { width: auto; flex-grow: 1; margin-left: 5px; }
+            .control-group button:first-of-type { margin-left: 0; }
+            .capitulo-reader-gr p { font-size: 1em; } 
+            .pt-translation-inline { font-size: 0.9em; margin-left: 10px;}
+            .reader-title-header h2 { font-size: 1.8em; }
+            .reader-title-header h3 { font-size: 1.1em; }
+            .capitulo-reader-gr h3.cap-title { font-size: 1.4em; }
+            .capitulo-reader-gr h4.cap-subtitle { font-size: 1.1em; }
+        }
+    </style>
+</head>
+<body class="tema-claro"> <div class="reader-page-wrapper theme-reader-claro"> <header class="site-header-mv">
+            <div class="header-mv-container">
+                <div class="logo-area-mv"><img src="assets/logo-curso.png" alt="Logo Curso" id="logo-curso-mv"></div>
+                <nav class="menu-principal-mv">
+                    <a href="index.html">Home</a>
+                    <a href="#">Meu Perfil</a>
+                    <a href="extras.html" class="active">Extras</a>
+                    <a href="playlist.html">Playlist</a>
+                </nav>
+                <div class="user-actions-mv"><button id="btn-toggle-tema-global" class="btn-mv btn-tema">Tema Global</button><img src="assets/flag-usa.png" alt="Idioma USA" class="flag-icon-mv"><div class="user-profile-mv"><span>Bem vindo(a)!</span></div></div>
+            </div>
+        </header>
+
+        <div id="user-selection-overlay" class="user-selection-overlay-container hidden">
+             <div class="user-selection-box">
+                <h2>Quem está estudando?</h2>
+                <p>Por favor, <a href="index.html" style="color: var(--cor-azul-primario-mv);">selecione um usuário</a> para acessar este conteúdo.</p>
+            </div>
+        </div>
+
+        <main class="container page-content">
+            <article class="reader-main-content">
+                <div class="reader-title-header">
+                    <h2>Six Sketches</h2>
+                    <h3>Leslie Dunkling</h3>
+                </div>
+
+                <div class="reader-controls-panel">
+                    <div class="control-group">
+                        <label for="fontSizeControls">Fonte (Tamanho):</label>
+                        <button id="decreaseReaderFont" title="Diminuir Fonte">-A</button>
+                        <button id="increaseReaderFont" title="Aumentar Fonte">A+</button>
+                    </div>
+                    <div class="control-group">
+                        <label for="fontFamilySelectReader">Fonte (Tipo):</label>
+                        <select id="fontFamilySelectReader">
+                            <option value="font-serif">Serifada (Padrão)</option>
+                            <option value="font-sans-serif">Sem Serifa</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label for="themeSelectReaderLocal">Tema de Leitura:</label>
+                        <select id="themeSelectReaderLocal">
+                            <option value="theme-reader-claro">Claro</option>
+                            <option value="theme-reader-sepia">Sépia</option>
+                            <option value="theme-reader-escuro">Escuro</option>
+                        </select>
+                    </div>
+                     <div class="control-group">
+                        <label for="lineHeightSelectReader">Espaç. Linhas:</label>
+                        <select id="lineHeightSelectReader">
+                            <option value="1.6">Pequeno</option>
+                            <option value="1.8">Médio (Padrão)</option>
+                            <option value="2.0">Grande</option>
+                            <option value="2.2">Extra Grande</option>
+                        </select>
+                    </div>
+                     <div class="control-group">
+                        <label for="textWidthSelectReader">Largura Texto:</label>
+                        <select id="textWidthSelectReader">
+                            <option value="600px">Pequena</option>
+                            <option value="700px">Média (Padrão)</option>
+                            <option value="800px">Grande</option>
+                            <option value="90%">Fluida</option> </select>
+                    </div>
+                </div>
+                
+                <div class="audio-player-reader">
+                    <p>Ouça a história completa (Duração: 20:05):</p>
+                    <audio id="full-reader-audio" controls controlsList="nodownload" style="width:100%;">
+                        <source src="https://res.cloudinary.com/dkkjrtbsv/video/upload/v1749090236/Six_Sketches_p3v8v9.mp3" type="audio/mpeg">
+                        Seu navegador não suporta o elemento de áudio.
+                    </audio>
+                </div>
+
+                <div class="download-pdf-reader-final">
+                    <a href="assets/pdfs/graded_readers/six_sketches_texto.pdf" download="Six_Sketches_Texto_Completo.pdf">Baixar PDF da História</a>
+                </div>
+
+                <div id="reader-text-display">
+                    <p style="text-align: center; color: var(--texto-secundario);">Carregando texto...</p>
+                </div>
+            </article>
+        </main>
+
+        <footer class="site-footer-mv">
+           <div class="footer-mv-container"><p>PROJETO BILINGUE AMANDA & RAFAEL © 2024-2025</p><nav><a href="#">Termos de uso</a> -<a href="#">Política de privacidade</a></nav></div>
+        </footer>
+
+    </div> <script src="js/script.js"></script> 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUserReader = localStorage.getItem('currentUserProjetoBilingue');
+            const userSelectionOverlayReader = document.getElementById('user-selection-overlay');
+            const corpoSite = document.body; 
+            const readerPageWrapper = document.querySelector('.reader-page-wrapper');
+            const readerMainContent = document.querySelector('.reader-main-content');
+
+            // Lógica de Tema Global do Site (afeta o body)
+            const btnToggleTemaGlobalReader = document.querySelector('#btn-toggle-tema-global');
+            function aplicarTemaGlobalSalvo() {
+                const temaSalvo = localStorage.getItem('temaProjetoBilingue') || 'tema-claro';
+                corpoSite.className = temaSalvo; // Define o tema global no body
+                // O tema do leitor é aplicado separadamente ao readerPageWrapper
+                aplicarEstilosLeitorPrefs(); 
+            }
+            function alternarTemaGlobal() {
+                const temaAtual = corpoSite.classList.contains('tema-claro') ? 'tema-claro' : 'tema-escuro';
+                const novoTema = temaAtual === 'tema-claro' ? 'tema-escuro' : 'tema-claro';
+                corpoSite.classList.remove(temaAtual);
+                corpoSite.classList.add(novoTema);
+                localStorage.setItem('temaProjetoBilingue', novoTema);
+            }
+            if (btnToggleTemaGlobalReader) {
+                btnToggleTemaGlobalReader.addEventListener('click', alternarTemaGlobal);
+            }
+            
+
+            if (!currentUserReader && userSelectionOverlayReader) {
+                userSelectionOverlayReader.classList.remove('hidden');
+                corpoSite.style.overflow = 'hidden';
+                if (readerPageWrapper) readerPageWrapper.style.display = 'none';
+                return; 
+            } else if (userSelectionOverlayReader) {
+                 userSelectionOverlayReader.classList.add('hidden');
+                 corpoSite.style.overflow = 'auto';
+                 if (readerPageWrapper) readerPageWrapper.style.display = 'block'; // Alterado para block
+                 const userDisplay = document.querySelector('.user-profile-mv span');
+                 if (userDisplay && currentUserReader) {
+                    userDisplay.textContent = `Bem vindo(a), ${currentUserReader === 'rafael' ? 'Rafael' : 'Amanda'}!`;
+                 }
+            }
+
+            const audioPlayer = document.getElementById('full-reader-audio');
+            const readerTextDisplay = document.getElementById('reader-text-display');
+            
+            const decreaseFontBtn = document.getElementById('decreaseReaderFont');
+            const increaseFontBtn = document.getElementById('increaseReaderFont');
+            const themeSelectReaderEl = document.getElementById('themeSelectReaderLocal');
+            const fontFamilySelectReader = document.getElementById('fontFamilySelectReader');
+            const lineHeightSelectReader = document.getElementById('lineHeightSelectReader');
+            const textWidthSelectReader = document.getElementById('textWidthSelectReader');
+
+            let readerPrefs = JSON.parse(localStorage.getItem(`readerPrefs_${currentUserReader}_sixsketches`)) || {
+                fontSize: 1.1, 
+                theme: 'theme-reader-claro', 
+                fontFamily: 'font-serif', 
+                lineHeight: "1.8",
+                textWidth: '700px'
+            };
+
+            function aplicarEstilosLeitorPrefs() {
+                if (readerMainContent) {
+                    readerMainContent.style.setProperty('--reader-font-size-current', `${readerPrefs.fontSize}em`);
+                    readerMainContent.style.setProperty('--reader-font-family-current', (readerPrefs.fontFamily === 'font-serif') ? 'Georgia, "Times New Roman", Times, serif' : '"Helvetica Neue", Helvetica, Arial, sans-serif');
+                    readerMainContent.style.setProperty('--reader-line-height-current', readerPrefs.lineHeight);
+                    readerMainContent.style.setProperty('--reader-text-width-current', readerPrefs.textWidth);
+                }
+                
+                if (readerPageWrapper) {
+                    readerPageWrapper.classList.remove('theme-reader-claro', 'theme-reader-sepia', 'theme-reader-escuro');
+                    readerPageWrapper.classList.add(readerPrefs.theme);
+                }
+                
+                if (themeSelectReaderEl) themeSelectReaderEl.value = readerPrefs.theme;
+                if (fontFamilySelectReader) fontFamilySelectReader.value = readerPrefs.fontFamily;
+                if (lineHeightSelectReader) lineHeightSelectReader.value = readerPrefs.lineHeight;
+                if (textWidthSelectReader) textWidthSelectReader.value = readerPrefs.textWidth;
+            }
+            
+            function salvarPrefsLeitor() {
+                localStorage.setItem(`readerPrefs_${currentUserReader}_sixsketches`, JSON.stringify(readerPrefs));
+            }
+
+            if (decreaseFontBtn) {
+                decreaseFontBtn.addEventListener('click', () => {
+                    if (readerPrefs.fontSize > 0.7) { 
+                        readerPrefs.fontSize = parseFloat((readerPrefs.fontSize - 0.1).toFixed(1));
+                        salvarPrefsLeitor(); aplicarEstilosLeitorPrefs();
+                    }
+                });
+            }
+            if (increaseFontBtn) {
+                increaseFontBtn.addEventListener('click', () => {
+                    if (readerPrefs.fontSize < 2.5) { 
+                        readerPrefs.fontSize = parseFloat((readerPrefs.fontSize + 0.1).toFixed(1));
+                        salvarPrefsLeitor(); aplicarEstilosLeitorPrefs();
+                    }
+                });
+            }
+            if (themeSelectReaderEl) {
+                themeSelectReaderEl.addEventListener('change', function() {
+                    readerPrefs.theme = this.value;
+                    salvarPrefsLeitor(); aplicarEstilosLeitorPrefs();
+                });
+            }
+            if (fontFamilySelectReader) {
+                fontFamilySelectReader.addEventListener('change', function() {
+                    readerPrefs.fontFamily = this.value;
+                    salvarPrefsLeitor(); aplicarEstilosLeitorPrefs();
+                });
+            }
+            if (lineHeightSelectReader) {
+                lineHeightSelectReader.addEventListener('change', function() {
+                    readerPrefs.lineHeight = this.value;
+                    salvarPrefsLeitor(); aplicarEstilosLeitorPrefs();
+                });
+            }
+            if (textWidthSelectReader) {
+                textWidthSelectReader.addEventListener('change', function() {
+                    readerPrefs.textWidth = this.value;
+                    salvarPrefsLeitor(); aplicarEstilosLeitorPrefs();
+                });
+            }
+            
+            aplicarTemaGlobalSalvo(); // Aplica tema global primeiro
+            aplicarEstilosLeitorPrefs(); // Depois aplica tema do leitor e fontes
+
+            function cueTimeToSeconds(timeStr) {
+                const parts = timeStr.split(':');
+                if (parts.length < 3) { console.error("Formato de tempo CUE inválido:", timeStr); return 0; }
+                const minutes = parseInt(parts[0], 10) || 0;
+                const seconds = parseInt(parts[1], 10) || 0;
+                const frames = parseInt(parts[2], 10) || 0;
+                return (minutes * 60) + seconds + (frames / 75); 
+            }
+            
+            const sixSketchesData = {
+                // !!! SUBSTITUA 'URL_AUDIO_SIX_SKETCHES_CLOUDINARY' PELO SEU LINK REAL !!!
+                audioSrc: "https://res.cloudinary.com/dkkjrtbsv/video/upload/v1749090236/Six_Sketches_p3v8v9.mp3", 
+                totalDuration: 1205, 
+                chapters: [
+                    {
+                        id: "track01_ss", titleEng: "SKETCH ONE", subtitleEng: "I'm Right!", startTimeCue: "00:00:00",
+                        textEng: `NARRATOR We are on a train, and here comes the ticket inspector.\n\nINSPECTOR Tickets, please. Your tickets, please.\n\nMAN Here you are.\n\nINSPECTOR Thank you, sir. (To the woman) Your ticket, please, madam.\n\nWOMAN Oh, yes. Here you are.\n\nINSPECTOR Thank you, madam. Tickets, please.\n\nNORMA Colin! The tickets!\n\nCOLIN You've got them, Norma. They're in your bag.\n\nNORMA No they're not. You've got them.\n\nCOLIN No, my love. I'm sorry, but you're wrong.\n\nNORMA Colin, I am never wrong. I have not got the tickets. Look - they're not in my bag. (To the ticket inspector) I'm sorry, Inspector.\n\nINSPECTOR Have you got the tickets, sir?\n\nNORMA Yes, he has. Look in your coat, Colin. (He looks.) No, not there. You're looking in the wrong place.\n\nCOLIN Here, then. Oh! What are these?\n\nCOLIN No, Norma, you're wrong. These are old tickets. They're for the wrong day.\n\nNORMA Oh! But Colin, you have got our train tickets. Look again.\n\nCOLIN Why? I haven't got the tick... Oh!\n\nNORMA What are they?\n\nCOLIN The train tickets.\n\nNORMA Ah! You see?\n\nCOLIN I'm sorry, my love. You're right and I'm wrong.\n\nNORMA (She smiles.) I'm always right, Colin.\n\nCOLIN Yes, Norma. Here you are, Inspector.\n\nINSPECTOR Thank you, sir.\n\nNORMA We're going to a wedding, Inspector. We're going to my sister's wedding, in Winchester. Those are two tickets to Winchester.\n\nINSPECTOR Yes, that's right, madam. These are two tickets to Winchester.\n\nCOLIN She's always right, Inspector.\n\nINSPECTOR (He smiles.) Not always, sir.\n\nNORMA What?\n\nINSPECTOR This train doesn't go to Winchester, madam. They're the right tickets, but you're on the wrong train.`,
+                        textPt: `NARRADOR Estamos em um trem, e aí vem o fiscal.\n\nINSPETOR Ingressos, por favor. Seus ingressos, por favor.\n\n این مرد اینجاست\n\nINSPETOR Obrigado, senhor. (Para a mulher) Sua passagem, por favor, senhora.\n\nMULHER Ah, sim. Aqui está.\n\nINSPETOR Obrigado, senhora. Ingressos, por favor.\n\nNORMA Colin! Os ingressos!\n\nCOLIN Você os tem, Norma. Estão na sua bolsa.\n\nNORMA Não, não são. Você os tem.\n\nCOLIN Não, meu amor. Sinto muito, mas você está errada.\n\nNORMA Colin, eu nunca me engano. Não tenho os ingressos. Olha, eles não estão na minha bolsa. (Para o fiscal) Desculpe, inspetor.\n\nINSPETOR O senhor tem os ingressos?\n\nNORMA Sim, ele tem. Olhe no seu casaco, Colin. (Ele olha.) Não, não está aí. Você está procurando no lugar errado.\n\nCOLIN Aqui, então. Ah! O que é isso?\n\nCOLIN Não, Norma, você está errada. Estes ingressos são antigos. São para o dia errado.\n\nNORMA Ah! Mas Colin, você conseguiu nossas passagens de trem. Olhe de novo.\n\nCOLIN Por quê? Eu não tenho o carrapato... Ah!\n\nNORMA O que são?\n\nCOLIN As passagens de trem.\n\nNORMA Ah! Viu?\n\nCOLIN Desculpe, meu amor. Você está certa e eu errado.\n\nNORMA (Ela sorri.) Estou sempre certa, Colin.\n\nCOLIN Sim, Norma. Aqui está, Inspetor.\n\nINSPETOR Obrigado, senhor.\n\nNORMA Vamos a um casamento, Inspetor. Vamos ao casamento da minha irmã, em Winchester. Essas são duas passagens para Winchester.\n\nINSPETOR Sim, é isso mesmo, senhora. Estas são duas passagens para Winchester.\n\nCOLIN Ela está sempre certa, Inspetor.\n\nINSPETOR (Ele sorri.) Nem sempre, senhor.\n\nNORMA O quê?\n\nINSPETOR Este trem não vai para Winchester, senhora. São as passagens certas, mas a senhora está no trem errado.`
+                    },
+                    {
+                        id: "track02_ss", titleEng: "SKETCH TWO", subtitleEng: "A Good Story", startTimeCue: "02:29:76",
+                        textEng: `NARRATOR We are in Mrs Price's house. She is with Mrs Roberts, and the two women are drinking coffee. Mrs Price's three children come into the room.\n\nMRS PRICE Ah, these are my children, Mrs Roberts.\n\nThat's John. He's a quiet boy.\n\nJOHN Hello, Mrs Roberts.\n\nMRS ROBERTS (She smiles.) Hello, John.\n\nMRS PRICE And this is my daughter Tracy.\n\nTRACY Hello.\n\nMRS ROBERTS Hello, Tracy.\n\nMRS PRICE And that's my son Michael. (She smiles.) He's not quiet.\n\nMICHAEL Hello, Mrs Roberts.\n\nMRS ROBERTS Hello, Michael.\n\nMICHAEL Excuse me, Mrs Roberts - can you tell stories?\n\nMRS ROBERTS Stories?\n\nMICHAEL Yes. Good stories.\n\nMRS ROBERTS No. No, I can't.\n\nMICHAEL I can tell good stories.\n\nMRS ROBERTS Can you? And you, John - what can you do?\n\nJOHN I can paint. Look - this is my picture.\n\nMRS ROBERTS Ah, yes. A town, with houses and buildings.\n\nJOHN That's a bank, and there's a cinema.\n\nMRS ROBERTS That's right. I can see the bank and the cinema. Yes, I like your picture, John. You paint well. Can you paint, Tracy?\n\nTRACY Yes. This is my picture. Look.\n\nMRS ROBERTS Yes, I see. A train in a station. That's very good, too.\n\nMICHAEL This is my picture, Mrs Roberts. Do you like it? Is it good?\n\nMRS ROBERTS Oh!\n\nMRS PRICE What is your picture, Michael? I'm sorry, but I don't understand it.\n\nMRS ROBERTS And I don't understand it, Michael.\n\nMICHAEL It's an animal - a thing.\n\nMRS ROBERTS A thing?\n\nMICHAEL Yes.\n\nMRS ROBERTS But Michael, it's got seven blue legs and three yellow eyes!\n\nMICHAEL Yes, and it's walking across your foot now. Look!\n\nMRS ROBERTS What?\n\nNARRATOR Mrs Roberts stands up quickly. Her face is white.\n\nMICHAEL Ha, ha! I can't paint, Mrs Roberts, but I can tell a good story.`,
+                        textPt: `NARRADOR Estamos na casa da Sra. Price. Ela está com a Sra. Roberts, e as duas mulheres estão tomando café. Os três filhos da Sra. Price entram na sala.\n\nSRA. PRICE Ah, esses são meus filhos, Sra. Roberts.\n\nEsse é o John. Ele é um garoto quieto.\n\nJOHN Olá, Sra. Roberts.\n\nSRA. ROBERTS (Ela sorri.) Olá, John.\n\nSRA. PRICE E esta é minha filha Tracy.\n\nTRACY Olá.\n\nSRA. ROBERTS Olá, Tracy.\n\nSRA. PRICE E esse é meu filho Michael. (Ela sorri.) Ele não é quieto.\n\nMICHAEL Olá, Sra. Roberts.\n\nSRA. ROBERTS Olá, Michael.\n\nMICHAEL Com licença, Sra. Roberts - a senhora sabe contar histórias?\n\nHistórias da SRA. ROBERTS?\n\nMICHAEL Sim. Boas histórias.\n\nSRA. ROBERTS Não. Não, não posso.\n\nMICHAEL Eu sei contar boas histórias.\n\nSRA. ROBERTS Você consegue? E você, John, o que consegue fazer?\n\nJOHN Eu sei pintar. Olha, este é o meu desenho.\n\nSRA. ROBERTS Ah, sim. Uma cidade, com casas e prédios.\n\nJOHN É um banco e tem um cinema.\n\nSRA. ROBERTS: Isso mesmo. Consigo ver o banco e o cinema. Sim, gostei do seu quadro, John. Você pinta bem. Você sabe pintar, Tracy?\n\nTRACY Sim. Esta é a minha foto. Olha.\n\nSRA. ROBERTS: Sim, entendi. Um trem na estação. Isso também é muito bom.\n\nMICHAEL Esta é a minha foto, Sra. Roberts. Você gostou? É boa?\n\nSRA. ROBERTS Oh!\n\nSRA. PRICE Qual é a sua imagem, Michael? Desculpe, mas não entendi.\n\nSRA. ROBERTS E eu não entendo isso, Michael.\n\nMICHAEL É um animal - uma coisa.\n\nSRA. ROBERTS Uma coisa?\n\nMICHAEL Sim.\n\nSRA. ROBERTS Mas Michael, ele tem sete pernas azuis e três olhos amarelos!\n\nMICHAEL Sim, e agora está passando pelo seu pé. Olha!\n\nSRA. ROBERTS O quê?\n\nNARRADOR A Sra. Roberts se levanta rapidamente. Seu rosto está pálido.\n\nMICHAEL Ha, ha! Eu não sei pintar, Sra. Roberts, mas sei contar uma boa história.`
+                    },
+                    {
+                        id: "track03_ss", titleEng: "SKETCH THREE", subtitleEng: "Cheese!", startTimeCue: "05:18:46",
+                        textEng: `NARRATOR We are in Mr Smith's shop. Mr Smith is talking to a woman.\n\nMRS ARCHER Six eggs please, Mr Smith. Brown eggs.\n\nMR SMITH Six brown eggs. Here you are, Mrs Archer.\n\nNARRATOR Mrs Archer gives Mr Smith the money for the eggs.\n\nMR SMITH Thank you. Goodbye.\n\nMRS ARCHER Goodbye.\n\nMRS CLARK Hello, Mr Smith.\n\nMR SMITH Hello, Mrs Clark. What can I do for you today?\n\nMRS CLARK I want some coffee, please. Good coffee. I like strong coffee.\n\nMR SMITH Good coffee. Have I got good, strong coffee? Ah, yes. This is very strong coffee.\n\nMRS CLARK Oh, good.\n\nMR SMITH Here you are. And it's not expensive.\n\nMRS CLARK Good!\n\nNARRATOR Mrs Clark goes, and a man comes into the shop.\n\nMR SMITH Oh, hello, sir. Your cheese, sir? You want your cheese?\n\nMAN Yes, please.\n\nMR SMITH You always buy cheese.\n\nMAN Yes.\n\nMR SMITH You like cheese?\n\nMAN No, I don't like it.\n\nMR SMITH No? But I don't understand, sir. You buy cheese from me every day.\n\nMAN Yes. I buy it, but I don't like it. I don't eat it.\n\nNARRATOR Mr Smith puts the cheese in a bag. He gives the bag to the man and looks at him. The man smiles.\n\nMAN I'm a photographer.\n\nMR SMITH Oh, yes?\n\nMAN Yes. Every day I take photographs of men, women and children. People like my photographs. They're good. The people in them are always happy and smiling.\n\nMR SMITH That's good, sir.\n\nMAN But the people aren't smiling. They're saying 'Cheese!'\n\nMR SMITH Oh?\n\nMAN Yes. People come to me for their photographs, and they're nervous.\n\nMR SMITH Yes, I can understand that. I'm always nervous too.\n\nMAN And nervous people don't smile. But I put some cheese on a table and I say, 'What's that?' And what do they say? They say, 'Cheese!' They say 'cheese' and smile. They can't say 'cheese' and not smile. You can't say 'cheese' and not smile.\n\nMR SMITH Cheese.\n\nMAN I'm right. You're smiling.\n\nMR SMITH Oh, yes!\n\nMAN Be happy, Mr Smith. Smile at the people in your shop. People always like a smile. Say 'cheese' to them.\n\nMR SMITH Yes, sir. Thank you.\n\nMAN Goodbye.\n\nMR SMITH Goodbye, sir. And thanks again.\n\nMRS DAVIS Good morning, Mr Smith.\n\nMR SMITH Cheese, Mrs Davis.\n\nMRS DAVIS No, thank you. Six white eggs, please.\n\nMR SMITH Yes, Mrs Davis. Cheese.\n\nMRS DAVIS No, Mr Smith. Six white eggs...`,
+                        textPt: `NARRADOR Estamos na loja do Sr. Smith. O Sr. Smith está conversando com uma mulher.\n\nSRA. ARCHER Seis ovos, por favor, Sr. Smith. Ovos marrons.\n\nSR. SMITH Seis ovos marrons. Aqui está, Sra. Archer.\n\nNARRADOR A Sra. Archer dá ao Sr. Smith o dinheiro para comprar os ovos.\n\nSR. SMITH Obrigado. Adeus.\n\nSRA. ARCHER Adeus.\n\nSRA. CLARK Olá, Sr. Smith.\n\nSR. SMITH Olá, Sra. Clark. O que posso fazer por você hoje?\n\nSRA. CLARK: Quero um café, por favor. Um bom café. Gosto de café forte.\n\nSR. SMITH Bom café. Tenho um café bom e forte? Ah, sim. Este café é muito forte.\n\nSRA. CLARK Ah, ótimo.\n\nSR. SMITH Aqui está. E não é caro.\n\nSRA. CLARK Ótimo!\n\nNARRADOR A Sra. Clark sai e um homem entra na loja.\n\nSR. SMITH Olá, senhor. Seu queijo, senhor? Quer seu queijo?\n\nHOMEM Sim, por favor.\n\nSR. SMITH Você sempre compra queijo.\n\nHOMEM Sim.\n\nSR. SMITH Você gosta de queijo?\n\nHOMEM Não, eu não gosto.\n\nSR. SMITH Não? Mas eu não entendo, senhor. O senhor compra queijo de mim todos os dias.\n\nHOMEM Sim. Eu compro, mas não gosto. Eu não como.\n\nNARRADOR O Sr. Smith coloca o queijo em um saco. Ele o entrega ao homem e olha para ele. O homem sorri.\n\nCARA Eu sou fotógrafo.\n\nSR. SMITH Ah, é mesmo?\n\nHOMEM Sim. Todos os dias fotografo homens, mulheres e crianças. As pessoas gostam das minhas fotos. Elas são boas. As pessoas nelas estão sempre felizes e sorridentes.\n\nSR. SMITH Isso é bom, senhor.\n\nHOMEM Mas as pessoas não estão sorrindo. Elas estão dizendo "Xis!"\n\nSR. SMITH Ah?\n\nHOMEM Sim. As pessoas vêm até mim para tirar fotos e ficam nervosas.\n\nSR. SMITH Sim, eu entendo. Eu também estou sempre nervoso.\n\nHOMEM E pessoas nervosas não sorriem. Mas eu coloco um pouco de queijo na mesa e pergunto: "O que é isso?" E o que elas dizem? Elas dizem: "Queijo!" Elas dizem "queijo" e sorriem. Elas não podem dizer "queijo" e não sorrir. Você não pode dizer "queijo" e não sorrir.\n\nSR. SMITH Queijo.\n\nCARA, estou certo. Você está sorrindo.\n\nSR. SMITH Ah, sim!\n\nHOMEM Seja feliz, Sr. Smith. Sorria para as pessoas na sua loja. As pessoas sempre gostam de um sorriso. Diga "xis" para elas.\n\nSR. SMITH Sim, senhor. Obrigado.\n\nHOMEM Adeus.\n\nSR. SMITH Adeus, senhor. E obrigado novamente.\n\nSRA. DAVIS Bom dia, Sr. Smith.\n\nSR. SMITH Cheese, Sra. Davis.\n\nSRA. DAVIS Não, obrigada. Seis ovos brancos, por favor.\n\nSR. SMITH Sim, Sra. Davis. Queijo.\n\nSRA. DAVIS Não, Sr. Smith. Seis ovos brancos...`
+                    },
+                    {
+                        id: "track04_ss", titleEng: "SKETCH FOUR", subtitleEng: "A Good Match", startTimeCue: "09:17:74",
+                        textEng: `NARRATOR The Green family are watching television.\n\nMr and Mrs Green are in the room with their son, Peter. Their daughter, Susan, comes in. She is with her boyfriend, David.\n\nSUSAN Hello, Mother, Father. This is David, David Jones.\n\nMRS GREEN Hello, David.\n\nDAVID Hello.\n\nSUSAN And that's Peter, my brother.\n\nPETER Hello. Is David your new boyfriend, Susan?\n\nSUSAN Be quiet, Peter!\n\nPETER Are you a football supporter, David?\n\nDAVID Yes, I am.\n\nPETER We're going to watch the match. Rovers are playing United.\n\nMR GREEN Sit down, David. Watch the match with us.\n\nDAVID Thanks.\n\nPETER We support Rovers. Do you support them, David?\n\nDAVID Er - no. I support United.\n\nSUSAN Oh!\n\nPETER You support United! A United supporter - here in this house!\n\nMRS GREEN Be quiet, Peter! Watch the television. Listen to the commentator.\n\nCOMMENTATOR Hello. This is Brian Hunter. I'm your commentator this afternoon. This is going to be a good match - yes, a very good match! Listen. You can hear the Rovers supporters.\n\nR SUPPORTERS Ro - vers!\n\nCOMMENTATOR And the United supporters are here too...\n\nR SUPPORTERS U - ni - ted! U - ni - ted!\n\nNARRATOR The Green family and David watch the match and listen to the commentator.\n\nCOMMENTATOR Smith has the ball. Now Brown has it. Brown shoots. It's a goal!\n\nR SUPPORTERS Goal!\n\nCOMMENTATOR Rovers one - United nil.\n\nPETER One-nil to Rovers, David. What do you think of your boys now?\n\nNARRATOR And later the commentator says...\n\nCOMMENTATOR Johnson gives the ball to Roberts. Roberts is going to shoot. No - the ball goes to Miller. Miller shoots, and yes! Goal!\n\nR SUPPORTERS Goal!\n\nCOMMENTATOR Rovers two, United nil.\n\nPETER Two-nil! Two-nil to Rovers, David.\n\nNARRATOR Susan and her brother are happy. David isn't very happy. But Rovers and United are playing again, and now United score. u SUPPORTERS Goal!\n\nPETER Oh, no!\n\nDAVID Two-one. That's good, United.\n\nNARRATOR And later United score again.\n\nDAVID Rovers two, United two!\n\nCOMMENTATOR This is a very good match!\n\nNARRATOR It is a good match, but Rovers and United don't score again.\n\nMR GREEN Two-two. The Rovers and United matches are always two-two or one-one.\n\nPETER But they're always good matches.\n\nSUSAN OK, we're going now, Mother. David and I are going to the cinema.\n\nPETER But Susan, your boyfriend supports United. You can't go to the cinema with him.\n\nMRS GREEN Be quiet, Peter!\n\nDAVID But Peter, that's good.\n\nPETER What is?\n\nDAVID Susan is a Rovers supporter, I'm a United supporter. Rovers and United - that's a good match. (Mr and Mrs Green smile.)\n\nNARRATOR It is a year later. Susan and David are very nervous. Today is their wedding day.\n\nSusan Green is going to be Mrs Jones.\n\nAnd what do their friends say?\n\nALL This is a good match!`,
+                        textPt: `NARRADOR A família Green está assistindo televisão.\n\nO Sr. e a Sra. Green estão na sala com o filho, Peter. A filha, Susan, entra. Ela está com o namorado, David.\n\nSUSAN Olá, mãe, pai. Este é David, David Jones.\n\nSRA. GREEN Olá, David.\n\nDAVID Olá.\n\nSUSAN E esse é Peter, meu irmão.\n\nPETER Olá. David é seu novo namorado, Susan?\n\nSUSAN Fique quieto, Peter!\n\nPETER Você é torcedor de futebol, David?\n\nDAVID Sim, sou eu.\n\nPETER Vamos assistir ao jogo. O Rovers vai jogar contra o United.\n\nSR. GREEN Sente-se, David. Assista à partida conosco.\n\nDAVID Obrigado.\n\nPETER Nós apoiamos o Rovers. Você apoia eles, David?\n\nDAVID Er - não. Eu torço para o United.\n\nSUSAN Ah!\n\nPETER Você torce para o United! Um torcedor do United — aqui nesta casa!\n\nSRA. GREEN: Fique quieto, Peter! Assista à televisão. Ouça o comentarista.\n\nCOMENTISTA Olá. Aqui é Brian Hunter. Sou seu comentarista esta tarde. Vai ser uma boa partida — sim, uma partida muito boa! ​​Escutem. Vocês conseguem ouvir a torcida do Rovers.\n\nAPOIADORES Ro - vers!\n\nCOMENTÁRIO E os torcedores do United também estão aqui...\n\nR APOIADORES U - ni - tado! U - ni - tado!\n\nNARRADOR A família Green e David assistem à partida e ouvem o comentarista.\n\nO COMENTÁRIO Smith está com a bola. Agora Brown está com ela. Brown chuta. É gol!\n\nR APOIADORES Gol!\n\nCOMENTÁRIO Rovers um - United zero.\n\nPETER Um a zero para o Rovers, David. O que você acha dos seus garotos agora?\n\nNARRADOR E mais tarde o comentarista diz...\n\nO COMENTÁRIO Johnson passa a bola para Roberts. Roberts vai chutar. Não, a bola vai para Miller. Miller chuta, e sim! Gol!\n\nR APOIADORES Gol!\n\nCOMENTÁRIO Rovers dois, United zero.\n\nPETER Dois a zero! Dois a zero para o Rovers, David.\n\nNARRADOR Susan e seu irmão estão felizes. David não está muito feliz. Mas Rovers e United estão jogando novamente, e agora o United marca. u TORCEDORES Gol!\n\nPETER Ah, não!\n\nDAVID Dois a um. Isso é bom, United.\n\nNARRADOR E mais tarde o United marca novamente.\n\nDAVID Rovers dois, United dois!\n\nCOMENTÁRIO Esta é uma partida muito boa!\n\nNARRADOR É uma boa partida, mas Rovers e United não marcam mais gols.\n\nSR. GREEN Dois a dois. Os jogos entre Rovers e United são sempre dois a dois ou um a um.\n\nPETER Mas eles sempre combinam bem.\n\nSUSAN Certo, vamos agora, mãe. David e eu vamos ao cinema.\n\nPETER Mas Susan, seu namorado torce para o United. Você não pode ir ao cinema com ele.\n\nSRA. GREEN Fique quieto, Peter!\n\nDAVID Mas Peter, isso é bom.\n\nPETER O que é?\n\nDAVID Susan é torcedora do Rovers, eu sou torcedor do United. Rovers e United - uma boa combinação. (Sr. e Sra. Green sorriem.)\n\nNARRADOR Um ano se passou. Susan e David estão muito nervosos. Hoje é o dia do casamento deles.\n\nSusan Green será a Sra. Jones.\n\nE o que dizem os amigos deles?\n\nTUDO Essa é uma boa combinação!`
+                    },
+                    {
+                        id: "track05_ss", titleEng: "SKETCH FIVE", subtitleEng: "Wedding Day", startTimeCue: "14:14:31",
+                        textEng: `NARRATOR David and his friends are football supporters, but they are not going to a football match today. Today is David's wedding day. In the morning, his friends come to his house.\n\nMARY Hello, David.\n\nDAVID Hello.\n\nJOHN Today's the day!\n\nDAVID Yes.\n\nPAUL Your wedding day!\n\nDAVID Yes.\n\nMARY You can't watch the football match today, David.\n\nDAVID No.\n\nJOHN United are going to score four goals.\n\nPAUL No - it's going to be four-nil to Rovers.\n\nDAVID Four-nil? They can't score goals!\n\nPAUL Oh yes, they can! Rovers always play well.\n\nMARY I don't support United or Rovers.\n\nJOHN And we're not football supporters today. We're supporting David.\n\nPAUL That's right. We're David supporters. Today's his wedding day, and he's nervous.\n\nDAVID Nervous? Me? I'm not nervous. I'm never nervous.\n\nMARY (To John and Paul) His wedding day, and he's not nervous. That's good.\n\nDAVID You can smile, you three, but I am not nervous.\n\nPAUL OK, David, we're wrong.\n\nMARY We understand. You're not nervous.\n\nJOHN (He smiles.) We like your new things, David.\n\nDAVID New things?\n\nPAUL Yes. You've got a new coat.\n\nDAVID Oh - yes.\n\nMARY And an expensive new shirt.\n\nDAVID Yes.\n\nJOHN And we like your new shoes, David.\n\nMARY The new black shoe on your left foot...\n\nPAUL And the new brown shoe on your right foot.\n\nDAVID What?\n\nJOHN Very interesting! One black shoe and one brown shoe!\n\nDAVID Oh, no!\n\nMARY But we understand.\n\nJOHN Yes.\n\nPAUL Today's your wedding day...\n\nDAVID (He smiles.) And I'm nervous!`,
+                        textPt: `NARRADOR David e seus amigos são torcedores de futebol, mas não vão a uma partida de futebol hoje. Hoje é o dia do casamento de David. De manhã, seus amigos vão à sua casa.\n\nMARY Olá, David.\n\nDAVID Olá.\n\nJOHN Hoje é o dia!\n\nDAVID Sim.\n\nPAUL O dia do seu casamento!\n\nDAVID Sim.\n\nMARY Você não pode assistir ao jogo de futebol hoje, David.\n\nDAVID Não.\n\nJOHN United vai marcar quatro gols.\n\nPAUL Não, será quatro a zero para o Rovers.\n\nDAVID Quatro a zero? Eles não sabem fazer gols!\n\nPAUL: Sim, eles podem! O Rovers sempre joga bem.\n\nMARY Eu não torço para o United ou para o Rovers.\n\nJOHN E hoje não somos torcedores de futebol. Somos torcedores do David.\n\nPAULO: Isso mesmo. Somos fãs do David. Hoje é o dia do casamento dele, e ele está nervoso.\n\nDAVID Nervoso? Eu? Não estou nervoso. Nunca fico nervoso.\n\nMARY (Para John e Paul) É o dia do casamento dele, e ele não está nervoso. Que bom.\n\nDAVID Vocês três podem sorrir, mas eu não estou nervoso.\n\nPAUL OK, David, estamos errados.\n\nMARY Nós entendemos. Você não está nervosa.\n\nJOHN (Ele sorri.) Gostamos das suas coisas novas, David.\n\nDAVID Coisas novas?\n\nPAUL Sim. Você tem um casaco novo.\n\nDAVID Ah, sim.\n\nMARY E uma camisa nova e cara.\n\nDAVID Sim.\n\nJOHN E nós gostamos dos seus sapatos novos, David.\n\nMARY O novo sapato preto no seu pé esquerdo...\n\nPAUL E o novo sapato marrom no seu pé direito.\n\nDAVID O quê?\n\nJOHN Muito interessante! Um sapato preto e um sapato marrom!\n\nDAVID Ah, não!\n\nMARY Mas nós entendemos.\n\nJOHN Sim.\n\nPAUL Hoje é o dia do seu casamento...\n\nDAVID (Ele sorri.) E eu estou nervoso!`
+                    },
+                    {
+                        id: "track06_ss", titleEng: "SKETCH SIX", subtitleEng: "The English Teacher", startTimeCue: "17:03:87",
+                        textEng: `NARRATOR Mr Brown is an English teacher. He teaches English every day. Listen to him.\n\nMR BROWN Now, Michel, say an English sentence, please.\n\nMICHEL The ticket inspector is looking at the tickets.\n\nMR BROWN Good. Do you understand that, Rita?\n\nRITA Yes, sir.\n\nMR BROWN Can you say a new sentence, please?\n\nRITA My father is a television commentator.\n\nMR BROWN Yes, good. Do you understand that, Anika\n\nANIKA Yes, sir.\n\nMR BROWN A new sentence, please, Anika.\n\nANIKA I like football.\n\nMR BROWN Good. Do you understand that, Istvan\n\nISTVAN Yes, sir.\n\nMR BROWN Say a new sentence, please.\n\nISTVAN The woman in the shop is buying eggs.\n\nMR BROWN Good. Do you understand that, Paolo\n\nPAOLO Yes, sir.\n\nMR BROWN Can you say a new sentence, please?\n\nPAOLO I can tell good stories.\n\nMR BROWN Yes, good. Do you understand that, Hans\n\nHANS Yes, sir.\n\nMR BROWN A new sentence, please, Hans.\n\nHANS The students are nervous.\n\nMR BROWN Good. Do you understand that, Yuki?\n\nYUKI Yes, sir.\n\nMR BROWN Say a new sentence, please, Yuki.\n\nYUKI Smoke is coming under the door.\n\nMR BROWN Good. Do you understand that, Helena\n\nHELENA Yes, sir.\n\nMR BROWN Give me a new sentence, please, Helena.\n\nHELENA The school is on fire.\n\nMR BROWN Good. Do you understand that, Maria?\n\nMARIA Yes, sir.\n\nMR BROWN Say a sentence, please.\n\nMARIA The school is on fire.\n\nMR BROWN No, a new sentence, please.\n\nMARIA But sir, you don't understand.\n\nThe school is on fire.\n\nMR BROWN I understand, Maria. Smoke is coming under the door. The school is... What? Fire! Go to the door now. Quickly! But don't run! It's a fire!\n\nMARIA Oh, good, sir. Now you understand!\n\n- THE END -`,
+                        textPt: `NARRADOR O Sr. Brown é professor de inglês. Ele ensina inglês todos os dias. Ouça-o.\n\nSR. BROWN Agora, Michel, diga uma frase em inglês, por favor.\n\nMICHEL O fiscal está olhando os bilhetes.\n\nSR. BROWN Ótimo. Você entendeu, Rita?\n\nRITA Sim, senhor.\n\nSR. BROWN Você pode dizer uma frase nova, por favor?\n\nRITA Meu pai é comentarista de televisão.\n\nSR. BROWN Sim, ótimo. Você entende isso, Anika?\n\nANIKA Sim, senhor.\n\nSR. BROWN Uma nova frase, por favor, Anika.\n\nANIKA Eu gosto de futebol.\n\nSR. BROWN Ótimo. Você entendeu isso, Istvan?\n\nISTVAN Sim, senhor.\n\nSR. BROWN Diga uma nova frase, por favor.\n\nISTVAN A mulher na loja está comprando ovos.\n\nSR. BROWN Ótimo. Você entendeu isso, Paolo?\n\nPAOLO Sim, senhor.\n\nSR. BROWN Você pode dizer uma frase nova, por favor?\n\nPAOLO Eu sei contar boas histórias.\n\nSR. BROWN Sim, ótimo. Você entende isso, Hans?\n\nHANS Sim, senhor.\n\nSR. BROWN Uma nova frase, por favor, Hans.\n\nHANS Os alunos estão nervosos.\n\nSR. BROWN Ótimo. Você entendeu isso, Yuki?\n\nYUKI Sim, senhor.\n\nSR. BROWN Diga uma nova frase, por favor, Yuki.\n\nYUKI Smoke está entrando pela porta.\n\nSR. BROWN Ótimo. Você entendeu isso, Helena?\n\nHELENA Sim, senhor.\n\nSR. BROWN Dê-me uma nova frase, por favor, Helena.\n\nHELENA A escola está pegando fogo.\n\nSR. BROWN Ótimo. Você entendeu, Maria?\n\nMARIA Sim, senhor.\n\nSR. BROWN Diga uma frase, por favor.\n\nMARIA A escola está pegando fogo.\n\nSR. BROWN Não, uma nova frase, por favor.\n\nMARIA Mas senhor, o senhor não entende.\n\nA escola está pegando fogo.\n\nSR. BROWN: Entendo, Maria. Tem fumaça entrando por baixo da porta. A escola está... O quê? Fogo! Vá até a porta agora. Rápido! Mas não corra! É um incêndio!\n\nMARIA Ah, ótimo, senhor. Agora você entendeu!\n\n- O FIM -`
+                    }
+                ]
+            };
+
+            if (audioPlayer && readerTextDisplay && sixSketchesData && sixSketchesData.chapters) {
+                if(audioPlayer.currentSrc !== sixSketchesData.audioSrc && sixSketchesData.audioSrc) { 
+                    const sourceTag = audioPlayer.querySelector('source') || document.createElement('source');
+                    sourceTag.src = sixSketchesData.audioSrc;
+                    sourceTag.type = 'audio/mpeg';
+                    if(!audioPlayer.querySelector('source')) { 
+                        audioPlayer.appendChild(sourceTag);
+                    }
+                    audioPlayer.load(); 
+                }
+                
+                readerTextDisplay.innerHTML = ''; 
+                let currentTrackInfo_ss = null; 
+                let activeChapterDiv_ss = null;
+                
+                sixSketchesData.chapters.forEach((chapter, index) => {
+                    chapter.startTimeSeconds = cueTimeToSeconds(chapter.startTimeCue);
+                    if (index < sixSketchesData.chapters.length - 1) {
+                        chapter.endTimeSeconds = cueTimeToSeconds(sixSketchesData.chapters[index + 1].startTimeCue);
+                    } else {
+                        chapter.endTimeSeconds = (audioPlayer.duration > 0 && !isNaN(audioPlayer.duration)) ? audioPlayer.duration : sixSketchesData.totalDuration;
+                    }
+
+                    const chapterDiv = document.createElement('div');
+                    chapterDiv.classList.add('capitulo-reader-gr'); 
+                    chapterDiv.dataset.trackId = chapter.id;
+                    
+                    const titleH3 = document.createElement('h3');
+                    titleH3.textContent = chapter.titleEng;
+                    titleH3.classList.add('cap-title');
+                    chapterDiv.appendChild(titleH3);
+
+                    const subtitleH4 = document.createElement('h4');
+                    subtitleH4.textContent = chapter.subtitleEng;
+                    subtitleH4.classList.add('cap-subtitle');
+                    chapterDiv.appendChild(subtitleH4);
+                    
+                    const engParagraphs = chapter.textEng.split('\n\n');
+                    const ptParagraphs = chapter.textPt.split('\n\n');
+
+                    engParagraphs.forEach((engPText, pIndex) => {
+                        if (engPText.trim() !== "") {
+                            const engPElement = document.createElement('p');
+                            engPElement.classList.add('eng-paragraph-interactive');
+                            engPElement.innerHTML = engPText.trim().replace(/\n/g, '<br>');
+                            chapterDiv.appendChild(engPElement);
+
+                            if (ptParagraphs[pIndex] && ptParagraphs[pIndex].trim() !== "") {
+                                const ptPElement = document.createElement('p');
+                                ptPElement.classList.add('pt-translation-inline');
+                                ptPElement.innerHTML = ptParagraphs[pIndex].trim().replace(/\n/g, '<br>');
+                                chapterDiv.appendChild(ptPElement);
+
+                                engPElement.addEventListener('click', function(event) {
+                                    event.stopPropagation(); 
+                                    const proximaTraducao = this.nextElementSibling;
+                                    if (proximaTraducao && proximaTraducao.classList.contains('pt-translation-inline')) {
+                                        proximaTraducao.style.display = proximaTraducao.style.display === 'block' ? 'none' : 'block';
+                                    }
+                                });
+                            }
+                        }
+                    });
+                    
+                    chapterDiv.addEventListener('click', function() {
+                        document.querySelectorAll('.capitulo-reader-gr.active-segment').forEach(el => el.classList.remove('active-segment'));
+                        // Esconde todas as traduções de parágrafos ao clicar num novo capítulo (para começar limpo)
+                        document.querySelectorAll('.pt-translation-inline').forEach(el => el.style.display = 'none'); 
+                        
+                        this.classList.add('active-segment');
+                        activeChapterDiv_ss = this; 
+                        
+                        if (currentTrackInfo_ss && currentTrackInfo_ss.timeoutId) clearTimeout(currentTrackInfo_ss.timeoutId);
+                        if (audioPlayer.src) { 
+                            audioPlayer.currentTime = chapter.startTimeSeconds;
+                            audioPlayer.play();
+                        }
+                        currentTrackInfo_ss = { id: chapter.id };
+                    });
+                    readerTextDisplay.appendChild(chapterDiv);
+                });
+                
+                if (audioPlayer.src) { 
+                    audioPlayer.addEventListener('loadedmetadata', function() {
+                        if (sixSketchesData.chapters.length > 0) {
+                            const lastChapter = sixSketchesData.chapters[sixSketchesData.chapters.length - 1];
+                            if (audioPlayer.duration > 0 && !isNaN(audioPlayer.duration)) {
+                                lastChapter.endTimeSeconds = audioPlayer.duration;
+                                sixSketchesData.totalDuration = audioPlayer.duration;
+                            }
+                        }
+                    });
+                    audioPlayer.addEventListener('pause', function() { if (currentTrackInfo_ss && currentTrackInfo_ss.timeoutId) clearTimeout(currentTrackInfo_ss.timeoutId); });
+                    audioPlayer.addEventListener('ended', function() {
+                         if(activeChapterDiv_ss) activeChapterDiv_ss.classList.remove('active-segment');
+                         document.querySelectorAll('.pt-translation-inline').forEach(el => el.style.display = 'none');
+                         if (currentTrackInfo_ss && currentTrackInfo_ss.timeoutId) clearTimeout(currentTrackInfo_ss.timeoutId);
+                         currentTrackInfo_ss = null;
+                    });
+                }
+
+            } else {
+                console.error("Elementos ou dados essenciais para o Graded Reader 'Six Sketches' não foram encontrados.");
+                if(readerTextDisplay) readerTextDisplay.innerHTML = "<p style='color: red;'>Erro ao carregar dados do Graded Reader 'Six Sketches'.</p>";
+            }
+        });
+    </script>
+</body>
+</html>

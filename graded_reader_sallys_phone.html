@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graded Reader: Sally's Phone - Projeto Bilíngue</title>
+    <link rel="stylesheet" href="css/style.css"> 
+    <style>
+        /* Estilos Globais para o Leitor */
+        :root {
+            /* Cores Tema Claro Leitor (Padrão) */
+            --reader-bg-claro: #fdfdfd;
+            --reader-texto-claro: #202124;
+            --reader-traducao-texto-claro: #5f6368;
+            --reader-traducao-bg-claro: #f1f3f4;
+            --reader-highlight-hover-claro: rgba(0, 123, 255, 0.08);
+            --reader-capitulo-ativo-bg-claro: #e0f2ff;
+            --reader-capitulo-ativo-borda-claro: var(--cor-azul-primario-mv);
+
+            /* Cores Tema Sépia Leitor */
+            --reader-bg-sepia: #f5e8d5;
+            --reader-texto-sepia: #5b4636;
+            --reader-traducao-texto-sepia: #795548;
+            --reader-traducao-bg-sepia: #e6ddc9;
+            --reader-highlight-hover-sepia: rgba(91, 70, 54, 0.1);
+            --reader-capitulo-ativo-bg-sepia: #dcd0bf;
+            --reader-capitulo-ativo-borda-sepia: #795548;
+
+            /* Cores Tema Escuro Leitor */
+            --reader-bg-escuro: #202124;
+            --reader-texto-escuro: #e8eaed;
+            --reader-traducao-texto-escuro: #bdc1c6;
+            --reader-traducao-bg-escuro: #3c4043;
+            --reader-highlight-hover-escuro: rgba(255, 255, 255, 0.1);
+            --reader-capitulo-ativo-bg-escuro: #2d3c4a;
+            --reader-capitulo-ativo-borda-escuro: var(--cor-secundaria);
+            
+            /* Variáveis de controle de layout do leitor */
+            --reader-font-family-current: 'Georgia', 'Times New Roman', Times, serif;
+            --reader-font-size-current: 1.1em;
+            --reader-line-height-current: 1.8;
+            --reader-text-width-current: 700px; 
+        }
+
+        /* Aplica o tema DO LEITOR ao .reader-page-wrapper */
+        .reader-page-wrapper.theme-reader-claro {
+            background-color: var(--reader-bg-claro);
+            color: var(--reader-texto-claro);
+        }
+        .reader-page-wrapper.theme-reader-claro .capitulo-reader.active-segment {
+            background-color: var(--reader-capitulo-ativo-bg-claro);
+            border-color: var(--reader-capitulo-ativo-borda-claro);
+        }
+        .reader-page-wrapper.theme-reader-claro .pt-translation-inline {
+            background-color: var(--reader-traducao-bg-claro);
+            color: var(--reader-traducao-texto-claro);
+        }
+         .reader-page-wrapper.theme-reader-claro .eng-paragraph-interactive:hover {
+            background-color: var(--reader-highlight-hover-claro);
+        }
+
+
+        .reader-page-wrapper.theme-reader-sepia {
+            background-color: var(--reader-bg-sepia);
+            color: var(--reader-texto-sepia);
+        }
+        .reader-page-wrapper.theme-reader-sepia .capitulo-reader.active-segment {
+            background-color: var(--reader-capitulo-ativo-bg-sepia);
+            border-color: var(--reader-capitulo-ativo-borda-sepia);
+        }
+        .reader-page-wrapper.theme-reader-sepia .pt-translation-inline {
+            background-color: var(--reader-traducao-bg-sepia);
+            color: var(--reader-traducao-texto-sepia);
+        }
+        .reader-page-wrapper.theme-reader-sepia .eng-paragraph-interactive:hover {
+            background-color: var(--reader-highlight-hover-sepia);
+        }
+
+        .reader-page-wrapper.theme-reader-escuro {
+            background-color: var(--reader-bg-escuro);
+            color: var(--reader-texto-escuro);
+        }
+         .reader-page-wrapper.theme-reader-escuro .capitulo-reader.active-segment {
+            background-color: var(--reader-capitulo-ativo-bg-escuro);
+            border-color: var(--reader-capitulo-ativo-borda-escuro);
+        }
+        .reader-page-wrapper.theme-reader-escuro .pt-translation-inline {
+            background-color: var(--reader-traducao-bg-escuro);
+            color: var(--reader-traducao-texto-escuro);
+        }
+        .reader-page-wrapper.theme-reader-escuro .eng-paragraph-interactive:hover {
+            background-color: var(--reader-highlight-hover-escuro);
+        }
+        /* Fim dos temas do leitor */
+
+
+        .reader-page-wrapper { 
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .reader-main-content { 
+            max-width: var(--reader-text-width-current); 
+            margin: 0 auto;
+            padding: 20px; 
+            font-family: var(--reader-font-family-current);
+            font-size: var(--reader-font-size-current);
+            line-height: var(--reader-line-height-current);
+             /* O fundo e cor do texto do .reader-main-content vêm do .reader-page-wrapper */
+        }
+        
+        .reader-title-header { text-align: center; margin-bottom: 30px; }
+        .reader-title-header h2 { font-size: 2.2em; margin:0; font-weight: 600; color: var(--cor-azul-primario-mv); }
+        .reader-title-header h3 { font-size: 1.2em; color: var(--texto-secundario); margin-top: 5px; font-weight: normal; }
+
+        .reader-controls-panel {
+            background-color: var(--fundo-elemento); /* Fundo do painel de controles usa o tema GLOBAL do site */
+            color: var(--texto-primario);
+            padding: 12px 18px; margin-bottom: 25px;
+            border-radius: var(--raio-borda-mv); box-shadow: var(--sombra-mv);
+            display: flex; flex-wrap: wrap; gap: 10px 20px;
+            align-items: center; justify-content: center; font-size: 0.9em;
+            border: 1px solid var(--borda-elemento);
+        }
+        .control-group { display: flex; align-items: center; gap: 8px; }
+        .control-group label { margin-right: 5px; font-weight: 500; }
+        .control-group button, .control-group select {
+            padding: 7px 10px; border: 1px solid var(--borda-elemento);
+            background-color: var(--fundo-elemento); color: var(--texto-primario);
+            border-radius: var(--raio-borda-mv); cursor: pointer; font-size: 0.95em;
+        }
+        .control-group button:hover, .control-group select:hover { border-color: var(--cor-azul-primario-mv); }
+        
+        .audio-player-reader { margin-bottom: 25px; border-bottom: 1px solid var(--borda-elemento); padding-bottom: 25px;}
+        .audio-player-reader audio { width: 100%; }
+        .audio-player-reader p { margin-bottom: 8px; font-size: 0.9em; color: var(--texto-secundario); }
+
+        .capitulo-reader-gr { margin-bottom: 15px; padding: 15px; border: 2px solid transparent; 
+            border-radius: var(--raio-borda-mv); cursor: pointer; transition: background-color 0.3s, border-color 0.3s;
+        }
+        .capitulo-reader-gr:hover { /* Estilo hover é aplicado pelo tema do leitor */ }
+        .capitulo-reader-gr.active-segment { /* Estilo ativo é aplicado pelo tema do leitor */
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.3); margin-bottom: 0px; 
+        }
+        .capitulo-reader-gr h3.cap-title { font-size: 1.6em; margin-bottom: 8px; font-weight: 600; } 
+        .capitulo-reader-gr h4.cap-subtitle { font-size: 1.3em; margin-bottom: 20px; opacity: 0.85; font-style: italic; } 
+        
+        .eng-paragraph-interactive {
+            margin-bottom: 0.3em; 
+            cursor: pointer;
+            padding: 3px 0; 
+            line-height: inherit; 
+            font-size: inherit;  
+        }
+        .eng-paragraph-interactive:hover { /* Estilo hover é aplicado pelo tema do leitor */ }
+        .eng-paragraph-interactive.active-para-audio { font-weight: bold; color: var(--cor-secundaria); }
+
+        .pt-translation-inline {
+            font-size: 0.9em; 
+            line-height: 1.6; 
+            margin-left: 25px; 
+            margin-top: 0.1em;
+            margin-bottom: 1.5em; 
+            padding: 10px 15px;
+            border-left: 4px solid var(--cor-secundaria); 
+            border-radius: 0 var(--raio-borda-mv) var(--raio-borda-mv) 0;
+            display: none; 
+            animation: fadeInTranslation 0.4s;
+            /* Fundo e cor do texto são aplicados pelo tema do leitor */
+        }
+        @keyframes fadeInTranslation { from { opacity: 0; } to { opacity: 1; } }
+
+        .download-pdf-reader-final { display: block; text-align: center; margin: 30px 0 10px 0; }
+        .download-pdf-reader-final a {
+            padding: 10px 18px; background-color: var(--cor-secundaria);
+            color: white; text-decoration: none;
+            border-radius: var(--raio-borda-mv); font-weight: 500;
+        }
+         .download-pdf-reader-final a:hover { background-color: #17a589; }
+
+        @media (max-width: 768px) { /* ... estilos responsivos como na última resposta ... */ }
+    </style>
+</head>
+<body class="tema-claro"> <div class="reader-page-wrapper theme-reader-claro"> <header class="site-header-mv">
+            <nav class="menu-principal-mv">
+                <a href="index.html">Home</a>
+                <a href="#">Meu Perfil</a>
+                <a href="extras.html" class="active">Extras</a>
+                <a href="playlist.html">Playlist</a>
+            </nav>
+            </header>
+
+        <div id="user-selection-overlay" class="user-selection-overlay-container hidden">
+            </div>
+
+        <main class="container page-content">
+            <article class="reader-main-content">
+                <div class="reader-title-header">
+                    <h2>Sally's Phone</h2>
+                    <h3>Christine Lindop</h3>
+                </div>
+
+                <div class="reader-controls-panel">
+                    <div class="control-group">
+                        <label for="fontSizeControls">Fonte (Tamanho):</label>
+                        <button id="decreaseReaderFont" title="Diminuir Fonte">-A</button>
+                        <button id="increaseReaderFont" title="Aumentar Fonte">A+</button>
+                    </div>
+                    <div class="control-group">
+                        <label for="fontFamilySelectReader">Fonte (Tipo):</label>
+                        <select id="fontFamilySelectReader">
+                            <option value="font-serif">Serifada (Padrão)</option>
+                            <option value="font-sans-serif">Sem Serifa</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label for="themeSelectReaderLocal">Tema de Leitura:</label>
+                        <select id="themeSelectReaderLocal">
+                            <option value="theme-reader-claro">Claro</option>
+                            <option value="theme-reader-sepia">Sépia</option>
+                            <option value="theme-reader-escuro">Escuro</option>
+                        </select>
+                    </div>
+                     <div class="control-group">
+                        <label for="lineHeightSelectReader">Espaç. Linhas:</label>
+                        <select id="lineHeightSelectReader">
+                            <option value="1.6">Pequeno</option>
+                            <option value="1.8" selected>Médio (Padrão)</option>
+                            <option value="2.0">Grande</option>
+                            <option value="2.2">Extra Grande</option>
+                        </select>
+                    </div>
+                     <div class="control-group">
+                        <label for="textWidthSelectReader">Largura Texto:</label>
+                        <select id="textWidthSelectReader">
+                            <option value="600px">Pequena</option>
+                            <option value="700px" selected>Média (Padrão)</option>
+                            <option value="800px">Grande</option>
+                            <option value="90%">Fluida</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="audio-player-reader">
+                    <p>Ouça a história completa (Duração: 20:13) ou clique nos capítulos para ouvir os trechos:</p>
+                    <audio id="full-reader-audio" controls controlsList="nodownload" style="width:100%;">
+                        <source src="https://res.cloudinary.com/dkkjrtbsv/video/upload/v1749081485/sallys_phone_wajy6i.mp3" type="audio/mpeg">
+                        Seu navegador não suporta o elemento de áudio.
+                    </audio>
+                </div>
+
+                <div class="download-pdf-reader-final">
+                    <a href="assets/pdfs/graded_readers/sallys_phone_texto.pdf" download="Sallys_Phone_Texto_Completo.pdf">Baixar PDF da História</a>
+                </div>
+
+                <div id="reader-text-display">
+                    <p style="text-align: center; color: var(--texto-secundario);">Carregando texto...</p>
+                </div>
+            </article>
+        </main>
+
+        <footer class="site-footer-mv">
+           </footer>
+
+    </div> <script src="js/script.js"></script> 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUserReader = localStorage.getItem('currentUserProjetoBilingue');
+            const userSelectionOverlayReader = document.getElementById('user-selection-overlay');
+            const corpoSite = document.body; // Para tema global do site
+            const readerPageWrapper = document.querySelector('.reader-page-wrapper'); // Para tema do leitor
+            const readerMainContent = document.querySelector('.reader-main-content'); // Para estilos de fonte/layout
+
+            // Aplica tema global do site (controlado por script.js, mas garantimos aqui também)
+            const temaGlobalSalvo = localStorage.getItem('temaProjetoBilingue') || 'tema-claro';
+            corpoSite.classList.remove('tema-claro', 'tema-escuro');
+            corpoSite.classList.add(temaGlobalSalvo);
+
+            // Botão de tema global no header desta página
+            const btnToggleTemaGlobalReader = document.querySelector('#btn-toggle-tema');
+            if (btnToggleTemaGlobalReader) {
+                btnToggleTemaGlobalReader.addEventListener('click', function() {
+                    if (corpoSite.classList.contains('tema-claro')) {
+                        corpoSite.classList.replace('tema-claro', 'tema-escuro');
+                        localStorage.setItem('temaProjetoBilingue', 'tema-escuro');
+                    } else {
+                        corpoSite.classList.replace('tema-escuro', 'tema-claro');
+                        localStorage.setItem('temaProjetoBilingue', 'tema-claro');
+                    }
+                });
+            }
+
+            if (!currentUserReader && userSelectionOverlayReader) {
+                userSelectionOverlayReader.classList.remove('hidden');
+                corpoSite.style.overflow = 'hidden';
+                if (readerPageWrapper) readerPageWrapper.style.display = 'none';
+                return; 
+            } else if (userSelectionOverlayReader) {
+                 userSelectionOverlayReader.classList.add('hidden');
+                 corpoSite.style.overflow = 'auto';
+                 if (readerPageWrapper) readerPageWrapper.style.display = 'block';
+                 const userDisplay = document.querySelector('.user-profile-mv span');
+                 if (userDisplay && currentUserReader) {
+                    userDisplay.textContent = `Bem vindo(a), ${currentUserReader === 'rafael' ? 'Rafael' : 'Amanda'}!`;
+                 }
+            }
+
+            const audioPlayer = document.getElementById('full-reader-audio');
+            const readerTextDisplay = document.getElementById('reader-text-display');
+            
+            const decreaseFontBtn = document.getElementById('decreaseReaderFont');
+            const increaseFontBtn = document.getElementById('increaseReaderFont');
+            const themeSelectReaderEl = document.getElementById('themeSelectReaderLocal');
+            const fontFamilySelectReader = document.getElementById('fontFamilySelectReader');
+            const lineHeightSelectReader = document.getElementById('lineHeightSelectReader');
+            const textWidthSelectReader = document.getElementById('textWidthSelectReader');
+
+            let readerPrefs = JSON.parse(localStorage.getItem(`readerPrefs_${currentUserReader}_sallysphone`)) || {
+                fontSize: 1.1, 
+                theme: 'theme-reader-claro', // Nome da classe
+                fontFamily: 'font-serif', // Nome da classe
+                lineHeight: "1.8",
+                textWidth: '700px'
+            };
+
+            function aplicarEstilosLeitorPrefs() {
+                if (readerMainContent) {
+                    readerMainContent.style.fontSize = `${readerPrefs.fontSize}em`;
+                    readerMainContent.style.fontFamily = `var(--reader-font-family-${readerPrefs.fontFamily.replace('font-','')})`; // Usa variável CSS
+                    readerMainContent.style.lineHeight = readerPrefs.lineHeight;
+                    readerMainContent.style.maxWidth = readerPrefs.textWidth;
+                }
+                
+                if (readerPageWrapper) {
+                    readerPageWrapper.classList.remove('theme-reader-claro', 'theme-reader-sepia', 'theme-reader-escuro');
+                    readerPageWrapper.classList.add(readerPrefs.theme);
+                }
+                
+                // Define os valores selecionados nos controles
+                if (themeSelectReaderEl) themeSelectReaderEl.value = readerPrefs.theme;
+                if (fontFamilySelectReader) fontFamilySelectReader.value = readerPrefs.fontFamily;
+                if (lineHeightSelectReader) lineHeightSelectReader.value = readerPrefs.lineHeight;
+                if (textWidthSelectReader) textWidthSelectReader.value = readerPrefs.textWidth;
+
+                // Atualiza variáveis CSS globais se o CSS principal as usar para o reader
+                document.documentElement.style.setProperty('--reader-font-family-current', readerPrefs.fontFamily === 'font-serif' ? 'Georgia, "Times New Roman", Times, serif' : '"Helvetica Neue", Helvetica, Arial, sans-serif');
+                document.documentElement.style.setProperty('--reader-font-size-current', `${readerPrefs.fontSize}em`);
+                document.documentElement.style.setProperty('--reader-line-height-current', readerPrefs.lineHeight);
+                document.documentElement.style.setProperty('--reader-text-width-current', readerPrefs.textWidth);
+            }
+            
+            function salvarPrefsLeitor() {
+                localStorage.setItem(`readerPrefs_${currentUserReader}_sallysphone`, JSON.stringify(readerPrefs));
+            }
+
+            if (decreaseFontBtn) {
+                decreaseFontBtn.addEventListener('click', () => {
+                    if (readerPrefs.fontSize > 0.7) { 
+                        readerPrefs.fontSize = parseFloat((readerPrefs.fontSize - 0.1).toFixed(1));
+                        salvarPrefsLeitor(); aplicarEstilosLeitorPrefs();
+                    }
+                });
+            }
+            if (increaseFontBtn) {
+                increaseFontBtn.addEventListener('click', () => {
+                    if (readerPrefs.fontSize < 2.5) { 
+                        readerPrefs.fontSize = parseFloat((readerPrefs.fontSize + 0.1).toFixed(1));
+                        salvarPrefsLeitor(); aplicarEstilosLeitorPrefs();
+                    }
+                });
+            }
+            if (themeSelectReaderEl) {
+                themeSelectReaderEl.addEventListener('change', function() {
+                    readerPrefs.theme = this.value;
+                    salvarPrefsLeitor(); aplicarEstilosLeitorPrefs();
+                });
+            }
+            if (fontFamilySelectReader) {
+                fontFamilySelectReader.addEventListener('change', function() {
+                    readerPrefs.fontFamily = this.value;
+                    salvarPrefsLeitor(); aplicarEstilosLeitorPrefs();
+                });
+            }
+            if (lineHeightSelectReader) {
+                lineHeightSelectReader.addEventListener('change', function() {
+                    readerPrefs.lineHeight = this.value;
+                    salvarPrefsLeitor(); aplicarEstilosLeitorPrefs();
+                });
+            }
+            if (textWidthSelectReader) {
+                textWidthSelectReader.addEventListener('change', function() {
+                    readerPrefs.textWidth = this.value;
+                    salvarPrefsLeitor(); aplicarEstilosLeitorPrefs();
+                });
+            }
+            
+            aplicarEstilosLeitorPrefs(); // Aplica ao carregar
+
+            function cueTimeToSeconds(timeStr) {
+                const parts = timeStr.split(':');
+                if (parts.length < 3) { console.error("Formato de tempo CUE inválido:", timeStr); return 0; }
+                const minutes = parseInt(parts[0], 10) || 0;
+                const seconds = parseInt(parts[1], 10) || 0;
+                const frames = parseInt(parts[2], 10) || 0;
+                return (minutes * 60) + seconds + (frames / 75); 
+            }
+            
+            const sallysPhoneData = {
+                audioSrc: "https://res.cloudinary.com/dkkjrtbsv/video/upload/v1749081485/sallys_phone_wajy6i.mp3",
+                totalDuration: 1213, 
+                chapters: [
+                    {
+                        id: "track01", titleEng: "CHAPTER ONE", subtitleEng: "Morning", startTimeCue: "00:00:00",
+                        textEng: `It is Thursday morning. Sally is in bed. Suddenly - Ring ring! Her phone is ringing - but where is it?\n\nSally gets out of bed and looks in her bag. No phone. She looks under the bed. No phone. Then she looks behind the door. There is her phone. Sally picks up her phone and answers it.\n\n'Hello Sally, it's Andrew.'\n\nAndrew is Sally's boyfriend. He has got a lot of money and a beautiful and expensive car.\n\n'Andrew, it's only seven o'clock -'\n\n'Don't forget, Sally - we're meeting Michael tonight. It's an important evening, because Michael's my new boss. Wear your blue skirt, Sally, I like that skirt. I must go now. See you at half past six. Bye.'\n\n'But Andrew... Bye.'\n\n'I can't wear the blue skirt,' Sally thinks. 'It's dirty. What can I wear?'\n\nSally is having breakfast with her mother and her brother Jack.\n\n'I'm going out tonight,' Sally tells her mother. 'Andrew and I are meeting his new boss.'\n\n'Andrew?' Jack says. 'Huh!'\n\n'Oh be quiet, Jack,' Sally says. 'Andrew is very nice to me.'\n\n'Nice?' Jack says. 'Huh! "Sally, I want a sandwich."\n\n"Yes, Andrew."\n\n"Sally, I don't like your hair."\n\n"No, Andrew, sorry Andrew."\n\n"Sally -'"\n\nBut then Sally stands up, and Jack runs out of the room.\n\nSally gets on the train. There are a lot of people on the train. Most of them are talking on their phones.\n\n'John? John! Get up and go to work. It's late!'\n\n'Have you got my money? I need it today. I must have it today.'\n\n'Remember - go to the supermarket tonight. Don't forget!'\n\nAnd Sally is listening to Andrew.\n\n'Sally, meet me at six o'clock, not at half past six. OK?'\n\n'OK Andrew - but my blue skirt -'\n\n'I must go, Sally - bye.'\n\nThen the train goes into a tunnel. The people on the train can not talk on their phones. They must talk to the other people on the train.\n\n'Hello, Max! How are you?'\n\n'Oh, hello Graham! I'm very well.'\n\n'Where are you working now, Lucy?'\n\n'I'm in a new office in Bank Street.'\n\n'Those are nice shoes, Jane.'\n\n'Thank you, Mary.'\n\nAfter three minutes, the train comes out of the tunnel. Everyone talks on their phones again.\n\n'Hello? John? Are you out of bed now?'\n\nNow Sally is at work. She is talking to her friend Claire, and she tells her about Andrew, Michael, and the blue skirt.\n\n'It's OK, Sally,' Claire says. 'Let's go out at lunchtime. We can find a new skirt. You can wear it tonight.'\n\nLater, Claire and Sally are having coffee with Louise. She works with them.\n\nRing ring! It is Andrew again.\n\n'Hi, Sally. Look, meet me at the Bar Bogart, not the Cosmo Bar - OK? The Bar Bogart is nearer. Bye.'\n\n'Bar Bogart,' Claire says. 'Mmm - that's nice.'\n\n'Huh!' Louise says. 'Forget him, Sally. Who needs men? "Do this, do that, go there, don't go there." Huh!'`,
+                        textPt: `É quinta-feira de manhã. Sally está na cama. De repente - Ring ring! O telefone dela está tocando - mas onde está?\n\nSally sai da cama e olha na bolsa. Não tem telefone. Ela olha embaixo da cama. Não tem telefone. Então, olha atrás da porta. Lá está o telefone dela. Sally pega o telefone e atende.\n\n'Olá, Sally, é o Andrew.'\n\nAndrew é o namorado da Sally. Ele tem muito dinheiro e um carro lindo e caro.\n\n'Andrew, são só sete horas -'\n\n'Não se esqueça, Sally, vamos encontrar o Michael hoje à noite. É uma noite importante, porque o Michael é meu novo chefe. Vista sua saia azul, Sally, eu gosto dessa saia. Preciso ir agora. Vejo você às seis e meia. Tchau.'\n\n'Mas Andrew... Tchau.'\n\n'Não posso usar a saia azul', pensa Sally. 'Está sujo. O que posso vestir?'\n\nSally está tomando café da manhã com a mãe e o irmão Jack.\n\n'Vou sair hoje à noite', Sally diz à mãe. 'Andrew e eu vamos conhecer o novo chefe dele.'\n\n'Andrew?' Jack diz. 'Hã!'\n\n'Ah, fica quieto, Jack', diz Sally. 'Andrew é muito legal comigo.'\n\n'Legal?' Jack diz. 'Hã! "Sally, eu quero um sanduíche."\n\n"Sim, Andrew."\n\n"Sally, não gosto do seu cabelo."\n\n"Não, Andrew, desculpe, Andrew."\n\n"Sally -'"\n\nMas então Sally se levanta e Jack sai correndo da sala.\n\nSally entra no trem. Há muitas pessoas no trem. A maioria está falando ao celular.\n\n'John? John! Levante-se e vá trabalhar. Está tarde!'\n\n'Você está com meu dinheiro? Preciso dele hoje. Preciso dele hoje.'\n\n'Lembre-se: vá ao supermercado hoje à noite. Não se esqueça!'\n\nE Sally está ouvindo Andrew.\n\n'Sally, encontre-me às seis horas, não às seis e meia. Ok?'\n\n'OK Andrew - mas minha saia azul...'\n\n'Preciso ir, Sally, tchau.'\n\nEntão o trem entra em um túnel. As pessoas no trem não podem falar ao celular. Elas precisam falar com as outras pessoas no trem.\n\n'Olá, Max! Como você está?'\n\n'Oh, olá, Graham! Estou muito bem.'\n\n"Onde você está trabalhando agora, Lucy?"\n\n"Estou em um novo escritório na Rua Bank."\n\n"Que sapatos lindos, Jane."\n\n"Obrigada, Mary."\n\nDepois de três minutos, o trem sai do túnel. Todos falam ao celular novamente.\n\n'Alô? John? Já acordou?'\n\nAgora Sally está no trabalho. Ela está conversando com sua amiga Claire e conta a ela sobre Andrew, Michael e a saia azul.\n\n'Tudo bem, Sally,' diz Claire. 'Vamos sair na hora do almoço. Podemos encontrar uma saia nova. Você pode usá-la hoje à noite.'\n\nMais tarde, Claire e Sally estão tomando café com Louise. Ela trabalha com elas.\n\nRing ring! É Andrew de novo.\n\n'Oi, Sally. Olha, me encontre no Bar Bogart, não no Cosmo Bar - OK? O Bar Bogart é mais perto. Tchau.'\n\n'Bar Bogart,' diz Claire. 'Mmm - que legal.'\n\n'Huh!' diz Louise. 'Esqueça ele, Sally. Quem precisa de homens? "Faça isso, faça aquilo, vá lá, não vá lá." Huh!'`
+                    },
+                    {
+                        id: "track02", titleEng: "CHAPTER TWO", subtitleEng: "Lunchtime", startTimeCue: "05:57:96",
+                        textEng: `It is one o'clock. Sally and Claire are looking at skirts.\n\n'Do you like this one, Sally?' Claire says.\n\n'Yes, it's beautiful, but I never wear red.'\n\n'Do you like red?' Claire asks.\n\n'Yes, I do - but Andrew doesn't.'\n\n'Well,' Claire says, 'it's a beautiful skirt. You like red. What do you want to do?'\n\nSally buys the skirt.\n\nClaire goes back to work, but Sally wants a coffee. She goes into a cafe. She buys a coffee and sits down. Then she phones her mother.\n\n'Hi, Mum. I've got a new skirt - it's beautiful! I want to wear it tonight.'\n\n'What colour is it?'\n\n'It's red.'\n\n'That's nice. Red is a good colour for you,' says her mother.\n\nNext to Sally, Paul is finishing his coffee. He phones his friend and talks to him. Then he stands up. The bag with the red skirt falls on the floor.\n\n'Oh! I'm sorry,' Paul says. He puts down his phone and picks up the bag. 'Here's your bag.'\n\n'That's OK,' Sally says. 'Thank you.' She smiles.\n\n'What a nice smile!' Paul thinks.\n\nPaul picks up his phone and goes out of the cafe. Sally finishes her coffee. She picks up her bag and her phone, and goes back to work.`,
+                        textPt: `É uma hora da tarde. Sally e Claire estão olhando saias.\n\n'Você gosta desta, Sally?', pergunta Claire.\n\n'Sim, é linda, mas eu nunca uso vermelho.'\n\n'Você gosta de vermelho?', pergunta Claire.\n\n'Sim, eu gosto, mas Andrew não.'\n\n'Bem', diz Claire, 'é uma saia linda. Você gosta de vermelho. O que você quer fazer?'\n\nSally compra a saia.\n\nClaire volta ao trabalho, mas Sally quer um café. Ela entra em uma cafeteria. Compra um café e se senta. Então, liga para a mãe.\n\n'Oi, mãe. Ganhei uma saia nova, é linda! Quero usá-la hoje à noite.'\n\n'De que cor é?'\n\n'É vermelha.'\n\n'Que legal. Vermelho fica bem em você', diz a mãe.\n\nAo lado de Sally, Paul está terminando seu café. Ele liga para o amigo e conversa com ele. Então, ele se levanta. A sacola com a saia vermelha cai no chão.\n\n'Ah! Desculpe', diz Paul. Ele larga o telefone e pega a sacola. 'Aqui está sua sacola.'\n\n'Tudo bem', diz Sally. 'Obrigada.' Ela sorri.\n\n'Que sorriso lindo!', pensa Paul.\n\nPaul pega o telefone e sai do café. Sally termina seu café. Ela pega a bolsa e o telefone e volta ao trabalho.`
+                    },
+                    {
+                        id: "track03", titleEng: "CHAPTER THREE", subtitleEng: "Afternoon", startTimeCue: "08:31:95",
+                        textEng: `Paul is in his office. Ring ring!\n\n'What's that noise?' Paul thinks. He answers the phone. It is Andrew.\n\n'Hello, Sally?'\n\n'It's not Sally, it's Paul.'\n\n'Paul? Paul who? Where's Sally?'\n\n'Who's Sally? There's no Sally here.'\n\n'Huh!'\n\nAndrew finishes the call.\n\nPaul wants to phone his mother. He finds 'Mum' on the phone, and presses the button.\n\n'Hello, Mum. It's Paul.'\n\n'Paul? Who's Paul? I'm not Paul's Mum. I'm Sally's Mum and Jack's Mum.'\n\n'What's happening?' Paul thinks.\n\n'What number is that?' he asks.\n\n'It's 0783 491839.'\n\n'I'm very sorry,' Paul says. 'It's the wrong number.'\n\n'That's OK,' Sally's Mum says. 'What a nice voice!' she thinks.\n\nSally is at work.\n\nRing ring!\n\n'What's that noise?' Sally thinks. She answers the phone.\n\n'Hello, is Paul there?'\n\n'No, I'm sorry, this -'\n\n'Can you give a message to him? This is his sister Katharine. There's a party at my house tonight. It's my birthday.'\n\n'But I -'\n\n'8 o'clock - OK? Bye.'\n\nSally talks to Claire and Louise.\n\n'I've got a message for Paul - but who's Paul? Do you know a Paul, Claire?' she asks.\n\n'No. What's the message?' Claire asks.\n\n'It's his sister Katharine's birthday, and she's having a party tonight. Do you think it's a wrong number?'\n\n'Yes, I think it is,' Claire says.\n\n'Hey, Sally!' Louise says. 'Put on your red skirt and go to the party. Forget Andrew!'\n\nPaul talks to a friend at work.\n\n'This is Sally's phone - and Sally's got my phone.'\n\n'But who is Sally?'\n\n'I don't know,' says Paul.\n\n'Why don't you phone her?'\n\n'What's my number?' Paul asks. 'I don't know my number.'\n\n'Why not?'\n\n'Porque eu nunca ligo para o meu número!'\n\nPaul phones his mother.\n\n'Mum, what's the number of my phone?'\n\n'Why do you want your phone number, Paul?'\n\n'Because Sally's got my phone.'\n\n'Who's Sally?' his mother asks.\n\n'I don't know, but she's got my phone, and I've got her phone.'\n\n'I don't understand.'\n\n'I know,' says Paul. 'It doesn't matter. Have you got my number?'\n\n'Here it is. 0781 644834.'\n\n'Thanks, Mum.'\n\nPaul phones Sally.\n\n'Hello, Sally - this is Paul.'\n\n'Paul - are you Katharine's brother?' Sally asks.\n\n'Yes, that's right. And I've got your phone.'\n\n'My phone? Oh - wait a minute. The Cafe Cuba at lunchtime? The bag on the floor?'\n\n'Yes, that's right. Well, we need to change phones.'\n\n'OK - where are you now, Paul?'\n\n'In College Road. I work there.'\n\n'I work in Manchester Street. Can we meet in Queen's Square?' Sally asks.\n\n'OK. What time do you finish work?'\n\n'At half past five.'\n\n'Let's meet in Queen's Square at a quarter to six,' says Paul. 'Phone me then.'\n\n'OK, Paul,' says Sally.`,
+                        textPt: `Paul está em seu escritório. Ring ring!\n\n'Que barulho é esse?', pensa Paul. Ele atende o telefone. É Andrew.\n\n'Alô, Sally?'\n\n'Não é Sally, é Paul.'\n\n'Paul? Paul quem? Onde está Sally?'\n\n'Quem é Sally? Não tem nenhuma Sally aqui.'\n\n'Hã!'\n\nAndrew encerra a ligação.\n\nPaul quer ligar para a mãe. Ele encontra "Mãe" no telefone e aperta o botão.\n\n"Olá, mãe. É o Paul."\n\n"Paul? Quem é o Paul? Eu não sou a mãe do Paul. Sou a mãe da Sally e a mãe do Jack."\n\n"O que está acontecendo?", pensa Paul.\n\n"Que número é esse?", pergunta ele.\n\n"É 0783 491839."\n\n"Sinto muito", diz Paul. "É o número errado."\n\n'Tudo bem', diz a mãe da Sally. 'Que voz bonita!', pensa ela.\n\nA Sally está no trabalho.\n\nRing ring!\n\n'Que barulho é esse?', pensa Sally. Ela atende o telefone.\n\n'Alô, o Paul está?'\n\n'Não, desculpe, este...'\n\n'Você pode dar um recado para ele? Aqui é a irmã dele, Katharine. Tem uma festa na minha casa hoje à noite. É meu aniversário.'\n\n'Mas eu...'\n\n'Oito horas... Certo? Tchau.'\n\nSally conversa com Claire e Louise.\n\n'Tenho um recado para o Paul... mas quem é o Paul? Você conhece algum Paul, Claire?', pergunta ela.\n\n'Não. Qual é o recado?', pergunta Claire.\n\n'É o aniversário da irmã dele, Katharine, e ela vai dar uma festa hoje à noite. Você acha que é um número errado?'\n\n'Sim, acho que sim', diz Claire.\n\n'Ei, Sally!', diz Louise. 'Vista sua saia vermelha e vá para a festa. Esqueça o Andrew!'\n\nPaul conversa com um amigo no trabalho.\n\n'Este é o telefone da Sally — e a Sally está com o meu.'\n\n'Mas quem é a Sally?'\n\n'Não sei', diz Paul.\n\n'Por que você não liga para ela?'\n\n'Qual é o meu número?', pergunta Paul. 'Não sei o meu número.'\n\n'Por que não?'\n\n'Porque eu nunca ligo para o meu número!'\n\nPaul liga para a mãe.\n\n'Mãe, qual é o número do meu telefone?'\n\n'Por que você quer o seu número, Paul?'\n\n'Porque a Sally está com o meu telefone.'\n\n'Quem é a Sally?', pergunta a mãe.\n\n'Eu não sei, mas ela está com o meu telefone e eu estou com o dela.'\n\n'Eu não entendo.'\n\n'Eu sei', diz Paul. 'Não importa. Você tem o meu número?'\n\n'Aqui está. 0781 644834.'\n\n'Obrigado, mãe.'\n\nPaul liga para a Sally.\n\n'Olá, Sally, aqui é o Paul.'\n\n'Paul, você é irmão da Katharine?', pergunta Sally.\n\n'Sim, isso mesmo. E eu estou com o seu telefone.'\n\n'Meu telefone? Ah... espere um minuto. O Café Cuba na hora do almoço? A sacola no chão?'\n\n'Sim, isso mesmo. Bem, precisamos trocar de telefone.'\n\n'OK... onde você está agora, Paul?'\n\n'Na College Road. Eu trabalho lá.'\n\n'Eu trabalho na Manchester Street. Podemos nos encontrar na Queen's Square?', pergunta Sally.\n\n'OK. A que horas você termina o trabalho?'\n\n'Às cinco e meia.'\n\n'Vamos nos encontrar na Queen's Square às seis menos um quarto', diz Paul. 'Me liga então.'\n\n'OK, Paul,' diz Sally.`
+                    },
+                    {
+                        id: "track04", titleEng: "CHAPTER FOUR", subtitleEng: "Evening", startTimeCue: "14:27:16",
+                        textEng: `It is half past five. Sally puts on her new skirt.\n\n'Do you like it, Louise?' she asks.\n\n'Oh yes. It's very nice.'\n\nIt is twenty to six. Paul arrives in Queen's Square. He looks for Sally. Is that Sally? He cannot remember. He phones Sally.\n\n'Hello, Sally. It's Paul. I'm in Queen's Square.'\n\n'Hello, Paul. I'm coming.'\n\nThere are lots of people in Queen's Square, and many of them are talking on phones.\n\nWhich is Paul? Sally can not remember. She phones Paul.\n\n'Paul - have you got black hair?'\n\n'No, I haven't.'\n\n'Good!' Sally thinks.\n\n'Have you got a book in your hand?' asks Sally.\n\n'No, I haven't.'\n\n'Good!' Sally thinks.\n\nSally can not find Paul.\n\n'Where are you, Paul?'\n\n'I'm near the trees.'\n\nSally goes across the square to the trees.\n\n'Are you Paul?' Sally says.\n\nPaul looks at Sally. 'She's beautiful!' he thinks. 'Yes, I'm Paul.'\n\n'He's nice!' Sally thinks.\n\n'I'm Sally. So - we meet again.'\n\n'I'm sorry about your phone, Sally. Here it is.'\n\n'That's OK. Here's your phone, Paul.'\n\n'Sally - would you like a drink? I want to say sorry.'\n\n'OK, but I haven't got much time.'\n\nPaul looks for a bar.\n\n'Let's go to the Blue Moon. We can have a drink there.'\n\nPaul and Sally are at the Blue Moon. Sally sits down at a table. Paul brings their drinks.\n\n'Here's your drink, Sally. And I am sorry about your phone.'\n\n'Forget it, Paul - it doesn't matter. Oh, I've got a message for you. It's from your sister Katharine.'\n\n'From Katharine? What is it?'\n\n'She says that it's her birthday today, and there's a party at her house.'\n\n'Oh no!' Paul says. 'I always forget birthdays. What can I do?'\n\nSally looks across the square. Near the trees, a woman is selling flowers.\n\n'Buy some flowers for your sister, and take them to the party,' she says to Paul.\n\n'Of course! That's the answer. Look, Sally - do you want to come to the party with me? Katharine always has good parties.'\n\n'Well, I...' Sally says.\n\n'Oh, I must tell you.' Paul says. 'I've got a message for you from Andrew. He says -'\n\n'It doesn't matter, Paul,' says Sally. 'I don't want the message. I would like to go to the party with you. But I must do something before we go.'\n\nSally takes her phone out of her bag and turns it off. In the Bar Bogart, Andrew phones Sally. Sally does not answer. 'Sally?' says Andrew. 'Sally? Answer me!'\n\nSally and Paul leave the Blue Moon.\n\n'That's a nice skirt,' says Paul. 'I like red.'\n\nSally smiles at him.\n\n- THE END -`,
+                        textPt: `São cinco e meia. Sally veste sua saia nova.\n\n'Gostou, Louise?', pergunta ela.\n\n'Ah, sim. É muito bonita.'\n\nSão vinte para as seis. Paul chega à Queen's Square. Procura Sally. É a Sally? Ele não se lembra. Telefona para Sally.\n\n'Olá, Sally. É o Paul. Estou na Queen's Square.'\n\n'Olá, Paul. Já vou.'\n\nHá muitas pessoas na Queen's Square, e muitas delas estão falando ao telefone.\n\nQuem é Paul? Sally não se lembra. Ela telefona para Paul.\n\n'Paul, você tem cabelo preto?'\n\n'Não, não tenho.'\n\n'Ótimo!', pensa Sally.\n\n'Você tem um livro na mão?', pergunta Sally.\n\n'Não, não tenho.'\n\n'Ótimo!', pensa Sally.\n\nSally não consegue encontrar Paul.\n\n'Onde você está, Paul?'\n\n'Estou perto das árvores.'\n\nSally atravessa a praça até as árvores.\n\n'Você é o Paul?', pergunta Sally.\n\nPaul olha para Sally. 'Ela é linda!', pensa. 'Sim, eu sou o Paul.'\n\n'Ele é legal!', pensa Sally.\n\n'Eu sou a Sally. Então, nos encontramos de novo.'\n\n'Sinto muito pelo seu telefone, Sally. Aqui está.'\n\n'Tudo bem. Aqui está o seu telefone, Paul.'\n\n'Sally, você gostaria de beber alguma coisa? Quero me desculpar.'\n\n'Ok, mas não tenho muito tempo.'\n\nPaul procura um bar.\n\n'Vamos ao Blue Moon. Podemos tomar um drinque lá.'\n\nPaul e Sally estão no Blue Moon. Sally se senta a uma mesa. Paul traz as bebidas deles.\n\n'Aqui está sua bebida, Sally. E me desculpe pelo seu celular.'\n\n'Esqueça, Paul, não importa. Ah, tenho um recado para você. É da sua irmã, Katharine.'\n\n'Da Katharine? O que é?'\n\n'Ela disse que hoje é aniversário dela e que tem uma festa na casa dela.'\n\n'Ah, não!', diz Paul. 'Eu sempre esqueço aniversários. O que eu posso fazer?'\n\nSally olha para a praça. Perto das árvores, uma mulher vende flores.\n\n'Compre flores para sua irmã e leve para a festa', diz ela a Paul.\n\n'Claro! Essa é a resposta. Olha, Sally, você quer ir à festa comigo? Katharine sempre dá boas festas.'\n\n'Bem, eu...', diz Sally.\n\n'Ah, preciso te contar.', diz Paul. 'Tenho uma mensagem do Andrew para você. Ele diz...'\n\n'Não importa, Paul', diz Sally. 'Não quero a mensagem. Gostaria de ir à festa com você. Mas preciso fazer uma coisa antes de irmos.'\n\nSally tira o celular da bolsa e o desliga. No Bar Bogart, Andrew liga para Sally. Sally não atende. 'Sally?', pergunta Andrew. 'Sally? Me responda!'\n\nSally e Paul saem do Blue Moon.\n\n'Que saia bonita', diz Paul. 'Eu gosto de vermelho.'\n\nSally sorri para ele.\n\n- FIM -`
+                    }
+                ]
+            };
+
+            if (audioPlayer && readerTextDisplay && sallysPhoneData && sallysPhoneData.chapters) {
+                if(audioPlayer.currentSrc !== sallysPhoneData.audioSrc && sallysPhoneData.audioSrc) { 
+                    const sourceTag = audioPlayer.querySelector('source') || document.createElement('source');
+                    sourceTag.src = sallysPhoneData.audioSrc;
+                    sourceTag.type = 'audio/mpeg';
+                    if(!audioPlayer.querySelector('source')) { 
+                        audioPlayer.appendChild(sourceTag);
+                    }
+                    audioPlayer.load(); 
+                }
+                
+                readerTextDisplay.innerHTML = ''; 
+                let currentTrackInfo = null; 
+                let activeChapterDiv = null; // Referência para o capítulo atualmente ativo
+                
+                sallysPhoneData.chapters.forEach((chapter, index) => {
+                    chapter.startTimeSeconds = cueTimeToSeconds(chapter.startTimeCue);
+                    if (index < sallysPhoneData.chapters.length - 1) {
+                        chapter.endTimeSeconds = cueTimeToSeconds(sallysPhoneData.chapters[index + 1].startTimeCue);
+                    } else {
+                        chapter.endTimeSeconds = (audioPlayer.duration > 0 && !isNaN(audioPlayer.duration)) ? audioPlayer.duration : sallysPhoneData.totalDuration;
+                    }
+
+                    const chapterDiv = document.createElement('div');
+                    chapterDiv.classList.add('capitulo-reader-gr'); 
+                    chapterDiv.dataset.trackId = chapter.id;
+                    
+                    const titleH3 = document.createElement('h3');
+                    titleH3.textContent = chapter.titleEng;
+                    titleH3.classList.add('cap-title');
+                    chapterDiv.appendChild(titleH3);
+
+                    const subtitleH4 = document.createElement('h4');
+                    subtitleH4.textContent = chapter.subtitleEng;
+                    subtitleH4.classList.add('cap-subtitle');
+                    chapterDiv.appendChild(subtitleH4);
+                    
+                    const engParagraphs = chapter.textEng.split('\n\n');
+                    const ptParagraphs = chapter.textPt.split('\n\n');
+
+                    engParagraphs.forEach((engPText, pIndex) => {
+                        if (engPText.trim() !== "") {
+                            const engPElement = document.createElement('p');
+                            engPElement.classList.add('eng-paragraph-interactive');
+                            engPElement.innerHTML = engPText.trim().replace(/\n/g, '<br>'); // Preserva quebras de linha simples
+                            chapterDiv.appendChild(engPElement);
+
+                            // Cria o parágrafo de tradução correspondente, inicialmente escondido
+                            if (ptParagraphs[pIndex] && ptParagraphs[pIndex].trim() !== "") {
+                                const ptPElement = document.createElement('p');
+                                ptPElement.classList.add('pt-translation-inline');
+                                ptPElement.innerHTML = ptParagraphs[pIndex].trim().replace(/\n/g, '<br>');
+                                chapterDiv.appendChild(ptPElement); // Adiciona tradução abaixo do parágrafo ENG
+
+                                engPElement.addEventListener('click', function(event) {
+                                    event.stopPropagation(); // Impede que o clique no parágrafo acione o clique do capítulo imediatamente
+                                    
+                                    // Alterna visibilidade da tradução específica deste parágrafo
+                                    const proximaTraducao = this.nextElementSibling;
+                                    if (proximaTraducao && proximaTraducao.classList.contains('pt-translation-inline')) {
+                                        proximaTraducao.style.display = proximaTraducao.style.display === 'block' ? 'none' : 'block';
+                                    }
+                                });
+                            }
+                        }
+                    });
+                    
+                    // Event listener para o BLOCO DO CAPÍTULO (para tocar áudio e destacar)
+                    chapterDiv.addEventListener('click', function() {
+                        // Se já está ativo e foi clicado de novo, talvez pausar? Ou não fazer nada.
+                        // Por enquanto, se clicar no mesmo capítulo ativo, ele recomeça o áudio.
+                        
+                        document.querySelectorAll('.capitulo-reader-gr.active-segment').forEach(el => {
+                            el.classList.remove('active-segment');
+                        });
+                        // Não remove mais os .traducao-capitulo-ativo, pois agora são por parágrafo
+                        this.classList.add('active-segment');
+                        activeChapterDiv = this; // Guarda o chapterDiv ativo
+
+                        // Toca áudio do segmento
+                        if (currentTrackInfo && currentTrackInfo.timeoutId) {
+                            clearTimeout(currentTrackInfo.timeoutId);
+                        }
+                        if (audioPlayer.src) { 
+                            audioPlayer.currentTime = chapter.startTimeSeconds;
+                            audioPlayer.play();
+                        }
+                        currentTrackInfo = { id: chapter.id };
+                    });
+                    readerTextDisplay.appendChild(chapterDiv);
+                });
+                
+                if (audioPlayer.src) { 
+                    audioPlayer.addEventListener('loadedmetadata', function() {
+                        if (sallysPhoneData.chapters.length > 0) {
+                            const lastChapter = sallysPhoneData.chapters[sallysPhoneData.chapters.length - 1];
+                            if (audioPlayer.duration && audioPlayer.duration > 0 && !isNaN(audioPlayer.duration) && isFinite(audioPlayer.duration)) {
+                                lastChapter.endTimeSeconds = audioPlayer.duration;
+                                sallysPhoneData.totalDuration = audioPlayer.duration;
+                            }
+                        }
+                    });
+                    
+                    audioPlayer.addEventListener('pause', function() {
+                        if (currentTrackInfo && currentTrackInfo.timeoutId) {
+                             clearTimeout(currentTrackInfo.timeoutId);
+                        }
+                    });
+                    audioPlayer.addEventListener('ended', function() {
+                         if(activeChapterDiv) activeChapterDiv.classList.remove('active-segment');
+                         // Opcional: esconder todas as traduções ao final do áudio completo
+                         // document.querySelectorAll('.pt-translation-inline').forEach(el => el.style.display = 'none');
+                        if (currentTrackInfo && currentTrackInfo.timeoutId) {
+                             clearTimeout(currentTrackInfo.timeoutId);
+                        }
+                        currentTrackInfo = null;
+                    });
+
+                    // Lógica para destacar o parágrafo em inglês enquanto o áudio do capítulo toca
+                    // Isso é mais complexo pois o CUE é a nível de capítulo, não parágrafo.
+                    // O que podemos fazer é destacar o capítulo inteiro (já feito com .active-segment)
+                    // ou, se você tiver os tempos de cada parágrafo, podemos fazer algo mais granular.
+                    // Por agora, o capítulo clicado fica destacado e o áudio dele toca.
+                }
+
+            } else {
+                console.error("Elementos ou dados essenciais para o Graded Reader não foram encontrados.");
+                if(readerTextDisplay) readerTextDisplay.innerHTML = "<p style='color: red;'>Erro ao carregar dados do Graded Reader.</p>";
+            }
+        });
+    </script>
+</body>
+</html>

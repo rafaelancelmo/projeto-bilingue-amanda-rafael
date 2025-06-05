@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extras: Graded Readers - Projeto Bilíngue</title>
+    <link rel="stylesheet" href="css/style.css"> 
+    <link rel="stylesheet" href="css/aula_style.css"> 
+    <style>
+        /* Estilos específicos para a página de Extras/Biblioteca */
+        .biblioteca-container {
+            padding: 20px;
+        }
+        .biblioteca-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--cor-borda-mv);
+        }
+        .biblioteca-header h2 {
+            color: var(--cor-azul-primario-mv);
+            margin: 0;
+        }
+        .filtros-nivel button {
+            margin-left: 8px;
+            padding: 6px 12px;
+            font-size: 0.9em;
+            background-color: var(--fundo-elemento);
+            border: 1px solid var(--borda-elemento);
+            color: var(--texto-secundario);
+            border-radius: var(--raio-borda-mv);
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .filtros-nivel button.active, .filtros-nivel button:hover {
+            background-color: var(--cor-azul-primario-mv);
+            color: white;
+            border-color: var(--cor-azul-primario-mv);
+        }
+        .lista-graded-readers {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .graded-reader-card {
+            background-color: var(--fundo-elemento);
+            border: 1px solid var(--borda-elemento);
+            border-radius: var(--raio-borda-mv);
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start; /* Alinha itens no topo */
+            box-shadow: var(--sombra-mv);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .graded-reader-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+        }
+        .graded-reader-card img.thumbnail {
+            width: 100px; 
+            height: 140px; 
+            object-fit: cover;
+            border-radius: var(--raio-borda-mv);
+            flex-shrink: 0;
+            border: 1px solid var(--borda-elemento);
+        }
+        .graded-reader-info {
+            flex-grow: 1;
+        }
+        .graded-reader-info h4 {
+            margin: 0 0 5px 0;
+            font-size: 1.4em; /* Título maior */
+            color: var(--texto-primario);
+            font-weight: 600;
+        }
+        .graded-reader-info .nivel {
+            font-size: 0.75em; /* Nível menor */
+            color: var(--cor-texto-claro);
+            background-color: var(--cor-texto-secundario); 
+            padding: 3px 8px; /* Padding ajustado */
+            border-radius: 10px;
+            display: inline-block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        .graded-reader-info .descricao {
+            font-size: 0.9em;
+            color: var(--texto-secundario);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        .graded-reader-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end; 
+            gap: 8px;
+            min-width: 160px; /* Espaço para o botão */
+        }
+        .graded-reader-actions .btn-mv {
+            width: 100%;
+            text-align: center;
+            padding: 10px 15px; /* Botão maior */
+        }
+        .graded-reader-actions .palavras-novas {
+            font-size: 0.8em;
+            color: var(--texto-secundario);
+        }
+    </style>
+</head>
+<body class="tema-claro">
+    <header class="site-header-mv">
+        <div class="header-mv-container">
+            <div class="logo-area-mv"><img src="assets/logo-curso.png" alt="Logo Curso" id="logo-curso-mv"></div>
+            <nav class="menu-principal-mv">
+                <a href="index.html">Home</a>
+                <a href="#">Meu Perfil</a>
+                <a href="extras.html" class="active">Extras</a> <a href="playlist.html">Playlist</a>
+            </nav>
+            <div class="user-actions-mv">
+                <button id="btn-logout" class="btn-mv btn-tema" style="background-color: #e74c3c; color: white;">Sair</button>
+                <button id="btn-toggle-tema" class="btn-mv btn-tema">Mudar Tema</button>
+                <img src="assets/flag-usa.png" alt="Idioma USA" class="flag-icon-mv">
+                <div class="user-profile-mv"><span>Bem vindo(a)!</span></div>
+            </div>
+        </div>
+    </header>
+
+    <div id="user-selection-overlay" class="user-selection-overlay-container hidden">
+         <div class="user-selection-box">
+            <h2>Quem está estudando?</h2>
+            <p>Por favor, <a href="index.html" style="color: var(--cor-azul-primario-mv);">selecione um usuário</a> para acessar este conteúdo.</p>
+        </div>
+    </div>
+
+    <main class="dashboard-mv-container biblioteca-container">
+    <div class="biblioteca-header">
+        <h2>Biblioteca de Graded Readers</h2>
+        <div class="filtros-nivel">
+            <button class="active" data-level="all">Todos</button>
+            <button data-level="1">Nível 1</button>
+            <button data-level="2">Nível 2</button>
+            <button data-level="3">Nível 3</button>
+            </div>
+    </div>
+
+    <div class="lista-graded-readers">
+        <article class="graded-reader-card" data-reader-id="sallys_phone" data-level="1">
+            <img src="assets/sallys_phone_cover.png" alt="Capa Sally's Phone" class="thumbnail"> 
+            <div class="graded-reader-info">
+                <h4>Sally's Phone</h4>
+                <span class="nivel">NÍVEL 1</span>
+                <p class="descricao">
+                    Uma divertida história sobre uma troca acidental de telefones e os encontros inesperados que isso pode causar.
+                </p>
+            </div>
+            <div class="graded-reader-actions">
+                <a href="graded_reader_sallys_phone.html" class="btn-mv btn-verde-mv">Ler História</a>
+                <span class="palavras-novas">Duração do áudio: 20:13</span>
+            </div>
+        </article>
+
+        <article class="graded-reader-card" data-reader-id="six_sketches" data-level="1"> <img src="assets/six_sketches.png" alt="Capa Six Sketches" class="thumbnail"> 
+            <div class="graded-reader-info">
+                <h4>Six Sketches</h4>
+                <span class="nivel">NÍVEL 1</span> <p class="descricao">
+                    Uma coleção de seis contos curtos e envolventes para praticar seu inglês.
+                </p>
+            </div>
+            <div class="graded-reader-actions">
+                <a href="graded_reader_six_sketches.html" class="btn-mv btn-verde-mv">Ler Histórias</a>
+                <span class="palavras-novas">Duração do áudio: 20:05</span>
+            </div>
+        </article>
+
+        <article class="graded-reader-card" data-reader-id="outro_livro_exemplo" data-level="2">
+            <img src="assets/placeholder_reader_cover.png" alt="Capa Outro Livro" class="thumbnail">
+            <div class="graded-reader-info">
+                <h4>Outro Graded Reader (Exemplo)</h4>
+                <span class="nivel">NÍVEL 2</span>
+                <p class="descricao">
+                    Descrição breve do outro graded reader.
+                </p>
+            </div>
+            <div class="graded-reader-actions">
+                <button class="btn-mv btn-disabled" disabled>Em Breve</button>
+                <span class="palavras-novas">XXXX palavras</span>
+            </div>
+        </article>
+
+    </div>
+</main>
+
+    <footer class="site-footer-mv">
+       <div class="footer-mv-container"><p>PROJETO BILINGUE AMANDA & RAFAEL © 2024-2025</p><nav><a href="#">Termos de uso</a> -<a href="#">Política de privacidade</a></nav></div>
+    </footer>
+
+    <script src="js/script.js"></script> 
+    <script>
+        // Script para a página de extras (filtragem básica)
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUserExtras = localStorage.getItem('currentUserProjetoBilingue');
+            const userSelectionOverlayExtras = document.getElementById('user-selection-overlay');
+            const corpo = document.body;
+
+            // Lógica de tema (copiada/adaptada do script.js para funcionar nesta página isoladamente)
+            const btnToggleTemaExtras = document.querySelector('#btn-toggle-tema'); // Usa o ID genérico do header
+            function aplicarTemaSalvoExtras() {
+                const temaSalvo = localStorage.getItem('temaProjetoBilingue');
+                corpo.classList.remove('tema-claro', 'tema-escuro');
+                if (temaSalvo) {
+                    corpo.classList.add(temaSalvo);
+                } else {
+                    corpo.classList.add('tema-claro');
+                }
+            }
+            function alternarTemaExtras() {
+                if (corpo.classList.contains('tema-claro')) {
+                    corpo.classList.replace('tema-claro', 'tema-escuro');
+                    localStorage.setItem('temaProjetoBilingue', 'tema-escuro');
+                } else {
+                    corpo.classList.replace('tema-escuro', 'tema-claro');
+                    localStorage.setItem('temaProjetoBilingue', 'tema-claro');
+                }
+            }
+            if (btnToggleTemaExtras) {
+                btnToggleTemaExtras.addEventListener('click', alternarTemaExtras);
+            }
+            aplicarTemaSalvoExtras();
+
+
+            if (!currentUserExtras && userSelectionOverlayExtras) {
+                userSelectionOverlayExtras.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            } else if (userSelectionOverlayExtras) {
+                userSelectionOverlayExtras.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+                const userDisplay = document.querySelector('.user-profile-mv span');
+                if (userDisplay && currentUserExtras) {
+                    userDisplay.textContent = `Bem vindo(a), ${currentUserExtras === 'rafael' ? 'Rafael' : 'Amanda'}!`;
+                }
+            }
+            
+            const filterButtons = document.querySelectorAll('.filtros-nivel button');
+            const readerCards = document.querySelectorAll('.graded-reader-card');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    const levelToShow = this.dataset.level;
+
+                    readerCards.forEach(card => {
+                        if (levelToShow === 'all' || card.dataset.level === levelToShow) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
